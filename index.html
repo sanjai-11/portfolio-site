@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>Sanjai's Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d3d9196654.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="header">
+    <div class="container">
+        <nav>
+            <img src="Portfolio_pictures/logo.png" class="logo">
+            <ul id="sidemenu">
+                <li><a href="#header">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experiences">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <i class="fas fa-times" onclick="closemenu()"></i>
+            </ul>
+            <i class="fas fa-bars" onclick="openmenu()"></i>
+        </nav>
+        <div class="header-text">
+            <p>Data Scientist</p>
+            <h1>Hi, I'm <span>Sanjaikumar</span><br>Balasubramaniyan</h1>
+        </div>
+    </div>
+</div>
+<!-- ---------------about----------- -->
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <img src="Portfolio_pictures/user.jpg">
+            </div>
+            <div class="about-col-2">
+                <h1 class="sub-title">About Me</h1>
+                <p>Hey there, I am Sanjaikumar Balasubramaniyan. 
+                I'm very proud to pursue MS Data Science in Indiana University, 
+                one of the best university in the world particularly for Data Science. 
+                I have about six months of work experience in data field through 
+                Internship. Very passionate in the field of data science. 
+                Proud publisher of "Advanced ANPR approach for vehicle managment system in the Adaly International Journal. 
+                My area of proficiencies are SQL, Python, R programming, MATLAB, Pytorch, Tableau, Tensorflow and so on. 
+                Thanks for go througing my portfolio.</p>
+
+                <div class="tab-titles">
+                    <p class="tab-links active-link"  onclick="opentab('skills')">Skills</p>
+                    <p class="tab-links"  onclick="opentab('experience')">Experience</p>
+                    <p class="tab-links"  onclick="opentab('education')">Education</p>
+                </div>
+                <div class="tab-contents active-tab" id="skills">
+                    <ul>
+                        <li><span>Data Science</span></li>
+                        <li><span>Machine Learning</span></li>
+                        <li><span>Data Processing</span></li>
+                    </ul>
+                </div>
+                <div class="tab-contents" id="experience">
+                    <ul>
+                        <li><span>Apr 2024 - July 2024</span><br>Data Scientist | Systech Solutions Pvt Ltd.</li>
+                        <li><span>Sept 2023 - Nov 2023</span><br>Data Analyst Intern | MeriSkill Pvt Ltd.</li>
+                        <li><span>May 2022 - Aug 2022</span><br>Data Science Intern | 8Queens Software Technologies Pvt Ltd.</li>
+                    </ul>
+                </div>
+                <div class="tab-contents" id="education">
+                    <ul>
+                        <li><span>Aug 2024 - May 2026</span><br>Masters in Data Science | Indiana University Bloomington.</li>
+                        <li><span>Oct 2020 - Apr 2024</span><br>B.Tech AI&DS | SRM VEC College.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-----------Experience------------>
+
+<div id="experiences">
+    <div class="container">
+        <h1 class="sub-title">My Experience</h1>
+        <div class="experience-list">
+            <div>
+                <h2>AI-Agent for Operating Backend System</h2>
+                <p>Under Construction</p>
+                <a href="#">Learn more</a>
+            </div>
+            <div>
+                <h2>Advanced ANPR approach for Vehichle Management</h2>
+                <p>Under Construction</p>
+                <a href="#">Learn more</a>
+            </div>
+            <div>
+                <h2>AI-Powered Bank note Identification System for Visually Impaired</h2>
+                <p>Under Construction</p>
+                <a href="#">Learn more</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------Projects-------------------->
+<div id="projects">
+    <div class="container">
+        <h1 class="sub-title">My Projects</h1>
+        <div class="project-list">
+            <div class="project">
+                <img src="Portfolio_pictures/work-1.png">
+                <div class="layer">
+                    <h3>App</h3>
+                    <p>Under Construction</p>
+                    <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="project">
+                <img src="Portfolio_pictures/work-2.png">
+                <div class="layer">
+                    <h3>App</h3>
+                    <p>Under Construction.</p>
+                    <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="project">
+                <img src="Portfolio_pictures/work-3.png">
+                <div class="layer">
+                    <h3>App</h3>
+                    <p>Under Construction</p>
+                    <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn">See more</a>
+    </div>
+</div>
+<!-------------------contact--------------------->
+<div id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="sub-title">Contact Me</h1>
+                <p><i class="fa-solid fa-envelope"></i> sanjaibala2002@gmail.com</p>
+                <p><i class="fas fa-phone-square-alt"></i> +1 (812) 671-6737</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/sanjaikumar-b-309066202" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/sanjai-11" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.instagram.com/bksanjai7" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
+                    <!--<a href="https://www.facebook.com/people/Sanjai/pfbid02tortrLZWAyffotwZm8xvXvQPqts5E9gBjtuFpyqNv6FS3FUS3Pcydjbqf46Z8Hvpl/?mibextid=JRoKGi"><i class="fa-brands fa-facebook"></i></a>-->
+                    
+                </div>
+                <a href="Portfolio_pictures/Sanjaikumar_Balasubramaniyan_Resume.pdf" download class="btn btn2">Download CV</a>
+            </div>
+            <div class="contact-right">
+            <form name="submit-to-google-sheet">
+                <input type="text" name="Name" placeholder="Your Name" required>
+                <input type="email" name="Email" placeholder="Your Email" required>
+                <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                <button type="submit" class="btn btn2">Submit</button>
+            </form>
+            <span id="msg"></span>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>Copyright © 2025 - Sanjai Bala. All Rights Reserved</p>
+    </div>
+</div>
+
+
+<script>
+
+    var tablinks = document.getElementsByClassName("tab-links");
+    var tabcontents = document.getElementsByClassName("tab-contents");
+
+    function opentab(tabname){
+        for(tablink of tablinks){
+            tablink.classList.remove("active-link");
+        }
+        for(tabcontent of tabcontents){
+            tabcontent.classList.remove("active-tab");
+        }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab");
+    }
+
+</script>
+
+<script>
+
+    var sidemenu = document.getElementById("sidemenu");
+
+    function openmenu(){
+        sidemenu.style.right = "0";
+    }
+    function closemenu(){
+        sidemenu.style.right = "-200px";
+    }
+
+</script>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwOLTJ5lGVeoOKQ9HCPAwSwWAQ7RtThtpLLMDtya1c_SJPZQnlih9IlvZ1NBf24GWgK/exec'
+    const form = document.forms['submit-to-google-sheet']
+    const msg = document.getElementById("msg")
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            msg.innerHTML = 'Message Sent Successfully!'
+            setTimeout(function(){
+                msg.innerHTML = ""
+            }, 7000)
+            form.reset()
+        })
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
+
+</body>
+</html>
