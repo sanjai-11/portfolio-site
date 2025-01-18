@@ -41,7 +41,7 @@ nav{
 nav ul li{
     display: inline-block;
     list-style: none;
-    margin: 10px 20px;
+    margin: 10px 10px;
 }
 
 nav ul li a{
@@ -155,7 +155,7 @@ nav ul li a:hover::after{
 }
 /*---------------Experience-----------------*/
 #experiences{
-    padding: 30px 0;
+    padding: 20px 0;
 }
 .experience-list{
     display: grid;
@@ -171,10 +171,14 @@ nav ul li a:hover::after{
     border-radius: 10px;
     transition: background 0.5s, transform 0.5s;
 }
-.experience-list div h2{
-    font-size: 30px;
+.experience-list div h3{
+    font-size: 25px;
     font-weight: 500;
     margin-bottom: 15px;
+}
+.experience-list div h4{
+    font-size: 16px;
+    font-weight: 200;
 }
 .experience-list div a{
     text-decoration: none;
@@ -189,7 +193,7 @@ nav ul li a:hover::after{
 }
 /*------------------Projects------------------*/
 #projects{
-    padding: 50px 0;
+    padding: 30px 0;
 }
 .project-list{
     display: grid;
@@ -263,6 +267,119 @@ nav ul li a:hover::after{
 .btn:hover{
     background: #ff004f;
 }
+
+/*------------Products---------------*/
+#products{
+    padding: 20px 0;
+}
+.product-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+.product{
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+.product img{
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    transition: transform o.5s;
+}
+
+.layer{
+    width: 100%;
+    height: 0;
+    background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    font-size: 14px;
+    transition: height 0.5s;
+}
+.layer h3{
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.layer a{
+    margin-top: 20px;
+    color: #ff004f;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    background: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+}
+.product:hover img{
+    transform: scale(1.1);
+}
+.product:hover .layer{
+    height: 100%;
+}
+.btn{
+    display: block;
+    margin: 50px auto;
+    width: fit-content;
+    border: 1px solid #ff004f;
+    padding: 14px 50px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #fff;
+    transition: background 0.5s;
+}
+.btn:hover{
+    background: #ff004f;
+}
+
+/*---------------Research-----------------*/
+#researchworks{
+    padding: 30px 20px;
+}
+.researchwork-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+.researchwork-list div{
+    background-color: #262626;
+    padding: 25px;
+    font-size: 13px;
+    font-weight: 300;
+    border-radius: 10px;
+    transition: background 0.5s, transform 0.5s;
+}
+.researchwork-list div h2{
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.researchwork-list div a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 12px;
+    margin-top: 20px;
+    display: inline-block;
+}
+.researchwork-list div:hover{
+    background: #ff004f;
+    transform: translateY(-10px);
+}
+
 /*---------Contact---------*/
 .contact-left{
     flex-basis: 35%;
@@ -332,7 +449,7 @@ nav .fas{
 
 @media only screen and (max-device-width: 600px){
     #header{
-        background-image: url(portfolio_pictures/phone-background.jpg);
+        background-image: url(portfolio_pictures/background.jpg);
     }
     .header-text{
         margin-top: 100%;
