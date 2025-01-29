@@ -141,7 +141,7 @@ nav ul li a:hover::after{
 
 .tab-contents ul{
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 5px;
   }
 .tab-contents ul li{
     list-style: none;
