@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot</title>
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
+</head>
+<body>
+    <div id="chatWindow"></div>
+    <input type="text" id="userInput" placeholder="Ask me anything..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        let model;
+
+        async function loadModel() {
+            model = await window.Transformers.pipeline('conversational', 'Xenova/distilgpt2');
+        }
+
+        async function sendMessage() {
+            const userMessage = document.getElementById("userInput").value;
+            const response = await model(userMessage);
+            document.getElementById("chatWindow").innerHTML += `<p>User: ${userMessage}</p>`;
+            document.getElementById("chatWindow").innerHTML += `<p>AI: ${response.generated_text}</p>`;
+        }
+
+        loadModel();
+    </script>
+</body>
+</html>

@@ -6,9 +6,14 @@
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <title>Sanjai's Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="js/chatbot-script.js"></script>
     <script src="https://kit.fontawesome.com/d3d9196654.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
+<canvas id="starfield"></canvas>
 <div id="header">
     <div class="container">
         <nav>
@@ -21,12 +26,13 @@
                 <li><a href="#products">Products</a></li>
                 <li><a href="#researchworks">Research</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li class="mobile-only"><a href="#" onclick="toggleChatbot(); closemenu(); return false;">Chat with AI</a></li>
                 <i class="fas fa-times" onclick="closemenu()"></i>
             </ul>
             <i class="fas fa-bars" onclick="openmenu()"></i>
         </nav>
         <div class="header-text">
-            <p>Data Scientist</p>
+            <span class="role-rotator"><span id="role-typewriter"></span></span>
             <h1>Hi, I'm <span>Sanjaikumar</span><br>Balasubramaniyan</h1>
         </div>
     </div>
@@ -40,7 +46,7 @@
             </div>
             <div class="about-col-2">
                 <h1 class="sub-title">About Me</h1>
-                <p style="text-align: justify;"> Welcome to my portfolio! I am Sanjaikumar Balasubramaniyan, a passionate Data Scientist with a strong foundation in machine learning, data engineering, and analytics. With hands-on experience as a Data Scientist and Data Analyst Intern, I have developed and deployed impactful solutions, such as real-time dashboards, predictive models, scalable workflows, and improving decision-making. Currently pursuing my Master’s in Data Science at Indiana University, Bloomington, I aim to transform complex data into actionable insights that drive innovation.
+                <p style="text-align: justify;"> Welcome to my portfolio! I am Sanjaikumar Balasubramaniyan, a passionate Data Scientist with a strong foundation in machine learning, data engineering, and analytics. With hands-on experience as a Data Scientist and Data Analyst Intern, I have developed and deployed impactful solutions, such as real-time dashboards, predictive models, scalable workflows, and improving decision-making. Currently pursuing my Master's in Data Science at Indiana University, Bloomington, I aim to transform complex data into actionable insights that drive innovation.
                 </p> <br>
                 <p style="text-align: justify;">My projects reflect a deep commitment to solving real-world problems through technology. From building an AI agent that streamlined backend workflows by 50% to create an ANPR system with 96% accuracy for vehicle management (Published in International Journal), my work is driven by precision and creativity. Skilled in Python, R, SQL, TensorFlow, and cloud platforms like AWS, and GCP, I am dedicated to leveraging my expertise to make a tangible impact in the world of data. Explore my portfolio to see how I turn data into decisions!</p>
 
@@ -87,7 +93,7 @@
                 <div class="tab-contents" id="education">
                     <ul>
                         <li><span>Aug 2024 - May 2026</span><br>Master's in Data Science | Indiana University Bloomington.</li>
-                        <li><span>Oct 2020 - Apr 2024</span><br>Bachelor's in Artificial Intelligence & Data Science | SRM VEC College.</li>
+                        <li><span>Oct 2020 - Apr 2024</span><br>Bachelor's in Artificial Intelligence & Data Science | SRMIST University.</li>
                     </ul>
                 </div>
             </div>
@@ -132,36 +138,68 @@ underserved communities.</p>
 <div id="projects">
     <div class="container">
         <h1 class="sub-title">My Projects</h1>
-        <div class="project-list">
-            <div class="project">
-                <img src="portfolio_pictures/ai_agent.png">
-                <div class="layer">
-                    <h3>AI Agent for Operating Backend System</h3>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Built an AI agent using Gemini-pro LLM, automating workflows with 50% improved efficiency and 80% fewer
+        <div class="slider-outer">
+            <button class="slider-btn prev-btn" aria-label="Previous Projects">&#10094;</button>
+            <div class="project-list slider-track">
+                <div class="project">
+                    <img src="portfolio_pictures/ai_agent.png">
+                    <div class="layer">
+                        <h3>AI Agent for Operating Backend System</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Built an AI agent using Gemini-pro LLM, automating workflows with 50% improved efficiency and 80% fewer
 manual tasks at 95% accuracy. </p>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Developed a Flask API with SQLite, cutting response times by 40%, supporting 1,000 queries, and boosting
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Developed a Flask API with SQLite, cutting response times by 40%, supporting 1,000 queries, and boosting
 backend efficiency by 30%.</p>
-                    <a href="#" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://github.com/sanjai-11/AI-Agent-for-operating-Background-System" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="project">
+                    <img src="portfolio_pictures/heart.jpg">
+                    <div class="layer">
+                        <h3>CardioCare</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> CardioCare is a heart disease management system that leverages machine learning to predict and assess cardiovascular risks based on real-time patient data.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The platform provides healthcare professionals with valuable insights, enabling proactive and informed decision-making for better patient care.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Click below link for Live Website.</p>
+                        <a href="https://cardiocare-40xa.onrender.com/" target=”_blank”><i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                </div>
+                <div class="project">
+                    <img src="portfolio_pictures/air_calli.png">
+                    <div class="layer">
+                        <h3>Air Calligraphy Using Computer Vision</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Designed a computer vision-based system enabling individuals without limbs (hand) to write in the air using a fingertip, eliminating the need for traditional input devices.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Leveraged OpenCV and Python to implement real-time object detection and gesture recognition for intuitive and accessible air-writing.</p>
+                        <a href="https://github.com/sanjai-11/Air-Calligraphy-using-CV" target=”_blank”><i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
+                </div>
+                <div class="project">
+                    <img src="portfolio_pictures/nyc.jpg">
+                    <div class="layer">
+                        <h3>NYC Crime Analytics - using Preswald</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The NY Crime Analytics Application is an interactive dashboard built using Preswald, providing a comprehensive view of crime trends across New York State from 1990 to 2023.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The application allows users to explore county-wise crime statistics, including violent, property, and firearm-related crimes, with visually engaging charts and interactive filtering for deeper insights.</p>
+                        <a href="https://github.com/sanjai-11/NY-Crime-Analytics-App-Preswald" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="project">
+                    <img src="portfolio_pictures/mon.jpg">
+                    <div class="layer">
+                        <h3>Monument Intelligence Dashboard</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The Monument Intelligence Dashboard is an interactive, AI-powered web app built with Preswald, allowing users to explore and analyze iconic monuments worldwide through dynamic visualizations and natural language queries.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The application features an interactive geospatial map, trend analysis by country and century, and a chatbot for intuitive, conversational exploration of global monuments' historical data and visitor statistics.</p>
+                        <a href="https://github.com/sanjai-11/monument-dashboard-preswald" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="project">
+                    <img src="portfolio_pictures/sales.png">
+                    <div class="layer">
+                        <h3>BlinkIt Sales Analytics</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Developed an interactive Power BI dashboard to analyze Blinkit's sales data, providing insights into key metrics such as total sales, item distribution, outlet performance, and customer preferences.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Implemented dynamic filtering and visualizations to track sales trends by product type, outlet size, and location, enabling data-driven decision-making for business growth.</p>
+                        <a href="https://github.com/sanjai-11/Blinkit-Sales-Analytics" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="project">
-                <img src="portfolio_pictures/sales.png">
-                <div class="layer">
-                    <h3>BlinkIt Sales Analytics</h3>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Developed an interactive Power BI dashboard to analyze Blinkit's sales data, providing insights into key metrics such as total sales, item distribution, outlet performance, and customer preferences.</p>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Implemented dynamic filtering and visualizations to track sales trends by product type, outlet size, and location, enabling data-driven decision-making for business growth.</p>
-                    <a href="#" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="project">
-                <img src="portfolio_pictures/air_calli.png">
-                <div class="layer">
-                    <h3>Air Calligraphy Using Computer Vision</h3>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Designed a computer vision-based system enabling individuals without limbs (hand) to write in the air using a fingertip, eliminating the need for traditional input devices.</p>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Leveraged OpenCV and Python to implement real-time object detection and gesture recognition for intuitive and accessible air-writing.</p>
-                    <a href="#" target=”_blank”><i class="fa-solid fa-up-right-from-square"></i></a>
-                </div>
-            </div>
+            <button class="slider-btn next-btn" aria-label="Next Projects">&#10095;</button>
         </div>
         <a href="https://github.com/sanjai-11" target=”_blank” class="btn">See more</a>
     </div>
@@ -171,34 +209,38 @@ backend efficiency by 30%.</p>
 <div id="products">
     <div class="container">
         <h1 class="sub-title">My Products</h1>
-        <div class="product-list">
-            <div class="product">
-                <img src="portfolio_pictures/jobha_img.jpg">
-                <div class="layer">
-                    <h2>Jobha Naturals Web Application</h2>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Managed a cross-functional team of six developers and coordinated with stakeholders to design, develop, and launch a scalable e-commerce platform for Jobha Naturals. Oversaw project timelines, feature prioritization, and seamless integration of RazorPay for secure transactions.</p>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Maintain ongoing collaboration with business stakeholders to optimize performance, implement updates, and provide strategic technical support.</p>
-                    <a href="https://www.jobhanaturals.com/" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+        <div class="slider-outer">
+            <button class="slider-btn prev-btn" aria-label="Previous Products">&#10094;</button>
+            <div class="product-list slider-track">
+                <div class="product">
+                    <img src="portfolio_pictures/jobha_img.jpg">
+                    <div class="layer">
+                        <h2>Jobha Naturals Web Application</h2>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Managed a cross-functional team of six developers and coordinated with stakeholders to design, develop, and launch a scalable e-commerce platform for Jobha Naturals. Oversaw project timelines, feature prioritization, and seamless integration of RazorPay for secure transactions.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Maintain ongoing collaboration with business stakeholders to optimize performance, implement updates, and provide strategic technical support.</p>
+                        <a href="https://www.jobhanaturals.com/" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="product">
+                    <img src="portfolio_pictures/bow_img.jpeg">
+                    <div class="layer">
+                        <h2>Box of Wellness Web Application</h2>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> A static web application that serves as a catalog of nutritious foods tailored for gym-goers, highlighting key nutritional facts. Users can conveniently browse healthy meal options and place orders, promoting informed dietary choices.
+                        </p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Clear layout for easy navigation, ensuring users quickly find the right meals to meet their fitness goals.</p>
+                        <a href="https://box-of-wellness.onrender.com/" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="product">
+                    <img src="portfolio_pictures/work-3.png">
+                    <div class="layer">
+                        <h3>App</h3>
+                        <p>Coming Soooon</p>
+                        <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="product">
-                <img src="portfolio_pictures/bow_img.jpeg">
-                <div class="layer">
-                    <h2>Box of Wellness Web Application</h2>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> A static web application that serves as a catalog of nutritious foods tailored for gym-goers, highlighting key nutritional facts. Users can conveniently browse healthy meal options and place orders, promoting informed dietary choices.
-                    </p>
-                    <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Clear layout for easy navigation, ensuring users quickly find the right meals to meet their fitness goals.</p>
-                    <a href="https://box-of-wellness.onrender.com/" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="product">
-                <img src="portfolio_pictures/work-3.png">
-                <div class="layer">
-                    <h3>App</h3>
-                    <p>Coming Soooon</p>
-                    <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
-                </div>
-            </div>
+            <button class="slider-btn next-btn" aria-label="Next Products">&#10095;</button>
         </div>
         <!-- <a href="#" class="btn">See more</a> -->
     </div>
@@ -208,22 +250,37 @@ backend efficiency by 30%.</p>
 <div id="researchworks">
     <div class="container">
         <h1 class="sub-title">My Research</h1>
-        <div class="researchwork-list">
-            <div>
-                <h2>Advanced ANPR approach for Vehichle Management</h2>
-                <p>Adalya Internationsl Journal</p>
-                
+        <div class="slider-outer">
+            <button class="slider-btn prev-btn" aria-label="Previous Research">&#10094;</button>
+            <div class="researchwork-list slider-track">
+                <div>
+                    <h2>Snacks & Satiety Research Study</h2>
+                    <p style="text-align: justify;"> Worked as a Research Assistant under Dr. Bret Rust on the Snacks & Satiety Study, funded by Linus Technology. Contributed to data analysis and research on the effects of snack consumption on satiety.</p>
+                    <p style="text-align: justify;">Contributed to an upcoming data authorship piece in The New York Times Magazine, showcasing expertise in data-driven insights and research.ThisNewYork Times Magazine - for Data Ownership</p>
+                </div>
+                <div>
+                    <h2>Funding Networks for BIPOC Non-Profit Organization</h2>
+                    <p style="text-align: justify;">Conducted network analysis to identify bonding, bridging, and linking patterns in grant funding, classifying recipients and funders by demographic focus to uncover insights into funding equity for underserved communities.</p>
+                    <p style="text-align: justify;">Presented the research at the ARNOVA conference, showcasing findings on the funding dynamics and equity for BIPOC nonprofit organizations.</p>
+                </div>
+                <div>
+                    <h2>Advanced ANPR approach for Vehichle Management</h2>
+                    <p style="text-align: justify;">Published a research paper titled "Advanced ANPR for Vehicle Management" in Adalya International Journal (DOI: 10.37896/aj13.3/001), which focused on using YOLO-based object detection combined with OCR for real-time license plate recognition, achieving 96% accuracy and improving blurred image clarity by 85%.</p>
+                    <p style="text-align: justify;">Developed a scalable, autonomous vehicle tracking system that utilized real-time object detection, motion tracking, and decision-based logging to optimize parking flow and entry/exit management in vehicle management systems.</p>
+                    <a href="https://drive.google.com/file/d/1PZXn8gMPbjQwiGJ_1ukCjLqmpkVkopUP/view">Link</a>
+                </div>
+                <div>
+                    <h2>AI-Powered Bank note Identification System for Visually Impaired</h2>
+                    <p style="text-align: justify;">Presented a paper titled "AI-Powered Banknote Identification System for Visually Impaired" at the Recent Trends in Analytics and Computing Technologies (RTACT) 2024 conference, showcasing an AI-based solution for assisting visually impaired individuals in identifying banknotes.</p>
+                    <p style="text-align: justify;">The system utilizes advanced computer vision and machine learning techniques to accurately identify banknotes and provide audio feedback, enhancing accessibility for visually impaired users in financial transactions.</p>
+                    <a href="https://drive.google.com/file/d/1Re9U3aKcNjf17Q0bdMQ6MBB4G1vRN4eB/view?usp=sharing">Link</a>
+                </div>
+                <div>
+                    <h2>Air Calligraphy using Computer Vision</h2>
+                    <p>Coming Soon</p>
+                </div>
             </div>
-            <div>
-                <h2>AI-Powered Bank note Identification System for Visually Impaired</h2>
-                <p>RTACT </p>
-                <a href="#">Learn more</a>
-            </div>
-            <div>
-                <h2>Air Calligraphy using Computer Vision</h2>
-                <p>Under Construction</p>
-                <a href="#">Learn more</a>
-            </div>
+            <button class="slider-btn next-btn" aria-label="Next Research">&#10095;</button>
         </div>
     </div>
 </div>
@@ -234,13 +291,13 @@ backend efficiency by 30%.</p>
         <div class="row">
             <div class="contact-left">
                 <h1 class="sub-title">Contact Me</h1>
-                <p><i class="fa-solid fa-envelope"></i> sanjaibala2002@gmail.com</p>
+                <p><i class="fa-solid fa-envelope"></i> sanjaibala11@gmail.com</p>
                 <p><i class="fas fa-phone-square-alt"></i> +1 (812) 671-6737</p>
                 <div class="social-icons">
-                    <a href="https://www.linkedin.com/in/sanjaikumar-b-309066202" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/sanjai-bala/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
                     <a href="https://github.com/sanjai-11" target="_blank"><i class="fa-brands fa-github"></i></a>
                     <a href="https://www.instagram.com/bksanjai7" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
-                    <!--<a href="https://www.facebook.com/people/Sanjai/pfbid02tortrLZWAyffotwZm8xvXvQPqts5E9gBjtuFpyqNv6FS3FUS3Pcydjbqf46Z8Hvpl/?mibextid=JRoKGi"><i class="fa-brands fa-facebook"></i></a>-->
+                    <!-- <a href="https://www.facebook.com/people/Sanjai/pfbid02tortrLZWAyffotwZm8xvXvQPqts5E9gBjtuFpyqNv6FS3FUS3Pcydjbqf46Z8Hvpl/?mibextid=JRoKGi"><i class="fa-brands fa-facebook"></i></a>-->
                     
                 </div>
                 <a href="portfolio_pictures/Sanjaikumar_Balasubramaniyan_Resume.pdf" download class="btn btn2">Download CV</a>
@@ -261,6 +318,7 @@ backend efficiency by 30%.</p>
     </div>
 </div>
 
+<div id="sidebar-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.2); z-index:1999;"></div>
 
 <script>
 
@@ -283,12 +341,19 @@ backend efficiency by 30%.</p>
 <script>
 
     var sidemenu = document.getElementById("sidemenu");
-
+    var nav = document.querySelector('nav');
     function openmenu(){
         sidemenu.style.right = "0";
+        nav.classList.add('menu-open');
+        // Hide chatbot if open
+        var chatContainer = document.querySelector('.chat-container');
+        if (chatContainer && !chatContainer.classList.contains('hidden')) {
+            chatContainer.classList.add('hidden');
+        }
     }
     function closemenu(){
         sidemenu.style.right = "-200px";
+        nav.classList.remove('menu-open');
     }
 
 </script>
@@ -312,5 +377,508 @@ backend efficiency by 30%.</p>
     })
   </script>
 
+
+<!-- Chatbot Button -->
+<div id="chatbot-toggle" onclick="toggleChatbot()">
+    <img src="portfolio_pictures/google.png" alt="Chatbot" class="chatbot-toggle-img" />
+</div>
+
+<div class="chat-container hidden">
+    <div class="chat-header">
+        <div class="chat-title">SK11</div>
+        <span class="close-btn" onclick="toggleChatbot()">×</span>
+    </div>
+    <div class="chat-body">
+        <div class="suggested-questions">
+            <button class="question-btn">What's your biggest accomplishments?</button>
+            <button class="question-btn">Convince me, you excel in AI.</button>
+            <button class="question-btn">What's your superpowers?</button>
+            <button class="question-btn">Key projects to see?</button>
+            <button class="question-btn">Why should we hire you?</button>
+        </div>
+        <div class="messages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+    </div>
+    <div class="chat-footer">
+        <input type="text" class="message-input" placeholder="Type your message...">
+        <button class="send-btn">Send</button>
+    </div>
+</div>
+
+<script>
+    function toggleChatbot() {
+        const chatContainer = document.querySelector('.chat-container');
+        chatContainer.classList.toggle('hidden');
+    }
+</script>
+
+<script>
+const roles = [
+  "Data Scientist",
+  "ML Engineer",
+  "AI Engineer",
+  "Budding Entrepreneur"
+];
+
+let roleIndex = 0;
+let charIndex = 0;
+let typing = true;
+const typeSpeed = 90;
+const eraseSpeed = 50;
+const delayBetweenRoles = 1200;
+const typewriter = document.getElementById('role-typewriter');
+
+function typeRole() {
+  if (!typewriter) return;
+  if (typing) {
+    if (charIndex < roles[roleIndex].length) {
+      typewriter.textContent += roles[roleIndex].charAt(charIndex);
+      charIndex++;
+      setTimeout(typeRole, typeSpeed);
+    } else {
+      typing = false;
+      setTimeout(typeRole, delayBetweenRoles);
+    }
+  } else {
+    if (charIndex > 0) {
+      typewriter.textContent = roles[roleIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(typeRole, eraseSpeed);
+    } else {
+      typing = true;
+      roleIndex = (roleIndex + 1) % roles.length;
+      setTimeout(typeRole, typeSpeed);
+    }
+  }
+}
+typeRole();
+</script>
+
+<script>
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars = [];
+let asteroids = [];
+const STAR_COUNT = 120;
+const ASTEROID_CHANCE = 0.001;
+let w = window.innerWidth;
+let h = window.innerHeight;
+let mouse = { x: w/2, y: h/2 };
+
+function resize() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w;
+    canvas.height = h;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function randomStar() {
+    const angle = Math.random() * 2 * Math.PI;
+    const speed = Math.random() * 0.15 + 0.05;
+    return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.2 + 0.2,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
+        baseAlpha: Math.random() * 0.5 + 0.5,
+        alpha: 1,
+        twinkleSpeed: Math.random() * 0.02 + 0.01,
+        twinklePhase: Math.random() * Math.PI * 2
+    };
+}
+
+function createAsteroid() {
+    const side = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
+    let x, y, dx, dy;
+    const speed = Math.random() * 15 + 10;
+    
+    switch(side) {
+        case 0: // top
+            x = Math.random() * w;
+            y = -20;
+            dx = (Math.random() - 0.5) * 5;
+            dy = speed;
+            break;
+        case 1: // right
+            x = w + 20;
+            y = Math.random() * h;
+            dx = -speed;
+            dy = (Math.random() - 0.5) * 5;
+            break;
+        case 2: // bottom
+            x = Math.random() * w;
+            y = h + 20;
+            dx = (Math.random() - 0.5) * 5;
+            dy = -speed;
+            break;
+        case 3: // left
+            x = -20;
+            y = Math.random() * h;
+            dx = speed;
+            dy = (Math.random() - 0.5) * 5;
+            break;
+    }
+    
+    return {
+        x, y,
+        dx, dy,
+        size: Math.random() * 3 + 2,
+        trail: [],
+        maxTrailLength: 25,
+        color: `hsl(${Math.random() * 30 + 15}, 100%, 50%)`, // Red to orange colors
+        particles: [],
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.2
+    };
+}
+
+stars = Array.from({length: STAR_COUNT}, randomStar);
+
+canvas.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+});
+
+function drawAsteroid(asteroid) {
+    // Draw trail with gradient
+    const gradient = ctx.createLinearGradient(
+        asteroid.trail[0]?.x || asteroid.x,
+        asteroid.trail[0]?.y || asteroid.y,
+        asteroid.x,
+        asteroid.y
+    );
+    gradient.addColorStop(0, 'rgba(255, 50, 50, 0)');
+    gradient.addColorStop(0.5, 'rgba(255, 100, 50, 0.5)');
+    gradient.addColorStop(1, 'rgba(255, 200, 50, 0.8)');
+
+    ctx.beginPath();
+    for (let i = 0; i < asteroid.trail.length - 1; i++) {
+        const point = asteroid.trail[i];
+        const nextPoint = asteroid.trail[i + 1];
+        
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = asteroid.size * (i / asteroid.trail.length) * 1.5;
+        ctx.globalAlpha = i / asteroid.trail.length;
+        
+        ctx.moveTo(point.x, point.y);
+        ctx.lineTo(nextPoint.x, nextPoint.y);
+        ctx.stroke();
+    }
+
+    // Draw asteroid core with glow
+    ctx.save();
+    ctx.translate(asteroid.x, asteroid.y);
+    ctx.rotate(asteroid.rotation);
+    
+    // Outer glow
+    ctx.beginPath();
+    ctx.arc(0, 0, asteroid.size * 2, 0, Math.PI * 2);
+    const glowGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, asteroid.size * 2);
+    glowGradient.addColorStop(0, 'rgba(255, 200, 50, 0.8)');
+    glowGradient.addColorStop(1, 'rgba(255, 50, 50, 0)');
+    ctx.fillStyle = glowGradient;
+    ctx.fill();
+
+    // Core
+    ctx.beginPath();
+    ctx.arc(0, 0, asteroid.size, 0, Math.PI * 2);
+    ctx.fillStyle = '#ff4400';
+    ctx.fill();
+
+    // Add sparkle effect
+    if (Math.random() < 0.3) {
+        const sparkleSize = Math.random() * 2;
+        ctx.beginPath();
+        ctx.arc(
+            (Math.random() - 0.5) * asteroid.size * 2,
+            (Math.random() - 0.5) * asteroid.size * 2,
+            sparkleSize,
+            0,
+            Math.PI * 2
+        );
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+    }
+
+    ctx.restore();
+
+    // Update rotation
+    asteroid.rotation += asteroid.rotationSpeed;
+}
+
+function animateStars() {
+    ctx.clearRect(0, 0, w, h);
+    
+    // Update and draw stars
+    for (let star of stars) {
+        star.x += star.dx;
+        star.y += star.dy;
+        star.alpha = star.baseAlpha + Math.sin(performance.now() * star.twinkleSpeed + star.twinklePhase) * 0.3;
+        
+        let dx = (mouse.x - w/2) * 0.0001;
+        let dy = (mouse.y - h/2) * 0.0001;
+        star.x += dx * (star.r * 2);
+        star.y += dy * (star.r * 2);
+        
+        if (star.x < 0) star.x = w;
+        if (star.x > w) star.x = 0;
+        if (star.y < 0) star.y = h;
+        if (star.y > h) star.y = 0;
+        
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, Math.min(1, star.alpha));
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r, 0, 2 * Math.PI);
+        ctx.fillStyle = '#fff';
+        ctx.shadowColor = '#fff';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.restore();
+    }
+    
+    // Randomly spawn asteroids
+    if (Math.random() < ASTEROID_CHANCE) {
+        asteroids.push(createAsteroid());
+    }
+    
+    // Update and draw asteroids
+    for (let i = asteroids.length - 1; i >= 0; i--) {
+        const asteroid = asteroids[i];
+        
+        // Update position
+        asteroid.x += asteroid.dx;
+        asteroid.y += asteroid.dy;
+        
+        // Add current position to trail
+        asteroid.trail.push({x: asteroid.x, y: asteroid.y});
+        if (asteroid.trail.length > asteroid.maxTrailLength) {
+            asteroid.trail.shift();
+        }
+        
+        // Draw asteroid
+        drawAsteroid(asteroid);
+        
+        // Remove if out of bounds
+        if (asteroid.x < -50 || asteroid.x > w + 50 || 
+            asteroid.y < -50 || asteroid.y > h + 50) {
+            asteroids.splice(i, 1);
+        }
+    }
+    
+    requestAnimationFrame(animateStars);
+}
+animateStars();
+</script>
+
+<script>
+function setupSlider(sectionId, cardSelector) {
+    const section = document.querySelector(sectionId);
+    if (!section) return;
+    const track = section.querySelector('.slider-track');
+    const prevBtn = section.querySelector('.prev-btn');
+    const nextBtn = section.querySelector('.next-btn');
+    const cards = section.querySelectorAll(cardSelector);
+    if (!track || !cards.length) return;
+    let index = 0;
+
+    function getCardWidthWithGap() {
+        const card = cards[0];
+        const cardWidth = card.offsetWidth;
+        // Get the gap from the parent flex container
+        const gap = parseInt(window.getComputedStyle(track).gap) || 0;
+        return cardWidth + gap;
+    }
+
+    function getVisibleCards() {
+        const containerWidth = section.querySelector('.slider-outer').offsetWidth;
+        const cardWidthWithGap = getCardWidthWithGap();
+        return Math.max(1, Math.floor(containerWidth / cardWidthWithGap));
+    }
+
+    function updateSlider() {
+        const cardWidthWithGap = getCardWidthWithGap();
+        const visibleCards = getVisibleCards();
+        // Clamp index so you can't scroll past the last full set of cards
+        const maxIndex = Math.max(0, cards.length - visibleCards);
+        index = Math.min(index, maxIndex);
+        track.style.transform = `translateX(-${index * cardWidthWithGap}px)`;
+    }
+
+    nextBtn.addEventListener('click', () => {
+        const visibleCards = getVisibleCards();
+        const maxIndex = Math.max(0, cards.length - visibleCards);
+        if (index < maxIndex) {
+            index++;
+            updateSlider();
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (index > 0) {
+            index--;
+            updateSlider();
+        }
+    });
+
+    window.addEventListener('resize', updateSlider);
+    updateSlider();
+}
+
+setupSlider('#projects', '.project');
+setupSlider('#products', '.product');
+setupSlider('#researchworks', '.researchwork-list > div');
+setupSlider('#experiences', '.experience-list > div');
+</script>
+
+<style>
+body {
+  overflow-x: hidden;
+}
+.slider-outer {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+.slider-track {
+  min-width: 0;
+}
+@media only screen and (max-device-width: 600px) {
+  .mobile-only { display: block !important; }
+}
+@media only screen and (min-device-width: 601px) {
+  .mobile-only { display: none !important; }
+}
+</style>
+
+<script>
+// Project/Product .layer show on tap/click for all devices
+function enableCardLayerToggle() {
+  document.querySelectorAll('.project, .product').forEach(card => {
+    card.onclick = function(e) {
+      // Only toggle if not clicking a link
+      if (e.target.tagName.toLowerCase() === 'a') return;
+      // Remove .show-layer from all others
+      document.querySelectorAll('.project.show-layer, .product.show-layer').forEach(c => {
+        if (c !== card) c.classList.remove('show-layer');
+      });
+      card.classList.toggle('show-layer');
+    };
+  });
+}
+window.addEventListener('resize', enableCardLayerToggle);
+document.addEventListener('DOMContentLoaded', enableCardLayerToggle);
+</script>
+
+<script>
+// Hamburger menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburger = document.querySelector('nav .fas');
+  const navUl = document.querySelector('nav ul');
+  const navLinks = document.querySelectorAll('nav ul li a');
+
+  if (hamburger) {
+    hamburger.addEventListener('click', function() {
+      document.body.classList.toggle('menu-open');
+    });
+  }
+
+  // Close menu when a nav link is clicked (optional)
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      document.body.classList.remove('menu-open');
+    });
+  });
+});
+</script>
+
+<script>
+document.addEventListener('click', function(event) {
+  // Only run if menu is open
+  if (document.body.classList.contains('menu-open')) {
+    const sidemenu = document.getElementById('sidemenu');
+    const hamburger = document.querySelector('nav .fa-bars');
+    // If the click is NOT inside the sidemenu or on the hamburger, close the menu
+    if (
+      sidemenu && !sidemenu.contains(event.target) &&
+      hamburger && !hamburger.contains(event.target)
+    ) {
+      document.body.classList.remove('menu-open');
+      // Also close the sidemenu if you use inline styles
+      sidemenu.style.right = '-200px';
+    }
+  }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburger = document.querySelector('nav .fa-bars');
+  const sidemenu = document.getElementById('sidemenu');
+  const closeBtn = sidemenu.querySelector('.fa-times');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  // Open menu
+  hamburger.addEventListener('click', function(e) {
+    document.body.classList.add('menu-open');
+    sidemenu.style.right = '0';
+    overlay.style.display = 'block';
+    e.stopPropagation();
+  });
+
+  // Close menu on X button
+  closeBtn.addEventListener('click', function(e) {
+    document.body.classList.remove('menu-open');
+    sidemenu.style.right = '-200px';
+    overlay.style.display = 'none';
+    e.stopPropagation();
+  });
+
+  // Close menu on overlay click
+  overlay.addEventListener('click', function() {
+    document.body.classList.remove('menu-open');
+    sidemenu.style.right = '-200px';
+    overlay.style.display = 'none';
+  });
+
+  // Prevent clicks inside sidemenu from closing it
+  sidemenu.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  // Close menu if click outside sidemenu and overlay (as fallback)
+  document.addEventListener('click', function(e) {
+    if (document.body.classList.contains('menu-open')) {
+      if (!sidemenu.contains(e.target) && !hamburger.contains(e.target)) {
+        document.body.classList.remove('menu-open');
+        sidemenu.style.right = '-200px';
+        overlay.style.display = 'none';
+      }
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sidemenu = document.getElementById('sidemenu');
+  const overlay = document.getElementById('sidebar-overlay');
+  const navLinks = sidemenu.querySelectorAll('li a');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      document.body.classList.remove('menu-open');
+      sidemenu.style.right = '-200px';
+      if (overlay) overlay.style.display = 'none';
+      // Let the anchor's default behavior (scroll to section) happen
+    });
+  });
+});
+</script>
+
 </body>
 </html>
+

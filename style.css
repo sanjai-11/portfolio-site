@@ -7,11 +7,13 @@
 }
 html{
     scroll-behavior: smooth;
+    overscroll-behavior-y: none;
 }
 
 body{
-    background: #080808;
+    background: #090a0f;
     color: #fff;
+    overflow-x: hidden;
 }
 
 #header{
@@ -199,12 +201,62 @@ nav ul li a:hover::after{
 #projects{
     padding: 30px 0;
 }
-.project-list{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 40px;
+.project-list, .product-list, .researchwork-list, .experience-list, .slider-track {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
     margin-top: 50px;
 }
+.researchwork-list > div {
+    margin-right: 0 !important;
+}
+.slider-outer {
+    position: relative;
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    gap: 40px;
+    transition: transform 0.5s cubic-bezier(.77,0,.18,1);
+}
+.project, .product, .researchwork-list > div, .experience-list > div {
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    flex: 0 0 350px;
+}
+.slider-btn {
+    background: rgba(0,0,0,0.7);
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.slider-outer .prev-btn { left: 10px; }
+.slider-outer .next-btn { right: 10px; }
+.slider-btn:hover { background: #ff004f; color: #fff; }
+@media (max-width: 1200px) {
+    .project, .product, .researchwork-list > div, .experience-list > div {
+        width: 280px;
+        min-width: 280px;
+        max-width: 280px;
+        flex: 0 0 280px;
+    }
+}
+
 .project{
     border-radius: 10px;
     position: relative;
@@ -218,22 +270,8 @@ nav ul li a:hover::after{
 }
 
 .layer{
-    width: 100%;
-    height: 0;
-    background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
-    border-radius: 10px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    text-align: center;
-    font-size: 14px;
-    transition: height 0.5s;
+    /* Remove height: 0; */
+    /* Remove transition: height; */
 }
 .layer h3{
     font-weight: 500;
@@ -255,7 +293,7 @@ nav ul li a:hover::after{
     transform: scale(1.1);
 }
 .project:hover .layer{
-    height: 100%;
+    /* Remove height: 100%; */
 }
 .btn{
     display: block;
@@ -276,12 +314,6 @@ nav ul li a:hover::after{
 #products{
     padding: 20px 0;
 }
-.product-list{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 40px;
-    margin-top: 50px;
-}
 .product{
     border-radius: 10px;
     position: relative;
@@ -295,22 +327,8 @@ nav ul li a:hover::after{
 }
 
 .layer{
-    width: 100%;
-    height: 0;
-    background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
-    border-radius: 10px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    text-align: center;
-    font-size: 14px;
-    transition: height 0.5s;
+    /* Remove height: 0; */
+    /* Remove transition: height; */
 }
 .layer h3{
     font-weight: 500;
@@ -332,7 +350,7 @@ nav ul li a:hover::after{
     transform: scale(1.1);
 }
 .product:hover .layer{
-    height: 100%;
+    /* Remove height: 100%; */
 }
 .btn{
     display: block;
@@ -353,36 +371,84 @@ nav ul li a:hover::after{
 #researchworks{
     padding: 30px 20px;
 }
-.researchwork-list{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 40px;
+.researchwork-list {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
     margin-top: 50px;
 }
-.researchwork-list div{
+.researchwork-list > div {
     background-color: #262626;
-    padding: 25px;
-    font-size: 13px;
+    padding: 25px 25px 20px 25px;
+    font-size: 15px;
     font-weight: 300;
-    border-radius: 10px;
+    border-radius: 16px;
     transition: background 0.5s, transform 0.5s;
-}
-.researchwork-list div h2{
-    font-size: 30px;
-    font-weight: 500;
-    margin-bottom: 15px;
-}
-.researchwork-list div a{
-    text-decoration: none;
+    min-width: 350px;
+    max-width: 350px;
+    min-height: 220px;
+    max-height: none;
+    height: auto;
+    flex: 0 0 350px;
+    margin-right: 40px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
     color: #fff;
-    font-size: 12px;
-    margin-top: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.researchwork-list > div h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+}
+.researchwork-list > div p {
+    margin: 0 0 8px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+    flex: 1 1 auto;
+    font-size: 14px;
+    line-height: 1.4;
+}
+.researchwork-list > div a {
+    text-decoration: underline;
+    color: #ff004f;
+    font-size: 14px;
+    margin-top: 8px;
     display: inline-block;
+    word-break: break-all;
 }
-.researchwork-list div:hover{
+.researchwork-list > div:hover {
     background: #ff004f;
-    transform: translateY(-10px);
+    color: #fff;
+    transform: translateY(-10px) scale(1.03);
 }
+.researchwork-list > div:hover a {
+    color: #fff;
+}
+@media (max-width: 1200px) {
+    .researchwork-list > div {
+        min-width: 280px;
+        max-width: 280px;
+        min-height: 180px;
+        max-height: none;
+        height: auto;
+        flex: 0 0 280px;
+    }
+    .researchwork-list > div h2 {
+        font-size: 18px;
+    }
+}
+
 
 /*---------Contact---------*/
 .contact-left{
@@ -446,9 +512,446 @@ form .btn2{
     font-weight: 300;
     margin-top: 20px;
 }
+
 /*-----------css for small screens---------------*/
 nav .fas{
     display: none;
+}
+
+
+#msg{
+    color: #61b752;
+    margin-top: -40px;
+    display: block;
+}
+
+
+/*-----------Chatbot---------------*/
+
+#chatbot-toggle {
+  z-index: 1000;
+}
+.chat-container:not(.hidden) ~ #chatbot-toggle,
+#chatbot-toggle:has(+ .chat-container:not(.hidden)),
+#chatbot-toggle:has(~ .chat-container:not(.hidden)),
+body .chat-container:not(.hidden) ~ #chatbot-toggle,
+body.menu-open #chatbot-toggle {
+  display: none !important;
+}
+@media (max-width: 1200px) {
+  .chat-container:not(.hidden) ~ #chatbot-toggle,
+  #chatbot-toggle:has(+ .chat-container:not(.hidden)),
+  #chatbot-toggle:has(~ .chat-container:not(.hidden)),
+  body .chat-container:not(.hidden) ~ #chatbot-toggle,
+  body.menu-open #chatbot-toggle {
+    display: none !important;
+  }
+}
+
+.chatbot-toggle-img {
+    width: 48px;
+    height: 48px;
+    display: block;
+    transition: filter 0.3s, transform 0.3s;
+}
+
+@keyframes chatbot-jump {
+    0% { transform: translateY(0); }
+    20% { transform: translateY(-20px); }
+    40% { transform: translateY(0); }
+    60% { transform: translateY(-12px); }
+    80% { transform: translateY(0); }
+    100% { transform: translateY(0); }
+}
+
+#chatbot-toggle:hover .chatbot-toggle-img {
+    filter: drop-shadow(0 0 8px #ff004f) brightness(1.2);
+    transform: rotate(20deg) scale(1.1);
+    transition: all 0.3s cubic-bezier(.25,1.5,.5,1);
+}
+
+.chat-container { 
+    position: fixed; 
+    bottom: 20px;
+    right: 20px;
+    height: 600px; 
+    width: 350px; 
+    background-color: #2a2a2a; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.chat-container.hidden { 
+    display: none; 
+}
+
+/* Chat Header */
+.chat-header {
+    background: linear-gradient(to right, #ff004f, #ff3377);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Chat Body */
+.chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Suggested Questions */
+.suggested-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.question-btn {
+    background-color: #3a3a3a;
+    color: #ff004f;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.question-btn:hover {
+    background-color: #444;
+}
+
+/* Messages */
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 12px 15px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.user-message {
+    align-self: flex-end;
+    background: linear-gradient(to right, #ff004f, #ff3377);
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: #3a3a3a;
+    color: white;
+    border-bottom-left-radius: 5px;
+}
+
+/* Chat Footer */
+.chat-footer {
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    background-color: #2a2a2a;
+    border-top: 1px solid #3a3a3a;
+}
+
+.message-input {
+    flex: 1;
+    padding: 12px 15px;
+    border-radius: 25px;
+    border: none;
+    background-color: #3a3a3a;
+    color: white;
+    outline: none;
+}
+
+.message-input::placeholder {
+    color: #888;
+}
+
+.send-btn {
+    background: linear-gradient(to right, #ff004f, #ff3377);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff004f;
+    border-radius: 5px;
+}
+
+
+/* Add typing indicator CSS to style.css */
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    float: left;
+    margin: 0 1px;
+    background-color: #9E9EA1;
+    display: block;
+    border-radius: 50%;
+    opacity: 0.4;
+}
+
+.typing-indicator span:nth-of-type(1) {
+    animation: 1s blink infinite 0.3333s;
+}
+
+.typing-indicator span:nth-of-type(2) {
+    animation: 1s blink infinite 0.6666s;
+}
+
+.typing-indicator span:nth-of-type(3) {
+    animation: 1s blink infinite 0.9999s;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Chatbot toggle sparkle image */
+.chatbot-toggle-img {
+    width: 48px;
+    height: 48px;
+    display: block;
+    animation: chatbot-jump 1.2s cubic-bezier(.25,1.5,.5,1) 1;
+}
+
+@keyframes chatbot-jump {
+    0% { transform: translateY(0); }
+    20% { transform: translateY(-20px); }
+    40% { transform: translateY(0); }
+    60% { transform: translateY(-12px); }
+    80% { transform: translateY(0); }
+    100% { transform: translateY(0); }
+}
+
+.slider-track {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-top: 50px;
+    transition: transform 0.5s cubic-bezier(.77,0,.18,1);
+}
+
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    display: block;
+    pointer-events: none;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+.role-rotator {
+    display: inline-block;
+    min-width: 220px; /* Adjust based on the longest role */
+    min-height: 1em;
+}
+
+/* Hide chatbot toggle when chat is open */
+.chat-container:not(.hidden) ~ #chatbot-toggle {
+    display: none !important;
+}
+
+/* 1. Product card content fix for mobile/tablet *
+/* 3. Starfield always visible on mobile */
+#starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  min-width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  z-index: -1;
+  display: block !important;
+  pointer-events: none;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%) !important;
+}
+
+/* 4. Hamburger menu fix for mobile */
+nav .fas {
+  display: block !important;
+  font-size: 25px;
+  cursor: pointer;
+}
+nav ul {
+  display: flex !important;
+}
+nav .fa-bars,
+nav .fa-times {
+  display: none !important;
+}
+
+@media (max-width: 1200px) {
+  nav ul {
+    display: none !important;
+  }
+  nav .fa-bars,
+  nav .fa-times {
+    display: block !important;
+  }
+  body.menu-open nav ul {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
+    width: 200px !important;
+    height: 100vh !important;
+    background: #ff004f !important;
+    z-index: 3000 !important;
+    padding-top: 32px !important;
+  }
+}
+
+/* 5. Chatbot toggle always visible on mobile/tablet, hides when chat is open */
+#chatbot-toggle {
+  display: flex !important;
+}
+.chat-container:not(.hidden) ~ #chatbot-toggle {
+  display: none !important;
+}
+
+/* 1. Hide chatbot toggle and chat when hamburger menu is open */
+body.menu-open #chatbot-toggle,
+body.menu-open .chat-container {
+  display: none !important;
+}
+
+/* 2. Experience card size and spacing */
+.experience-list > div {
+  max-width: 420px;
+  margin: 0 auto 24px auto;
+  width: 90vw;
+  box-sizing: border-box;
+}
+
+/* 3. Projects/Products: Hide .layer by default, show on hover/click, improve alignment */
+.project .layer, .product .layer {
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px 18px 60px 18px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.project.show-layer .layer, .product.show-layer .layer {
+  opacity: 1;
+  pointer-events: auto;
+}
+.project .layer a, .product .layer a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0 auto;
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #ff004f;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: background 0.3s, color 0.3s;
+}
+.project .layer a:hover, .product .layer a:hover {
+  background: #ff004f;
+  color: #fff;
+}
+.project .layer h3, .product .layer h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: left;
+  width: 100%;
+}
+.project .layer p, .product .layer p {
+  font-size: 14px;
+  margin-bottom: 8px;
+  text-align: left;
+  word-break: break-word;
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+  #chatbot-toggle {
+    position: fixed;
+    right: 20px;
+    left: auto;
+    bottom: 20px;
+    z-index: 2000;
+    display: flex !important;
+  }
 }
 
 @media only screen and (max-device-width: 600px){
@@ -510,8 +1013,343 @@ nav .fas{
         font-size: 14px;
     }
 }
-#msg{
-    color: #61b752;
-    margin-top: -40px;
+
+/* --- Experience Section Responsive Grid --- */
+@media (max-width: 600px) {
+  .experience-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .experience-list > div {
+    width: 100% !important;
+    max-width: 420px !important;
+    min-width: 0 !important;
+    margin: 0 auto 16px auto !important;
+    box-sizing: border-box !important;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .experience-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px !important;
+    justify-items: center;
+  }
+  .experience-list > div {
+    width: 100% !important;
+    max-width: 420px !important;
+    min-width: 0 !important;
+    margin: 0 auto 0 auto !important;
+  }
+}
+
+/* --- Chatbot Toggle Always Visible on Mobile/Tablet (except when chat/menu open) --- */
+@media (max-width: 1200px) {
+  #chatbot-toggle {
+    display: flex !important;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2000;
+  }
+  body.menu-open #chatbot-toggle,
+  .chat-container:not(.hidden) ~ #chatbot-toggle {
+    display: none !important;
+  }
+}
+
+/* --- Nav Responsive Layout for Tablet --- */
+@media (max-width: 1200px) {
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    position: static;
+    background: none;
+    height: auto;
+    padding-top: 0;
+    transition: none;
+  }
+  nav ul li {
+    display: inline-block;
+    margin: 10px 10px;
+  }
+  nav .fas {
+    display: block !important;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 3000;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  body.menu-open nav ul {
+    right: 0 !important;
+    position: fixed;
+    top: 0;
+    background: #ff004f;
+    width: 200px;
+    height: 100vh;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 50px;
+    z-index: 2000;
+    transition: right 0.5s;
+  }
+  body.menu-open nav ul li {
     display: block;
+    margin: 25px;
+  }
+}
+
+/* --- Mobile Container and Experience Card Spacing Fix --- */
+@media (max-width: 600px) {
+  .container {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .experience-list > div,
+  .project,
+  .product,
+  .researchwork-list > div {
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 0 auto 16px auto !important;
+    box-sizing: border-box !important;
+  }
+  nav {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+  }
+  .logo {
+    width: 120px !important;
+    margin-top: 12px !important;
+    margin-bottom: 0 !important;
+    display: block;
+  }
+  nav .fas.fa-bars {
+    right: 12px !important;
+    top: 18px !important;
+    font-size: 28px !important;
+  }
+  .header-text {
+    margin-top: 36vh !important;
+    font-size: 16px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .header-text h1 {
+    font-size: 28px !important;
+    margin-top: 12px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .role-rotator {
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+    min-width: 0 !important;
+    padding-left: 0 !important;
+  }
+  .sub-title {
+    margin-bottom: 32px !important;
+  }
+}
+
+/* --- Mobile Hamburger/Side Panel Nav Fix --- */
+@media (max-width: 600px) {
+  nav {
+    position: relative;
+  }
+  nav .fas.fa-bars {
+    display: block !important;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 3001;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  nav ul {
+    position: fixed;
+    top: 0;
+    right: -220px;
+    width: 200px;
+    height: 100vh;
+    background: #ff004f;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 10px;
+    z-index: 3000;
+    transition: right 0.5s;
+    box-shadow: -2px 0 12px rgba(0,0,0,0.15);
+    display: flex;
+  }
+  nav ul li {
+    display: block;
+    margin: 25px 0 25px 24px;
+  }
+  nav ul .fas.fa-times {
+    display: block !important;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #fff;
+    z-index: 3002;
+  }
+  body.menu-open nav ul {
+    right: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .project-list,
+  .product-list,
+  .researchwork-list,
+  .experience-list {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .sub-title {
+    margin-bottom: 32px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #header {
+    padding-top: 32px !important;
+  }
+  .container {
+    padding-top: 0 !important;
+  }
+  .logo {
+    margin-top: 12px !important;
+    margin-bottom: 0 !important;
+    display: block;
+  }
+  .header-text {
+    margin-top: 28vh !important;
+  }
+}
+
+body.menu-open nav .fa-bars {
+  display: none !important;
+}
+
+@media (min-width: 1201px) {
+  .project, .product {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .project .layer, .product .layer {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100%);
+    transition: opacity 0.3s, transform 0.3s;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.6), #ff004f);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 24px 18px 60px 18px;
+    box-sizing: border-box;
+  }
+  .project:hover .layer, .product:hover .layer {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .project:hover img, .product:hover img {
+    transform: scale(1.1);
+    filter: blur(1px) brightness(0.7);
+    transition: transform 0.5s, filter 0.5s;
+  }
+  nav .fa-bars,
+  nav .fa-times {
+    display: none !important;
+  }
+  nav ul {
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    width: auto !important;
+    position: static !important;
+    background: none !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    box-shadow: none !important;
+  }
+  nav ul li {
+    margin: 0 0 0 32px !important;
+    display: inline-block !important;
+  }
+}
+
+/* Hide hamburger and X by default (all screens) */
+nav .fa-bars,
+nav .fa-times {
+  display: none !important;
+}
+
+/* Show nav links, right-aligned, on large screens */
+@media (min-width: 1201px) {
+  nav ul {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    width: auto !important;
+    position: static !important;
+    background: none !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    box-shadow: none !important;
+  }
+  nav ul li {
+    margin: 0 0 0 32px !important;
+    display: inline-block !important;
+  }
+}
+
+/* On screens 1200px and below, show hamburger/X, hide nav links */
+@media (max-width: 1200px) {
+  nav ul {
+    display: none !important;
+  }
+  nav .fa-bars,
+  nav .fa-times {
+    display: block !important;
+  }
+  body.menu-open nav ul {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
+    width: 200px !important;
+    height: 100vh !important;
+    background: #ff004f !important;
+    z-index: 3000 !important;
+    padding-top: 32px !important;
+  }
 }
