@@ -274,7 +274,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to get AI response from our backend
     async function getAIResponse(userMessage) {
         try {
-            const response = await fetch('http://localhost:3000/api/chat', {
+            // Use dynamic URL that works both locally and when hosted
+            const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                ? 'http://localhost:3000/api/chat'
+                : 'https://your-backend-url.railway.app/api/chat'; // This will be updated with actual Railway URL
+            
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
