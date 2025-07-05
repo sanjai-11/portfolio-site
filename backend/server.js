@@ -112,6 +112,17 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
+// Add a root route for health check
+app.get('/', (req, res) => {
+    res.json({ 
+        message: 'Sanjai Portfolio Backend API is running!',
+        status: 'healthy',
+        endpoints: {
+            chat: '/api/chat'
+        }
+    });
+});
+
 // Start server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
