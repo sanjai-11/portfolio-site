@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Use dynamic URL that works both locally and when hosted
             const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
                 ? 'http://localhost:3000/api/chat'
-                : 'https://your-backend-url.railway.app/api/chat'; // This will be updated with actual Railway URL
+                : 'https://your-backend-name.onrender.com/api/chat'; // Replace with your actual Render URL
             
             const response = await fetch(apiUrl, {
                 method: 'POST',
