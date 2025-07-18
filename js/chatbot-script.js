@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Gemini API Key - Securely handled
-    let GEMINI_API_KEY = localStorage.getItem('gemini_api_key') || null;
+    // Your Gemini API Key (loaded from config)
+    const GEMINI_API_KEY = API_CONFIG.GEMINI_API_KEY;
     const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
     // DOM Elements
@@ -62,21 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
     closeBtn.style.cursor = 'pointer';
     closeBtn.style.padding = '0 4px';
 
-    // Create API key settings button
-    let apiKeyBtn = document.createElement('button');
-    apiKeyBtn.className = 'api-key-btn';
-    apiKeyBtn.title = 'Configure API Key';
-    apiKeyBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path></svg>';
-    apiKeyBtn.style.background = 'none';
-    apiKeyBtn.style.border = 'none';
-    apiKeyBtn.style.cursor = 'pointer';
-    apiKeyBtn.style.marginRight = '8px';
-    apiKeyBtn.style.padding = '0';
-
     // Add buttons to header
     btnGroup.appendChild(downloadBtn);
     btnGroup.appendChild(deleteBtn);
-    btnGroup.appendChild(apiKeyBtn);
     btnGroup.appendChild(closeBtn);
     chatHeader.appendChild(btnGroup);
 
@@ -180,83 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // Function to securely prompt for API key
-    function promptForApiKey() {
-        return new Promise((resolve) => {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.7); z-index: 10000; display: flex; 
-                align-items: center; justify-content: center;
-            `;
-            
-            const content = document.createElement('div');
-            content.style.cssText = `
-                background: #fff; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center;
-            `;
-            
-            content.innerHTML = `
-                <h3 style="margin: 0 0 15px 0; color: #333;">🔐 Configure Gemini AI Key</h3>
-                <p style="margin: 0 0 20px 0; color: #666; line-height: 1.5;">
-                    To enable AI conversations, please enter your Gemini API key.<br>
-                    <small>Get your free key from <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></small>
-                </p>
-                <input type="password" id="api-key-input" placeholder="Enter your Gemini API key" 
-                       style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
-                <div>
-                    <button id="api-key-save" style="background: #ff004f; color: white; border: none; padding: 12px 24px; 
-                           border-radius: 8px; cursor: pointer; margin-right: 10px; font-weight: bold;">Save</button>
-                    <button id="api-key-cancel" style="background: #ccc; color: #333; border: none; padding: 12px 24px; 
-                           border-radius: 8px; cursor: pointer; font-weight: bold;">Skip</button>
-                </div>
-            `;
-            
-            modal.appendChild(content);
-            document.body.appendChild(modal);
-            
-            const input = modal.querySelector('#api-key-input');
-            const saveBtn = modal.querySelector('#api-key-save');
-            const cancelBtn = modal.querySelector('#api-key-cancel');
-            
-            input.focus();
-            
-            const cleanup = () => {
-                document.body.removeChild(modal);
-            };
-            
-            saveBtn.onclick = () => {
-                const key = input.value.trim();
-                if (key) {
-                    localStorage.setItem('gemini_api_key', key);
-                    GEMINI_API_KEY = key;
-                    cleanup();
-                    resolve(key);
-                } else {
-                    input.style.borderColor = '#ff004f';
-                    input.placeholder = 'Please enter a valid API key';
-                }
-            };
-            
-            cancelBtn.onclick = () => {
-                cleanup();
-                resolve(null);
-            };
-            
-            input.onkeypress = (e) => {
-                if (e.key === 'Enter') saveBtn.click();
-            };
-        });
-    }
-
     // Function to get AI response from Gemini API
     async function getAIResponse(userMessage) {
-        if (!GEMINI_API_KEY) {
-            const key = await promptForApiKey();
-            if (!key) {
-                return "Hi! I'm SK11, Sanjai's AI assistant. To enable AI conversations with advanced features, please configure your Gemini API key using the settings button (⚙️) in the chat header. For now, I can help you navigate to different sections of Sanjai's portfolio or you can contact him directly at sanjaibala11@gmail.com.";
-            }
-        }
 
         try {
             const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
@@ -337,11 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add welcome message when chat is opened
     function addWelcomeMessage() {
         if (messagesContainer.children.length === 0) {
-            if (GEMINI_API_KEY) {
-                addMessage("Hi there! I'm SK11, Sanjai Bala's AI assistant. I can help you learn about Sanjai's skills, projects, experience, and research work. What would you like to know?");
-            } else {
-                addMessage("Hi there! I'm SK11, Sanjai Bala's AI assistant. I can help you learn about Sanjai's skills, projects, experience, and research work. For enhanced AI conversations, click the ⚙️ button to configure your Gemini API key. What would you like to know?");
-            }
+            addMessage("Hi there! I'm SK11, Sanjai Bala's AI assistant. I can help you learn about Sanjai's skills, projects, experience, and research work. What would you like to know?");
         }
     }
 
@@ -365,13 +274,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     deleteBtn.addEventListener('click', function() {
         messagesContainer.innerHTML = '';
-    });
-    
-    apiKeyBtn.addEventListener('click', async function() {
-        const key = await promptForApiKey();
-        if (key) {
-            addMessage("✅ API key configured successfully! You can now enjoy full AI conversations.", false);
-        }
     });
 
     downloadBtn.addEventListener('click', function() {
@@ -401,6 +303,18 @@ document.addEventListener('DOMContentLoaded', function() {
             handleUserMessage(button.textContent);
         });
     });
+
+    // Replace send button with triangle (paper plane) SVG
+    sendButton.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="#ff004f" xmlns="http://www.w3.org/2000/svg"><polygon points="2,21 23,12 2,3 6,12 2,21"/></svg>';
+    sendButton.style.background = 'none';
+    sendButton.style.border = 'none';
+    sendButton.style.display = 'flex';
+    sendButton.style.alignItems = 'center';
+    sendButton.style.justifyContent = 'center';
+    sendButton.style.width = '45px';
+    sendButton.style.height = '45px';
+    sendButton.style.cursor = 'pointer';
+    sendButton.style.padding = '0';
 
     sendButton.addEventListener('click', () => {
         handleUserMessage(messageInput.value);
