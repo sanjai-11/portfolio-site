@@ -6,8 +6,43 @@
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <title>Sanjai's Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/chatbot-script.js"></script>
+    
+    <script>
+        // Hide/Show Navigation on Scroll
+        let lastScrollTop = 0;
+        const navElement = document.querySelector('nav');
+        
+        // Enhanced scrollbar visibility for main page
+        let mainScrollTimeout;
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down - hide navigation
+                navElement.style.transform = 'translateY(-100%)';
+            } else if (scrollTop < lastScrollTop) {
+                // Scrolling up - show navigation
+                navElement.style.transform = 'translateY(0)';
+            }
+            
+            // Show scrollbar when scrolling
+            document.documentElement.classList.add('scrolling');
+            document.body.classList.add('scrolling');
+            
+            // Hide scrollbar after scrolling stops
+            clearTimeout(mainScrollTimeout);
+            mainScrollTimeout = setTimeout(() => {
+                document.documentElement.classList.remove('scrolling');
+                document.body.classList.remove('scrolling');
+            }, 1800); // Longer timeout for portfolio page
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
     <script src="https://kit.fontawesome.com/d3d9196654.js" crossorigin="anonymous"></script>
 
 </head>
@@ -384,19 +419,19 @@ backend efficiency by 30%.</p>
 
 <div class="chat-container hidden">
     <div class="chat-header">
-        <div class="chat-title">SK11</div>
+                        <div class="chat-title">SK</div>
         <span class="close-btn" onclick="toggleChatbot()">×</span>
     </div>
     <div class="chat-body">
-        <div class="suggested-questions">
-            <button class="question-btn">What's your biggest accomplishments?</button>
-            <button class="question-btn">Convince me, you excel in AI.</button>
-            <button class="question-btn">What's your superpowers?</button>
-            <button class="question-btn">Key projects to see?</button>
-            <button class="question-btn">Why should we hire you?</button>
-        </div>
         <div class="messages">
-            <!-- Messages will be added here dynamically -->
+            <div class="suggested-questions">
+                <button class="question-btn">What's your biggest accomplishments?</button>
+                <button class="question-btn">Convince me, you excel in AI.</button>
+                <button class="question-btn">What's your superpowers?</button>
+                <button class="question-btn">Key projects to see?</button>
+                <button class="question-btn">Why should we hire you?</button>
+            </div>
+            <!-- Chat messages will be added here dynamically -->
         </div>
     </div>
     <div class="chat-footer">

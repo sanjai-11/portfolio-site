@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Your Gemini API Key (loaded from config)
-    const GEMINI_API_KEY = API_CONFIG.GEMINI_API_KEY;
-    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+    const GEMINI_API_KEY = (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) 
+        ? API_CONFIG.GEMINI_API_KEY 
+        : 'AIzaSyBFw3iLeokV_PO82IoMIO7-9MpU2-ulH74';
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
 
     // DOM Elements
     const chatBody = document.querySelector('.chat-body');
@@ -81,13 +83,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Extract skills
         const skills = Array.from(document.querySelectorAll('#skills ul li span')).map(skill => skill.textContent);
         
-        // Extract experience
+        // Extract experience with specific achievements per company
         const experiences = Array.from(document.querySelectorAll('#experiences .experience-list > div')).map(exp => {
             const title = exp.querySelector('h3')?.textContent || '';
             const company = exp.querySelector('h4')?.textContent || '';
             const date = exp.querySelector('p:first-of-type')?.textContent || '';
             const description = Array.from(exp.querySelectorAll('p[style*="text-align: justify"]')).map(p => p.textContent.trim()).join(' ');
-            return `${title} at ${company} (${date}): ${description}`;
+            
+            // Map specific achievements to companies
+            let achievements = '';
+            if (company.includes('Systech Solutions')) {
+                achievements = ' KEY ACHIEVEMENTS: 40% decision-making improvement, 35% data processing reduction, 25% customer segmentation accuracy boost, 30% operational efficiency increase';
+            } else if (company.includes('8Queens')) {
+                achievements = ' KEY ACHIEVEMENTS: 15% sales performance improvement, diabetes risk prediction model deployment';
+            } else if (company.includes('Indiana University')) {
+                achievements = ' KEY ACHIEVEMENTS: 157,000+ BIPOC nonprofit grants analysis, network analysis for funding patterns';
+            }
+            
+            return `${title} at ${company} (${date}): ${description}${achievements}`;
         });
         
         // Extract projects
@@ -136,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const data = extractPortfolioData();
         
         return `
-        You are SK11, an AI assistant representing ${data.name} (Sanjaikumar Balasubramaniyan, goes by Sanjai Bala). Here's current information about Sanjai:
+        You are SK, an AI assistant representing ${data.name} (Sanjaikumar Balasubramaniyan, goes by Sanjai Bala). Here's current information about Sanjai:
 
         ABOUT:
         ${data.about}
@@ -168,10 +181,70 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
+    // Test API connection
+    async function testAPIConnection() {
+        
+        try {
+            const testResponse = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: "Hello, just testing the connection. Reply with 'Connection successful'"
+                        }]
+                    }]
+                })
+            });
+            
+            if (testResponse.ok) {
+                const data = await testResponse.json();
+
+            } else {
+                const errorText = await testResponse.text();
+                console.error('❌ API Connection Test: FAILED');
+                console.error('Status:', testResponse.status, testResponse.statusText);
+                console.error('Error:', errorText);
+            }
+        } catch (error) {
+            console.error('❌ API Connection Test: NETWORK ERROR');
+            console.error('Error:', error);
+        }
+    }
+
+    // Function to build conversation context
+    function buildConversationContext() {
+        const messages = Array.from(messagesContainer.querySelectorAll('.message'));
+        let conversationHistory = '';
+        
+        messages.forEach(msg => {
+            const isUser = msg.classList.contains('user-message');
+            const content = msg.textContent || msg.innerText;
+            if (isUser) {
+                conversationHistory += `Human: ${content}\n`;
+            } else {
+                conversationHistory += `SK: ${content}\n`;
+            }
+        });
+        
+        return conversationHistory;
+    }
+
     // Function to get AI response from Gemini API
     async function getAIResponse(userMessage) {
+        // Ensure API key is available
+        if (!GEMINI_API_KEY || GEMINI_API_KEY === 'undefined') {
+            console.error('Gemini API key is not properly configured');
+            return "I apologize, but there's an issue with the AI configuration. Please check the API key setup. You can contact Sanjai directly at sanjaibala11@gmail.com.";
+        }
 
         try {
+            const conversationHistory = buildConversationContext();
+            const contextPrompt = conversationHistory ? 
+                `Previous conversation:\n${conversationHistory}\n\n` : '';
+
             const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
                 method: 'POST',
                 headers: {
@@ -180,23 +253,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
-                            text: `${buildPortfolioContext()}\n\nUser question: ${userMessage}\n\nRespond as SK11, Sanjai's AI assistant. Keep it conversational and helpful.`
+                            text: `${buildPortfolioContext()}\n\n${contextPrompt}Current user question: ${userMessage}\n\nRespond as SK, Sanjai's AI assistant speaking ON BEHALF of Sanjai. CRITICAL RULES:
+- Speak as "I", "my", "me", "myself" - NOT "he", "him", "his", "Sanjai"
+- You ARE Sanjai responding directly to the user
+- Remember the conversation context and answer follow-up questions intelligently
+- If user asks "where" or "when" about previous achievements, refer to specific companies/dates
+- Keep responses 2-3 SHORT sentences maximum
+- Use bullet points (•) ONLY when listing multiple items/skills
+- For single answers or explanations, use plain conversational text
+- Be POLITE, PROFESSIONAL, INTERESTING, and VIBRANT
+- Include specific numbers/achievements naturally
+- Sound IMPRESSIVE but HUMBLE and APPROACHABLE
+- Avoid overly boastful language like "rockstar" or "wizard"`
                         }]
                     }]
                 })
             });
 
             if (!response.ok) {
-                throw new Error('Failed to get response from AI');
+                const errorText = await response.text();
+                console.error('API Error Response:', errorText);
+                console.error('Status:', response.status, response.statusText);
+                throw new Error(`API Error: ${response.status} - ${errorText}`);
             }
 
             const data = await response.json();
+
             return data.candidates[0].content.parts[0].text;
         } catch (error) {
             console.error('Error fetching AI response:', error);
-            return "I apologize, but I'm having trouble processing your request right now. Please try again later or contact Sanjai directly at sanjaibala11@gmail.com.";
+            console.error('API Key (first 10 chars):', GEMINI_API_KEY.substring(0, 10));
+            console.error('API URL:', GEMINI_API_URL);
+            
+            // More specific error message based on the error type
+            if (error.message.includes('Failed to fetch')) {
+                return "I'm having trouble connecting to the AI service. This might be a network issue. Please check your internet connection and try again.";
+            } else if (error.message.includes('Failed to get response')) {
+                return "The AI service returned an error. This might be an API key issue. Please contact Sanjai at sanjaibala11@gmail.com.";
+            } else {
+                return "I apologize, but I'm having trouble processing your request right now. Please try again later or contact Sanjai directly at sanjaibala11@gmail.com.";
+            }
         }
     }
+
+    // Create and add a dummy div for auto-scroll at the end of messages
+    const scrollMarker = document.createElement('div');
+    scrollMarker.id = 'scroll-marker';
+    scrollMarker.style.height = '1px';
+    scrollMarker.style.width = '1px';
+    scrollMarker.style.opacity = '0';
+    messagesContainer.appendChild(scrollMarker);
 
     // Function to add a message to the chat
     function addMessage(text, isUser = false) {
@@ -216,11 +322,73 @@ document.addEventListener('DOMContentLoaded', function() {
                 </a>
             `;
         } else {
-            messageDiv.textContent = text;
+            // Format the message with better line breaks and styling
+            const formattedText = text
+                .replace(/\n/g, '<br>')
+                .replace(/• /g, '<br>• ')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');
+            messageDiv.innerHTML = formattedText;
         }
         
-        messagesContainer.appendChild(messageDiv);
-        chatBody.scrollTop = chatBody.scrollHeight;
+        // Insert message before the scroll marker
+        messagesContainer.insertBefore(messageDiv, scrollMarker);
+        
+        // Scroll to show new message using scrollIntoView
+        scrollToBottom();
+    }
+
+    // Questions are always visible and scroll naturally with content - no hide function needed
+
+    // Helper function for smooth and reliable scrolling to bottom
+    function scrollToBottom() {
+        const scrollMarker = document.getElementById('scroll-marker');
+        if (!scrollMarker) {
+            console.log('❌ ScrollToBottom: Scroll marker not found');
+            return;
+        }
+        
+        console.log('🔄 ScrollToBottom: Starting auto-scroll...');
+        
+        // Method 1: Immediate scroll (no animation) for instant feedback
+        scrollMarker.scrollIntoView({ 
+            behavior: 'auto', 
+            block: 'end' 
+        });
+        
+        // Method 2: Smooth scroll for better UX
+        setTimeout(() => {
+            if (scrollMarker) {
+                scrollMarker.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'end' 
+                });
+            }
+        }, 50);
+        
+        // Method 3: Fallback with traditional scroll
+        if (chatBody) {
+            setTimeout(() => {
+                chatBody.scrollTop = chatBody.scrollHeight;
+                console.log(`📊 ScrollTop set to: ${chatBody.scrollTop}, ScrollHeight: ${chatBody.scrollHeight}`);
+            }, 100);
+        }
+        
+        // Method 4: Final fallback for really stubborn cases
+        setTimeout(() => {
+            if (scrollMarker) {
+                scrollMarker.scrollIntoView({ 
+                    behavior: 'auto', 
+                    block: 'end' 
+                });
+                
+                // Force traditional scroll as last resort
+                if (chatBody) {
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    console.log('✅ ScrollToBottom: Final scroll completed');
+                }
+            }
+        }, 300);
     }
 
     // Function to handle user message
@@ -229,37 +397,62 @@ document.addEventListener('DOMContentLoaded', function() {
         
         addMessage(text, true);
         messageInput.value = '';
+        
+        // Scroll to show user message
+        scrollToBottom();
 
         // Show typing indicator
         const typingIndicator = document.createElement('div');
         typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
         typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-        messagesContainer.appendChild(typingIndicator);
-        chatBody.scrollTop = chatBody.scrollHeight;
+        
+        // Insert typing indicator before scroll marker
+        const scrollMarker = document.getElementById('scroll-marker');
+        if (scrollMarker) {
+            messagesContainer.insertBefore(typingIndicator, scrollMarker);
+        } else {
+            messagesContainer.appendChild(typingIndicator);
+        }
+        
+        // Scroll to show typing indicator
+        scrollToBottom();
 
         try {
             const botResponse = await getAIResponse(text);
             messagesContainer.removeChild(typingIndicator);
             addMessage(botResponse);
+            
+            // Scroll to show bot response
+            scrollToBottom();
         } catch (error) {
             messagesContainer.removeChild(typingIndicator);
             addMessage("I apologize, but I'm having trouble processing your request right now. Please try again later or contact Sanjai directly at sanjaibala11@gmail.com.");
+            
+            // Scroll to show error message
+            scrollToBottom();
         }
     }
 
     // Add welcome message when chat is opened
     function addWelcomeMessage() {
-        if (messagesContainer.children.length === 0) {
-            addMessage("Hi there! I'm SK11, Sanjai Bala's AI assistant. I can help you learn about Sanjai's skills, projects, experience, and research work. What would you like to know?");
+        // Check if there are any actual message elements (not just suggested-questions)
+        const actualMessages = messagesContainer.querySelectorAll('.message');
+        if (actualMessages.length === 0) {
+            addMessage("Hi there! I'm SK, your AI assistant representing Sanjai Bala. I'll answer on behalf of Sanjai about his skills, projects, experience, and research work. What would you like to know?");
         }
     }
+
+    // Suggested questions are now handled entirely by CSS
 
     // Toggle chatbot visibility
     function toggleChatbot() {
         if (chatContainer.classList.contains('hidden')) {
             chatContainer.classList.remove('hidden');
             chatbotToggle.style.display = 'none';
-            addWelcomeMessage();
+            // Add welcome message with slight delay to ensure DOM is ready
+            setTimeout(() => {
+                addWelcomeMessage();
+            }, 50);
         } else {
             chatContainer.classList.add('hidden');
             chatbotToggle.style.display = 'block';
@@ -273,34 +466,140 @@ document.addEventListener('DOMContentLoaded', function() {
     closeBtn.addEventListener('click', toggleChatbot);
     
     deleteBtn.addEventListener('click', function() {
-        messagesContainer.innerHTML = '';
+        // Clear all messages but restore the original structure with questions
+        messagesContainer.innerHTML = `
+            <div class="suggested-questions">
+                <button class="question-btn">What's your biggest accomplishments?</button>
+                <button class="question-btn">Convince me, you excel in AI.</button>
+                <button class="question-btn">What's your superpowers?</button>
+                <button class="question-btn">Key projects to see?</button>
+                <button class="question-btn">Why should we hire you?</button>
+            </div>
+        `;
+        
+        // Recreate the scroll marker
+        const newScrollMarker = document.createElement('div');
+        newScrollMarker.id = 'scroll-marker';
+        newScrollMarker.style.height = '1px';
+        newScrollMarker.style.width = '1px';
+        newScrollMarker.style.opacity = '0';
+        messagesContainer.appendChild(newScrollMarker);
+        
+        // Re-attach event listeners to the new question buttons with enhanced scroll
+        const newQuestionButtons = messagesContainer.querySelectorAll('.question-btn');
+        newQuestionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Immediately scroll down when question is clicked
+                scrollToBottom();
+                
+                // Handle the message with additional scroll after it's added
+                handleUserMessage(button.textContent);
+                
+                // Extra scroll to ensure visibility
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 100);
+            });
+        });
+        
+        // Add welcome message back with slight delay
+        setTimeout(() => {
+            addWelcomeMessage();
+        }, 50);
     });
 
     downloadBtn.addEventListener('click', function() {
-        const messages = Array.from(messagesContainer.querySelectorAll('.message'));
-        let transcript = 'SK11 Chat Transcript\n\n';
-        
-        messages.forEach(msg => {
-            const isUser = msg.classList.contains('user-message');
-            transcript += `${isUser ? 'You' : 'SK11'}: ${msg.textContent}\n\n`;
-        });
-        
-        transcript += `Generated on ${new Date().toLocaleString()}`;
-        
-        const blob = new Blob([transcript], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'SK11_chat_transcript.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        try {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add header
+            doc.setFontSize(20);
+            doc.setFont("helvetica", "bold");
+            doc.text('SK Chat Transcript', 20, 20);
+            
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+            doc.text(`Generated on: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 20, 30);
+            
+            // Add messages
+            const messages = Array.from(messagesContainer.querySelectorAll('.message'));
+            let yPosition = 50;
+            const pageHeight = 280;
+            const marginLeft = 20;
+            const marginRight = 190;
+            
+            messages.forEach(msg => {
+                const isUser = msg.classList.contains('user-message');
+                const sender = isUser ? 'You' : 'SK';
+                const text = msg.textContent.trim();
+                
+                // Check if we need a new page
+                if (yPosition > pageHeight) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                
+                // Add sender name
+                doc.setFont("helvetica", "bold");
+                doc.text(`${sender}:`, marginLeft, yPosition);
+                yPosition += 7;
+                
+                // Add message text with word wrapping
+                doc.setFont("helvetica", "normal");
+                const textLines = doc.splitTextToSize(text, marginRight - marginLeft);
+                
+                textLines.forEach(line => {
+                    if (yPosition > pageHeight) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                    doc.text(line, marginLeft + 5, yPosition);
+                    yPosition += 5;
+                });
+                
+                yPosition += 10; // Space between messages
+            });
+            
+            // Save PDF
+            doc.save('SK_chat_transcript.pdf');
+        } catch (error) {
+            console.error('PDF generation failed:', error);
+            // Fallback to TXT if PDF fails
+            const messages = Array.from(messagesContainer.querySelectorAll('.message'));
+            let transcript = 'SK Chat Transcript\n\n';
+            
+            messages.forEach(msg => {
+                const isUser = msg.classList.contains('user-message');
+                transcript += `${isUser ? 'You' : 'SK'}: ${msg.textContent}\n\n`;
+            });
+            
+            transcript += `Generated on ${new Date().toLocaleString()}`;
+            
+            const blob = new Blob([transcript], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'SK_chat_transcript.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     });
 
     questionButtons.forEach(button => {
         button.addEventListener('click', () => {
+            // Immediately scroll down when question is clicked
+            scrollToBottom();
+            
+            // Handle the message with additional scroll after it's added
             handleUserMessage(button.textContent);
+            
+            // Extra scroll to ensure visibility
+            setTimeout(() => {
+                scrollToBottom();
+            }, 100);
         });
     });
 
@@ -317,15 +616,100 @@ document.addEventListener('DOMContentLoaded', function() {
     sendButton.style.padding = '0';
 
     sendButton.addEventListener('click', () => {
-        handleUserMessage(messageInput.value);
+        const message = messageInput.value.trim();
+        if (message) {
+            // Immediately scroll down when send button is clicked
+            scrollToBottom();
+            handleUserMessage(message);
+            // Extra scroll to ensure visibility
+            setTimeout(() => {
+                scrollToBottom();
+            }, 100);
+        }
     });
 
     messageInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            handleUserMessage(messageInput.value);
+            e.preventDefault(); // Prevent form submission
+            const message = messageInput.value.trim();
+            if (message) {
+                // Immediately scroll down when Enter is pressed
+                scrollToBottom();
+                handleUserMessage(message);
+                // Extra scroll to ensure visibility
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 100);
+            }
         }
     });
 
+    // Also handle Enter key on keydown for better responsiveness
+    messageInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const message = messageInput.value.trim();
+            if (message) {
+                // Immediately scroll down when Enter is pressed
+                scrollToBottom();
+                handleUserMessage(message);
+                // Extra scroll to ensure visibility
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 100);
+            }
+        }
+    });
+
+    // Debug: Check API key configuration
+    console.log('Chatbot initialized');
+    console.log('API Key available:', !!GEMINI_API_KEY);
+    console.log('API Key first 10 chars:', GEMINI_API_KEY ? GEMINI_API_KEY.substring(0, 10) : 'NOT FOUND');
+    console.log('API URL:', GEMINI_API_URL);
+    
+    // Test API connection on startup
+    testAPIConnection();
+
+    // Add CSS to prevent horizontal overflow and improve spacing
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .message { 
+            word-break: break-word !important; 
+            white-space: pre-wrap !important; 
+            overflow-wrap: break-word !important;
+            max-width: 100% !important;
+            hyphens: auto !important;
+        }
+        .messages {
+            overflow-x: hidden !important;
+            word-wrap: break-word !important;
+        }
+        .chat-body {
+            overflow-x: hidden !important;
+        }
+    `;
+    document.head.appendChild(style);
+
     // Initialize
     chatbotToggle.style.display = 'block';
+    
+    // Add welcome message on page load if chatbot is opened
+    if (!chatContainer.classList.contains('hidden')) {
+        addWelcomeMessage();
+    }
+    
+    // Enhanced scrollbar visibility for chatbot
+    let chatScrollTimeout;
+    if (chatBody) {
+        chatBody.addEventListener('scroll', () => {
+            // Show scrollbar when scrolling
+            chatBody.classList.add('scrolling');
+            
+            // Hide scrollbar after scrolling stops
+            clearTimeout(chatScrollTimeout);
+            chatScrollTimeout = setTimeout(() => {
+                chatBody.classList.remove('scrolling');
+            }, 1200); // Slightly longer timeout for better UX
+        });
+    }
 }); 
