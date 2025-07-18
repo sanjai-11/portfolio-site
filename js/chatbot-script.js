@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Your Gemini API Key - Replace with your actual API key
-    const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // Replace this with your actual Gemini API key
+    const GEMINI_API_KEY = 'AIzaSyBFw3iLeokV_PO82IoMIO7-9MpU2-ulH74'; // Replace this with your actual Gemini API key
     const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
     // DOM Elements
@@ -68,48 +68,105 @@ document.addEventListener('DOMContentLoaded', function() {
     btnGroup.appendChild(closeBtn);
     chatHeader.appendChild(btnGroup);
 
-    // Portfolio context for AI
-    const portfolioContext = `
-    You are SK11, an AI assistant representing Sanjaikumar Balasubramaniyan. Here's key information about Sanjai:
+    // Function to dynamically extract portfolio information from the HTML
+    function extractPortfolioData() {
+        // Extract personal info
+        const name = document.querySelector('.header-text h1 span')?.textContent || 'Sanjaikumar';
+        const email = document.querySelector('p i.fa-envelope')?.parentElement?.textContent?.replace('✉', '').trim() || 'sanjaibala11@gmail.com';
+        const phone = document.querySelector('p i.fa-phone-square-alt')?.parentElement?.textContent?.trim() || '+1 (812) 671-6737';
+        
+        // Extract about section
+        const aboutText = Array.from(document.querySelectorAll('#about p')).map(p => p.textContent.trim()).join(' ');
+        
+        // Extract skills
+        const skills = Array.from(document.querySelectorAll('#skills ul li span')).map(skill => skill.textContent);
+        
+        // Extract experience
+        const experiences = Array.from(document.querySelectorAll('#experiences .experience-list > div')).map(exp => {
+            const title = exp.querySelector('h3')?.textContent || '';
+            const company = exp.querySelector('h4')?.textContent || '';
+            const date = exp.querySelector('p:first-of-type')?.textContent || '';
+            const description = Array.from(exp.querySelectorAll('p[style*="text-align: justify"]')).map(p => p.textContent.trim()).join(' ');
+            return `${title} at ${company} (${date}): ${description}`;
+        });
+        
+        // Extract projects
+        const projects = Array.from(document.querySelectorAll('#projects .project')).map(proj => {
+            const title = proj.querySelector('h3')?.textContent || '';
+            const description = Array.from(proj.querySelectorAll('p')).map(p => p.textContent.trim()).join(' ');
+            const link = proj.querySelector('a')?.href || '';
+            return `${title}: ${description}${link ? ` (Link: ${link})` : ''}`;
+        });
+        
+        // Extract products
+        const products = Array.from(document.querySelectorAll('#products .product')).map(prod => {
+            const title = prod.querySelector('h2, h3')?.textContent || '';
+            const description = Array.from(prod.querySelectorAll('p')).map(p => p.textContent.trim()).join(' ');
+            const link = prod.querySelector('a')?.href || '';
+            return `${title}: ${description}${link ? ` (Link: ${link})` : ''}`;
+        });
+        
+        // Extract research
+        const research = Array.from(document.querySelectorAll('#researchworks .researchwork-list > div')).map(res => {
+            const title = res.querySelector('h2')?.textContent || '';
+            const description = Array.from(res.querySelectorAll('p')).map(p => p.textContent.trim()).join(' ');
+            const link = res.querySelector('a')?.href || '';
+            return `${title}: ${description}${link ? ` (Link: ${link})` : ''}`;
+        });
+        
+        // Extract education
+        const education = Array.from(document.querySelectorAll('#education ul li')).map(edu => edu.textContent.trim());
+        
+        return {
+            name,
+            email,
+            phone,
+            about: aboutText,
+            skills,
+            experiences,
+            projects,
+            products,
+            research,
+            education
+        };
+    }
+    
+    // Function to build dynamic portfolio context
+    function buildPortfolioContext() {
+        const data = extractPortfolioData();
+        
+        return `
+        You are SK11, an AI assistant representing ${data.name} (Sanjaikumar Balasubramaniyan, goes by Sanjai Bala). Here's current information about Sanjai:
 
-    PERSONAL INFO:
-    - Name: Sanjaikumar Balasubramaniyan (goes by Sanjai Bala)
-    - Current Role: Research Data Scientist at Indiana University Bloomington (Jan 2025 - Present)
-    - Education: Master's in Data Science at Indiana University Bloomington (Aug 2024 - May 2026)
-    - Previous Education: Bachelor's in AI & Data Science from SRMIST University (Oct 2020 - Apr 2024)
-    - Contact: sanjaibala11@gmail.com, +1 (812) 671-6737
-    - Location: Bloomington, Indiana
+        ABOUT:
+        ${data.about}
 
-    SKILLS:
-    - Machine Learning, Statistics, Data Analytics, Generative AI, NLP, Deep Learning
-    - Data Cleaning, Data Wrangling, ETL Pipelines
-    - Cloud: AWS (S3, EC2, SageMaker), GCP (BigQuery, DataFlow), Apache Spark
-    - Programming: Python, SQL, R
+        CONTACT:
+        - Email: ${data.email}
+        - Phone: ${data.phone}
 
-    KEY PROJECTS:
-    1. AI Agent for Operating Backend System - Built with Gemini-pro LLM, 50% efficiency improvement
-    2. CardioCare - Heart disease management system with ML predictions (Live: https://cardiocare-40xa.onrender.com/)
-    3. Air Calligraphy using Computer Vision - Enables air-writing for individuals without limbs
-    4. NYC Crime Analytics - Interactive dashboard using Preswald
-    5. Monument Intelligence Dashboard - AI-powered exploration of global monuments
-    6. BlinkIt Sales Analytics - Power BI dashboard for sales insights
+        SKILLS:
+        ${data.skills.join(', ')}
 
-    PRODUCTS:
-    1. Jobha Naturals Web Application (https://www.jobhanaturals.com/) - E-commerce platform he led
-    2. Box of Wellness (https://box-of-wellness.onrender.com/) - Nutrition catalog for gym-goers
+        EDUCATION:
+        ${data.education.join('\n')}
 
-    RESEARCH:
-    - Published "Advanced ANPR for Vehicle Management" (96% accuracy)
-    - "AI-Powered Banknote Identification System for Visually Impaired"
-    - Currently researching funding networks for BIPOC nonprofits
+        EXPERIENCE:
+        ${data.experiences.map((exp, i) => `${i + 1}. ${exp}`).join('\n')}
 
-    EXPERIENCE:
-    - Research Data Scientist, Indiana University (Current)
-    - Data Scientist Intern, Systech Solutions Inc (Apr-July 2024)
-    - Data Analyst Intern, 8Queens Software Technologies (May 2022-Jan 2023)
+        PROJECTS:
+        ${data.projects.map((proj, i) => `${i + 1}. ${proj}`).join('\n')}
 
-    Keep responses conversational, helpful, and focused on Sanjai's achievements. Always be enthusiastic about his work!
-    `;
+        PRODUCTS:
+        ${data.products.map((prod, i) => `${i + 1}. ${prod}`).join('\n')}
+
+        RESEARCH:
+        ${data.research.map((res, i) => `${i + 1}. ${res}`).join('\n')}
+
+        Keep responses conversational, helpful, and focused on Sanjai's achievements. Always be enthusiastic about his work!
+        Be specific when discussing his projects, experience, and research. If asked about links or wanting to see something, direct them to the relevant section of the portfolio or provide the actual links mentioned above.
+        `;
+    }
 
     // Function to get AI response from Gemini API
     async function getAIResponse(userMessage) {
@@ -126,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
-                            text: `${portfolioContext}\n\nUser question: ${userMessage}\n\nRespond as SK11, Sanjai's AI assistant. Keep it conversational and helpful.`
+                            text: `${buildPortfolioContext()}\n\nUser question: ${userMessage}\n\nRespond as SK11, Sanjai's AI assistant. Keep it conversational and helpful.`
                         }]
                     }]
                 })
