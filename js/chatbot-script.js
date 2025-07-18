@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Your Gemini API Key - Replace with your actual API key
+    const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // Replace this with your actual Gemini API key
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+
     // DOM Elements
     const chatBody = document.querySelector('.chat-body');
     const messagesContainer = document.querySelector('.messages');
@@ -9,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatbotToggle = document.getElementById('chatbot-toggle');
     const chatHeader = document.querySelector('.chat-header');
 
-    // Remove any existing close/delete buttons in header (if present)
+    // Remove any existing close/delete buttons in header
     const oldCloseBtn = chatHeader.querySelector('.close-btn');
     if (oldCloseBtn) oldCloseBtn.remove();
     const oldDeleteBtn = chatHeader.querySelector('.delete-btn');
@@ -17,14 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const oldBtnGroup = chatHeader.querySelector('.header-btn-group');
     if (oldBtnGroup) oldBtnGroup.remove();
 
-    // Create a flex container for right-side header buttons
+    // Create header button group
     let btnGroup = document.createElement('div');
     btnGroup.className = 'header-btn-group';
     btnGroup.style.display = 'flex';
     btnGroup.style.alignItems = 'center';
     btnGroup.style.marginLeft = 'auto';
 
-    // Create download button (icon-only, white icon)
+    // Create download button
     let downloadBtn = document.createElement('button');
     downloadBtn.className = 'download-btn';
     downloadBtn.title = 'Download chat transcript';
@@ -34,10 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
     downloadBtn.style.cursor = 'pointer';
     downloadBtn.style.marginRight = '8px';
     downloadBtn.style.padding = '0';
-    downloadBtn.style.display = 'flex';
-    downloadBtn.style.alignItems = 'center';
 
-    // Create delete button (icon-only, no box, white icon)
+    // Create delete button
     let deleteBtn = document.createElement('button');
     deleteBtn.className = 'delete-btn';
     deleteBtn.title = 'Clear chat';
@@ -47,45 +49,99 @@ document.addEventListener('DOMContentLoaded', function() {
     deleteBtn.style.cursor = 'pointer';
     deleteBtn.style.marginRight = '8px';
     deleteBtn.style.padding = '0';
-    deleteBtn.style.display = 'flex';
-    deleteBtn.style.alignItems = 'center';
 
-    // Create minimize (close) button
-    let minimizeBtn = document.createElement('button');
-    minimizeBtn.className = 'close-btn';
-    minimizeBtn.title = 'Minimize';
-    minimizeBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-    minimizeBtn.style.background = 'none';
-    minimizeBtn.style.border = 'none';
-    minimizeBtn.style.color = '#fff';
-    minimizeBtn.style.fontSize = '20px';
-    minimizeBtn.style.cursor = 'pointer';
-    minimizeBtn.style.padding = '0 4px';
-    minimizeBtn.style.display = 'flex';
-    minimizeBtn.style.alignItems = 'center';
+    // Create close button
+    let closeBtn = document.createElement('button');
+    closeBtn.className = 'close-btn';
+    closeBtn.title = 'Close chat';
+    closeBtn.innerHTML = '×';
+    closeBtn.style.background = 'none';
+    closeBtn.style.border = 'none';
+    closeBtn.style.color = '#fff';
+    closeBtn.style.fontSize = '24px';
+    closeBtn.style.cursor = 'pointer';
+    closeBtn.style.padding = '0 4px';
 
-    // Add download, delete and minimize buttons to the group (download left, delete left, minimize right)
+    // Add buttons to header
     btnGroup.appendChild(downloadBtn);
     btnGroup.appendChild(deleteBtn);
-    btnGroup.appendChild(minimizeBtn);
+    btnGroup.appendChild(closeBtn);
     chatHeader.appendChild(btnGroup);
 
-    // Insert download button to the left of deleteBtn
-    btnGroup.insertBefore(downloadBtn, deleteBtn);
+    // Portfolio context for AI
+    const portfolioContext = `
+    You are SK11, an AI assistant representing Sanjaikumar Balasubramaniyan. Here's key information about Sanjai:
 
-    // Minimize button event
-    minimizeBtn.addEventListener('click', function() {
-        toggleChatbot();
-    });
+    PERSONAL INFO:
+    - Name: Sanjaikumar Balasubramaniyan (goes by Sanjai Bala)
+    - Current Role: Research Data Scientist at Indiana University Bloomington (Jan 2025 - Present)
+    - Education: Master's in Data Science at Indiana University Bloomington (Aug 2024 - May 2026)
+    - Previous Education: Bachelor's in AI & Data Science from SRMIST University (Oct 2020 - Apr 2024)
+    - Contact: sanjaibala11@gmail.com, +1 (812) 671-6737
+    - Location: Bloomington, Indiana
 
-    // Helper: get portfolio/contact links from DOM
-    function getPortfolioLinks() {
-        const github = document.querySelector('.social-icons a[href*="github"]')?.href || 'https://github.com/sanjai-11';
-        const linkedin = document.querySelector('.social-icons a[href*="linkedin"]')?.href || 'https://www.linkedin.com/in/sanjai-bala/';
-        const leetcode = 'https://leetcode.com/u/sanjai-11/';
-        const instagram = document.querySelector('.social-icons a[href*="instagram"]')?.href || 'https://www.instagram.com/bksanjai7';
-        const resume = '/portfolio_pictures/Sanjaikumar_Balasubramaniyan_Resume.pdf';
-        return { github, linkedin, leetcode, instagram, resume };
+    SKILLS:
+    - Machine Learning, Statistics, Data Analytics, Generative AI, NLP, Deep Learning
+    - Data Cleaning, Data Wrangling, ETL Pipelines
+    - Cloud: AWS (S3, EC2, SageMaker), GCP (BigQuery, DataFlow), Apache Spark
+    - Programming: Python, SQL, R
+
+    KEY PROJECTS:
+    1. AI Agent for Operating Backend System - Built with Gemini-pro LLM, 50% efficiency improvement
+    2. CardioCare - Heart disease management system with ML predictions (Live: https://cardiocare-40xa.onrender.com/)
+    3. Air Calligraphy using Computer Vision - Enables air-writing for individuals without limbs
+    4. NYC Crime Analytics - Interactive dashboard using Preswald
+    5. Monument Intelligence Dashboard - AI-powered exploration of global monuments
+    6. BlinkIt Sales Analytics - Power BI dashboard for sales insights
+
+    PRODUCTS:
+    1. Jobha Naturals Web Application (https://www.jobhanaturals.com/) - E-commerce platform he led
+    2. Box of Wellness (https://box-of-wellness.onrender.com/) - Nutrition catalog for gym-goers
+
+    RESEARCH:
+    - Published "Advanced ANPR for Vehicle Management" (96% accuracy)
+    - "AI-Powered Banknote Identification System for Visually Impaired"
+    - Currently researching funding networks for BIPOC nonprofits
+
+    EXPERIENCE:
+    - Research Data Scientist, Indiana University (Current)
+    - Data Scientist Intern, Systech Solutions Inc (Apr-July 2024)
+    - Data Analyst Intern, 8Queens Software Technologies (May 2022-Jan 2023)
+
+    Keep responses conversational, helpful, and focused on Sanjai's achievements. Always be enthusiastic about his work!
+    `;
+
+    // Function to get AI response from Gemini API
+    async function getAIResponse(userMessage) {
+        if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
+            return "Hi! I'm SK11, Sanjai's AI assistant. To enable AI conversations, please add your Gemini API key to the chatbot script. For now, I can help you navigate to different sections of Sanjai's portfolio or you can contact him directly at sanjaibala11@gmail.com.";
+        }
+
+        try {
+            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `${portfolioContext}\n\nUser question: ${userMessage}\n\nRespond as SK11, Sanjai's AI assistant. Keep it conversational and helpful.`
+                        }]
+                    }]
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to get response from AI');
+            }
+
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        } catch (error) {
+            console.error('Error fetching AI response:', error);
+            return "I apologize, but I'm having trouble processing your request right now. Please try again later or contact Sanjai directly at sanjaibala11@gmail.com.";
+        }
     }
 
     // Function to add a message to the chat
@@ -93,260 +149,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
         messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
-        const links = getPortfolioLinks();
-        // Resume download button logic
-        if (!isUser && text.includes('[DOWNLOAD_RESUME]')) {
-            const [before, after] = text.split('[DOWNLOAD_RESUME]');
-            if (before && before.trim()) {
-                const spanBefore = document.createElement('span');
-                spanBefore.textContent = before.trim() + ' ';
-                messageDiv.appendChild(spanBefore);
-            }
-            // Add instruction text
-            const info = document.createElement('div');
-            info.textContent = 'Click the below button to download the resume.';
-            info.style.fontSize = '13px';
-            info.style.marginBottom = '4px';
-            messageDiv.appendChild(info);
-            // Small Download Resume button
-            const btn = document.createElement('a');
-            btn.href = '/portfolio_pictures/Sanjaikumar_Balasubramaniyan_Resume.pdf';
-            btn.textContent = 'Download Resume';
-            btn.className = 'btn btn2';
-            btn.style.margin = '0 0 0 0';
-            btn.style.display = 'inline-block';
-            btn.style.fontSize = '12px';
-            btn.style.fontWeight = 'bold';
-            btn.style.textAlign = 'center';
-            btn.style.cursor = 'pointer';
-            btn.style.padding = '6px 16px';
-            btn.style.borderRadius = '6px';
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const link = document.createElement('a');
-                link.href = btn.href;
-                link.download = 'Sanjaikumar_Balasubramaniyan_Resume.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-            messageDiv.appendChild(btn);
-            if (after && after.trim()) {
-                const spanAfter = document.createElement('span');
-                spanAfter.textContent = ' ' + after.trim();
-                messageDiv.appendChild(spanAfter);
-            }
-        } else if (!isUser && /github|linkedin|leetcode|instagram/i.test(text)) {
-            // Link button logic
-            // Find all known links in the text and show as buttons
-            const linkButtons = [];
-            let infoText = '';
-            if (/github/i.test(text)) infoText = 'Click the below button to get my GitHub.';
-            if (/linkedin/i.test(text)) infoText = 'Click the below button to get my LinkedIn.';
-            if (/leetcode/i.test(text)) infoText = 'Click the below button to get my LeetCode.';
-            if (/instagram/i.test(text)) infoText = 'Click the below button to get my Instagram.';
-            if (infoText) {
-                const info = document.createElement('div');
-                info.textContent = infoText;
-                info.style.fontSize = '13px';
-                info.style.marginBottom = '4px';
-                messageDiv.appendChild(info);
-            }
-            if (/github/i.test(text)) {
-                const btn = document.createElement('a');
-                btn.href = links.github;
-                btn.target = '_blank';
-                btn.rel = 'noopener noreferrer';
-                btn.textContent = 'GitHub';
-                btn.className = 'btn btn2';
-                btn.style.margin = '0 8px 0 0';
-                btn.style.display = 'inline-block';
-                btn.style.fontSize = '12px';
-                btn.style.fontWeight = 'bold';
-                btn.style.textAlign = 'center';
-                btn.style.cursor = 'pointer';
-                btn.style.padding = '6px 16px';
-                btn.style.borderRadius = '6px';
-                linkButtons.push(btn);
-            }
-            if (/linkedin/i.test(text)) {
-                const btn = document.createElement('a');
-                btn.href = links.linkedin;
-                btn.target = '_blank';
-                btn.rel = 'noopener noreferrer';
-                btn.textContent = 'LinkedIn';
-                btn.className = 'btn btn2';
-                btn.style.margin = '0 8px 0 0';
-                btn.style.display = 'inline-block';
-                btn.style.fontSize = '12px';
-                btn.style.fontWeight = 'bold';
-                btn.style.textAlign = 'center';
-                btn.style.cursor = 'pointer';
-                btn.style.padding = '6px 16px';
-                btn.style.borderRadius = '6px';
-                linkButtons.push(btn);
-            }
-            if (/leetcode/i.test(text)) {
-                const btn = document.createElement('a');
-                btn.href = links.leetcode;
-                btn.target = '_blank';
-                btn.rel = 'noopener noreferrer';
-                btn.textContent = 'LeetCode';
-                btn.className = 'btn btn2';
-                btn.style.margin = '0 8px 0 0';
-                btn.style.display = 'inline-block';
-                btn.style.fontSize = '12px';
-                btn.style.fontWeight = 'bold';
-                btn.style.textAlign = 'center';
-                btn.style.cursor = 'pointer';
-                btn.style.padding = '6px 16px';
-                btn.style.borderRadius = '6px';
-                linkButtons.push(btn);
-            }
-            if (/instagram/i.test(text)) {
-                const btn = document.createElement('a');
-                btn.href = links.instagram;
-                btn.target = '_blank';
-                btn.rel = 'noopener noreferrer';
-                btn.textContent = 'Instagram';
-                btn.className = 'btn btn2';
-                btn.style.margin = '0 8px 0 0';
-                btn.style.display = 'inline-block';
-                btn.style.fontSize = '12px';
-                btn.style.fontWeight = 'bold';
-                btn.style.textAlign = 'center';
-                btn.style.cursor = 'pointer';
-                btn.style.padding = '6px 16px';
-                btn.style.borderRadius = '6px';
-                linkButtons.push(btn);
-            }
-            // Add all link buttons to the messageDiv
-            if (linkButtons.length) {
-                linkButtons.forEach(btn => messageDiv.appendChild(btn));
-            } else {
-                messageDiv.textContent = text;
-            }
+        
+        // Handle resume download requests
+        if (!isUser && text.toLowerCase().includes('resume') || text.toLowerCase().includes('cv')) {
+            messageDiv.innerHTML = `
+                <div style="margin-bottom: 10px;">${text}</div>
+                <a href="portfolio_pictures/Sanjaikumar_Balasubramaniyan_Resume.pdf" 
+                   download="Sanjaikumar_Balasubramaniyan_Resume.pdf"
+                   class="btn btn2" 
+                   style="display: inline-block; margin: 5px 0; padding: 8px 16px; font-size: 12px;">
+                   Download Resume
+                </a>
+            `;
         } else {
-            // Fallback: normal text or previous logic
-            const resumeRegex = /(https?:\/\/\S+portfolio_pictures\/Sanjaikumar_Balasubramaniyan_Resume\.pdf)/i;
-            if (!isUser && resumeRegex.test(text)) {
-                const parts = text.split(resumeRegex);
-                messageDiv.innerHTML = '';
-                parts.forEach(part => {
-                    if (resumeRegex.test(part)) {
-                        const btn = document.createElement('a');
-                        btn.href = part;
-                        btn.target = '_blank';
-                        btn.rel = 'noopener noreferrer';
-                        btn.download = '';
-                        btn.textContent = 'Download Resume';
-                        btn.className = 'btn btn2';
-                        btn.style.margin = '8px 0 0 0';
-                        btn.style.display = 'inline-block';
-                        btn.style.fontSize = '15px';
-                        btn.style.fontWeight = 'bold';
-                        btn.style.textAlign = 'center';
-                        btn.style.cursor = 'pointer';
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            const link = document.createElement('a');
-                            link.href = btn.href;
-                            link.download = 'Sanjaikumar_Balasubramaniyan_Resume.pdf';
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        });
-                        messageDiv.appendChild(btn);
-                    } else {
-                        const span = document.createElement('span');
-                        span.textContent = part;
-                        messageDiv.appendChild(span);
-                    }
-                });
-            } else {
-                messageDiv.textContent = text;
-            }
+            messageDiv.textContent = text;
         }
+        
         messagesContainer.appendChild(messageDiv);
         chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    // Function to get AI response from our backend
-    async function getAIResponse(userMessage) {
-        try {
-            // Use dynamic URL that works both locally and when hosted
-            const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                ? 'http://localhost:3000/api/chat'
-                : 'https://your-backend-name.onrender.com/api/chat'; // Replace with your actual Render URL
-            
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: userMessage })
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            if (data.error) {
-                throw new Error(data.error);
-            }
-            return data.response;
-        } catch (error) {
-            console.error('Error fetching AI response:', error);
-            return "I apologize, but I'm having trouble connecting to my AI service right now. Please try again later or contact Sanjai directly at sanjaibala11@gmail.com.";
-        }
     }
 
     // Function to handle user message
     async function handleUserMessage(text) {
         if (!text.trim()) return;
+        
         addMessage(text, true);
         messageInput.value = '';
-        // Intercept resume/cv requests and show button directly
-        if (/\b(resume|cv|curriculum vitae)\b/i.test(text)) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', 'bot-message');
-            // Add instruction text
-            const info = document.createElement('div');
-            info.textContent = 'Click the below button to download the resume.';
-            info.style.fontSize = '13px';
-            info.style.marginBottom = '4px';
-            messageDiv.appendChild(info);
-            // Small Download Resume button
-            const btn = document.createElement('a');
-            btn.href = '/portfolio_pictures/Sanjaikumar_Balasubramaniyan_Resume.pdf';
-            btn.textContent = 'Download Resume';
-            btn.className = 'btn btn2';
-            btn.style.margin = '0 0 0 0';
-            btn.style.display = 'inline-block';
-            btn.style.fontSize = '12px';
-            btn.style.fontWeight = 'bold';
-            btn.style.textAlign = 'center';
-            btn.style.cursor = 'pointer';
-            btn.style.padding = '6px 16px';
-            btn.style.borderRadius = '6px';
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const link = document.createElement('a');
-                link.href = btn.href;
-                link.download = 'Sanjaikumar_Balasubramaniyan_Resume.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-            messageDiv.appendChild(btn);
-            messagesContainer.appendChild(messageDiv);
-            chatBody.scrollTop = chatBody.scrollHeight;
-            return;
-        }
+
+        // Show typing indicator
         const typingIndicator = document.createElement('div');
         typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
         typingIndicator.innerHTML = '<span></span><span></span><span></span>';
         messagesContainer.appendChild(typingIndicator);
         chatBody.scrollTop = chatBody.scrollHeight;
+
         try {
             const botResponse = await getAIResponse(text);
             messagesContainer.removeChild(typingIndicator);
@@ -360,160 +196,70 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add welcome message when chat is opened
     function addWelcomeMessage() {
         if (messagesContainer.children.length === 0) {
-            addMessage("Hi there! I'm SK11, Sanjai Bala's AI assistant. I'll be chatting with you instead of Sanjai. Feel free to ask me anything about Sanjai's skills, projects, experience, or research work. I'll be happy to share more details!");
+            addMessage("Hi there! I'm SK11, Sanjai Bala's AI assistant. I can help you learn about Sanjai's skills, projects, experience, and research work. What would you like to know?");
         }
     }
 
-    // Show/hide chatbot toggle button based on chat visibility
-    function updateChatbotToggleVisibility() {
-        if (chatContainer.classList.contains('hidden')) {
-            chatbotToggle.style.display = 'block';
-        } else {
-            chatbotToggle.style.display = 'none';
-        }
-    }
-
-    // Toggle chatbot open/close and clear chat on close
+    // Toggle chatbot visibility
     function toggleChatbot() {
         if (chatContainer.classList.contains('hidden')) {
             chatContainer.classList.remove('hidden');
+            chatbotToggle.style.display = 'none';
             addWelcomeMessage();
         } else {
             chatContainer.classList.add('hidden');
-            // Do NOT clear messages here
+            chatbotToggle.style.display = 'block';
         }
-        updateChatbotToggleVisibility();
     }
 
-    // Attach toggleChatbot to the global scope so HTML can call it
+    // Make toggleChatbot globally available
     window.toggleChatbot = toggleChatbot;
 
-    // Delete button event: clear chat
+    // Event Listeners
+    closeBtn.addEventListener('click', toggleChatbot);
+    
     deleteBtn.addEventListener('click', function() {
         messagesContainer.innerHTML = '';
     });
 
-    // Download transcript logic
     downloadBtn.addEventListener('click', function() {
-        const tempContainer = document.createElement('div');
-        tempContainer.style.width = '500px';
-        tempContainer.style.padding = '20px';
-        tempContainer.style.backgroundColor = '#fff';
-        tempContainer.style.fontFamily = 'Poppins, Arial, sans-serif';
-
-        // Add header
-        const header = document.createElement('div');
-        header.style.textAlign = 'center';
-        header.style.marginBottom = '20px';
-        header.style.padding = '16px 10px';
-        header.style.backgroundColor = '#ff004f';
-        header.style.color = '#fff';
-        header.style.borderRadius = '16px';
-        header.style.fontWeight = 'bold';
-        header.style.fontSize = '2rem';
-        header.innerHTML = 'SK11 Chat Transcript';
-        tempContainer.appendChild(header);
-
-        // Get all messages and create chat bubbles
-        const messages = messagesContainer.querySelectorAll('.message');
+        const messages = Array.from(messagesContainer.querySelectorAll('.message'));
+        let transcript = 'SK11 Chat Transcript\n\n';
+        
         messages.forEach(msg => {
-            const bubble = document.createElement('div');
-            bubble.style.margin = '18px 0';
-            bubble.style.display = 'flex';
-            bubble.style.flexDirection = 'column';
             const isUser = msg.classList.contains('user-message');
-            bubble.style.alignItems = isUser ? 'flex-end' : 'flex-start';
-
-            const messageContent = document.createElement('div');
-            messageContent.style.maxWidth = '320px';
-            messageContent.style.width = 'fit-content';
-            messageContent.style.padding = '14px 18px';
-            messageContent.style.borderRadius = '18px';
-            messageContent.style.backgroundColor = isUser ? '#ff004f' : '#e5e7eb';
-            messageContent.style.boxShadow = '0 1px 4px rgba(0,0,0,0.10)';
-            messageContent.style.position = 'relative';
-            messageContent.style.marginLeft = isUser ? 'auto' : '0';
-            messageContent.style.marginRight = isUser ? '0' : 'auto';
-            messageContent.style.fontSize = '16px';
-            messageContent.style.fontFamily = 'Poppins, Arial, sans-serif';
-            messageContent.style.color = isUser ? '#fff' : '#222';
-            messageContent.style.wordBreak = 'break-word';
-            messageContent.style.whiteSpace = 'pre-wrap';
-            messageContent.textContent = msg.textContent;
-
-            const label = document.createElement('div');
-            label.style.fontSize = '14px';
-            label.style.fontWeight = 'bold';
-            label.style.margin = isUser ? '0 10px 5px 0' : '0 0 5px 10px';
-            label.style.textAlign = isUser ? 'right' : 'left';
-            label.textContent = isUser ? 'You' : 'SK11 AI';
-            label.style.color = isUser ? '#222' : '#ff004f';
-
-            bubble.appendChild(label);
-            bubble.appendChild(messageContent);
-            tempContainer.appendChild(bubble);
+            transcript += `${isUser ? 'You' : 'SK11'}: ${msg.textContent}\n\n`;
         });
-
-        // Add timestamp
-        const timestamp = document.createElement('div');
-        timestamp.style.textAlign = 'center';
-        timestamp.style.marginTop = '20px';
-        timestamp.style.color = '#888';
-        timestamp.style.fontSize = '13px';
-        timestamp.textContent = `Generated on ${new Date().toLocaleString()}`;
-        tempContainer.appendChild(timestamp);
-
-        document.body.appendChild(tempContainer); // Add to DOM for rendering
-        html2canvas(tempContainer, {
-            scale: 2,
-            backgroundColor: '#fff'
-        }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jspdf.jsPDF({
-                orientation: 'portrait',
-                unit: 'px',
-                format: [canvas.width, canvas.height]
-            });
-            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-            pdf.save('SK11_chat_transcript.pdf');
-            document.body.removeChild(tempContainer); // Clean up
-        });
+        
+        transcript += `Generated on ${new Date().toLocaleString()}`;
+        
+        const blob = new Blob([transcript], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'SK11_chat_transcript.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     });
 
-    // On page load, set correct visibility
-    updateChatbotToggleVisibility();
-
-    // Event Listeners
     questionButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const questionText = button.textContent;
-            handleUserMessage(questionText);
+            handleUserMessage(button.textContent);
         });
     });
-
-    // Replace send button with triangle (paper plane) SVG
-    sendButton.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="#ff004f" xmlns="http://www.w3.org/2000/svg"><polygon points="2,21 23,12 2,3 6,12 2,21"/></svg>';
-    sendButton.style.background = 'none';
-    sendButton.style.border = 'none';
-    sendButton.style.display = 'flex';
-    sendButton.style.alignItems = 'center';
-    sendButton.style.justifyContent = 'center';
-    sendButton.style.width = '45px';
-    sendButton.style.height = '45px';
-    sendButton.style.cursor = 'pointer';
-    sendButton.style.padding = '0';
 
     sendButton.addEventListener('click', () => {
         handleUserMessage(messageInput.value);
     });
+
     messageInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             handleUserMessage(messageInput.value);
         }
     });
 
-    // Add this to ensure long messages wrap and don't overflow
-    const style = document.createElement('style');
-    style.innerHTML = `.message { word-break: break-word; white-space: pre-line; } .resume-download-btn:hover { background: #d60043 !important; }`;
-    document.head.appendChild(style);
+    // Initialize
+    chatbotToggle.style.display = 'block';
 }); 

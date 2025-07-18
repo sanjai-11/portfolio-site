@@ -1,164 +1,150 @@
-# Sanjai Bala's Portfolio Website
+# Sanjai's Portfolio Website
 
-A modern portfolio website with an AI-powered chatbot built with HTML, CSS, JavaScript, and Node.js.
+A modern, interactive portfolio website showcasing my skills, projects, experience, and research work in Data Science and AI. Features an AI-powered chatbot assistant.
 
-## Features
+## 🌟 Features
 
-- 🎨 Modern, responsive design
-- 🤖 AI-powered chatbot using Mistral AI
-- 📱 Mobile-friendly interface
-- 📄 Resume download functionality
-- 🔗 Social media integration
-- 📊 Interactive project showcase
+- **Interactive Portfolio**: Showcasing skills, experience, projects, and research
+- **AI Chatbot Assistant**: Powered by Google's Gemini AI for intelligent conversations
+- **Responsive Design**: Works perfectly on desktop, tablet, and mobile
+- **Modern UI/UX**: Beautiful animations, starfield background, and smooth transitions
+- **Downloadable Resume**: Direct download functionality
+- **Project Showcases**: Interactive sliders for projects, products, and research
+- **Contact Form**: Integrated contact form with Google Sheets
 
-## Tech Stack
+## 🚀 Live Demo
 
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Backend**: Node.js, Express.js
-- **AI**: Mistral AI API
-- **Hosting**: Vercel (Frontend) + Railway (Backend)
+Visit the live website: [Your GitHub Pages URL will be here]
 
-## Local Development
+## 🛠️ Setup for GitHub Pages
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
+### Step 1: Clone/Fork Repository
+```bash
+git clone https://github.com/your-username/portfolio-site.git
+cd portfolio-site
+```
 
-### Setup
+### Step 2: Configure Gemini AI Chatbot
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd portfolio-website-ai
-   ```
-
-2. **Install dependencies**
-   ```bash
-   # Install frontend dependencies (if any)
-   npm install
-   
-   # Install backend dependencies
-   cd backend
-   npm install
-   ```
-
-3. **Set up environment variables**
-   Create a `.env` file in the `backend` folder:
-   ```
-   MISTRAL_API_KEY=your_mistral_api_key_here
-   PORT=3000
-   ```
-
-4. **Start the backend server**
-   ```bash
-   cd backend
-   node server.js
-   ```
-
-5. **Open the frontend**
-   - Open `index.html` in your browser
-   - Or use a local server: `python -m http.server 8000`
-
-## Deployment
-
-### Frontend Deployment (Vercel)
-
-1. **Push to GitHub**
-   ```bash
-   git add .
-   git commit -m "Ready for deployment"
-   git push origin main
-   ```
-
-2. **Deploy to Vercel**
-   - Go to [vercel.com](https://vercel.com)
-   - Sign up with GitHub
-   - Import your repository
-   - Deploy automatically
-
-3. **Add custom domain**
-   - In Vercel dashboard, go to Settings → Domains
-   - Add `www.sanjaibala.com`
-   - Update your domain's DNS settings as instructed
-
-### Backend Deployment (Railway)
-
-1. **Prepare backend for Railway**
-   - Ensure `Procfile` exists in backend folder
-   - Ensure `package.json` has correct start script
-
-2. **Deploy to Railway**
-   - Go to [railway.app](https://railway.app)
-   - Sign up with GitHub
-   - Create new project
-   - Connect your repository
-   - Set environment variables:
-     - `MISTRAL_API_KEY`: Your Mistral API key
-     - `PORT`: 3000
-
-3. **Get Railway URL**
-   - After deployment, copy the Railway URL
-   - Update `js/chatbot-script.js` with the Railway URL
-
-### Update Frontend with Backend URL
-
-After getting your Railway URL, update the chatbot script:
-
+1. Get your Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Open `js/chatbot-script.js`
+3. Replace `YOUR_GEMINI_API_KEY_HERE` with your actual API key:
 ```javascript
-// In js/chatbot-script.js, line 279
-const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://localhost:3000/api/chat'
-    : 'https://your-actual-railway-url.railway.app/api/chat';
+const GEMINI_API_KEY = 'your_actual_gemini_api_key_here';
 ```
 
-## Environment Variables
+### Step 3: Deploy to GitHub Pages
 
-### Backend (.env)
+1. Push your code to GitHub:
+```bash
+git add .
+git commit -m "Initial portfolio setup"
+git push origin main
 ```
-MISTRAL_API_KEY=your_mistral_api_key_here
-PORT=3000
+
+2. Enable GitHub Pages:
+   - Go to your repository settings
+   - Scroll down to "Pages" section
+   - Under "Source", select "Deploy from a branch"
+   - Choose "main" branch and "/ (root)" folder
+   - Click "Save"
+
+3. Your site will be available at: `https://your-username.github.io/repository-name`
+
+## 🎨 Customization
+
+### Personal Information
+Update the following files with your information:
+- `index.html`: Personal details, experience, projects, contact info
+- `portfolio_pictures/`: Replace with your own images and resume
+- `js/chatbot-script.js`: Update the portfolio context with your information
+
+### Styling
+- `style.css`: Customize colors, fonts, and layout
+- Chatbot styling is included in the main CSS file
+
+### Contact Form
+The contact form uses Google Sheets integration. Update the `scriptURL` in `index.html` with your own Google Apps Script URL.
+
+## 🤖 AI Chatbot Features
+
+- **Smart Responses**: Powered by Google's Gemini AI
+- **Portfolio Knowledge**: Trained on your portfolio information
+- **Resume Downloads**: Direct integration with resume download
+- **Chat History**: Download chat transcripts
+- **Responsive Design**: Works on all devices
+
+## 📱 Responsive Design
+
+The website is fully responsive and optimized for:
+- Desktop computers
+- Tablets
+- Mobile phones
+- Various screen sizes
+
+## 🔧 Technical Stack
+
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **AI Integration**: Google Gemini AI API
+- **Hosting**: GitHub Pages (Static)
+- **Icons**: Font Awesome
+- **Fonts**: Google Fonts (Poppins)
+
+## 📦 Files Structure
+
 ```
-
-### Railway Environment Variables
-- `MISTRAL_API_KEY`: Your Mistral AI API key
-- `PORT`: 3000
-
-## File Structure
-
-```
-portfolio-website-ai/
-├── index.html              # Main portfolio page
+portfolio-site/
+├── index.html              # Main HTML file
 ├── style.css              # Main stylesheet
 ├── js/
-│   └── chatbot-script.js  # Chatbot functionality
-├── portfolio_pictures/    # Images and assets
-├── backend/
-│   ├── server.js         # Express server
-│   ├── package.json      # Backend dependencies
-│   └── .env             # Environment variables
-├── vercel.json          # Vercel configuration
-└── README.md           # This file
+│   └── chatbot-script.js   # Chatbot functionality
+├── portfolio_pictures/     # Images and resume
+│   ├── logo.png
+│   ├── user.jpg
+│   ├── resume.pdf
+│   └── project_images/
+└── README.md              # This file
 ```
 
-## API Endpoints
+## 🔒 Security Notes
 
-- `POST /api/chat` - Chatbot API endpoint
-  - Body: `{ "message": "user message" }`
-  - Response: `{ "response": "ai response" }`
+- **API Keys**: Never commit your actual Gemini API key to a public repository
+- Consider using environment variables or GitHub Secrets for sensitive data
+- The current setup requires the API key to be in the client-side code for simplicity
 
-## Security Notes
+## 📈 Performance
 
-- Never commit your `.env` file to version control
-- Use environment variables for sensitive data
-- Railway automatically handles environment variables securely
+- **Optimized Images**: Compressed images for faster loading
+- **Minimal Dependencies**: No heavy frameworks
+- **Lazy Loading**: Efficient resource loading
+- **CDN Integration**: Fast content delivery
 
-## Support
+## 🐛 Troubleshooting
 
-For issues or questions:
-- Email: sanjaibala11@gmail.com
-- LinkedIn: [Sanjai Bala](https://www.linkedin.com/in/sanjai-bala/)
-- GitHub: [sanjai-11](https://github.com/sanjai-11)
+### Chatbot Not Working
+1. Check if your Gemini API key is correctly set
+2. Verify the API key has proper permissions
+3. Check browser console for any errors
 
-## License
+### GitHub Pages Not Updating
+1. Check the Actions tab for deployment status
+2. Ensure your repository is public (for free GitHub Pages)
+3. Verify the correct branch is selected in Pages settings
 
-This project is open source and available under the [MIT License](LICENSE). 
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Feel free to fork this repository and customize it for your own portfolio!
+
+## 📞 Contact
+
+- **Email**: sanjaibala11@gmail.com
+- **LinkedIn**: [Sanjai Bala](https://www.linkedin.com/in/sanjai-bala/)
+- **GitHub**: [sanjai-11](https://github.com/sanjai-11)
+
+---
+
+⭐ Star this repository if you found it helpful! 
