@@ -5,7 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # API Keys and Secrets
-js/config.js
+# js/config.js  # Commented out for GitHub Pages deployment
 
 # Environment files
 .env
