@@ -94,10 +94,10 @@ nav{
     top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('portfolio_pictures/background.jpg') center center/cover no-repeat;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
     z-index: 1000;
     padding: 10px 10%;
     transition: transform 0.3s ease-in-out;
@@ -112,27 +112,30 @@ nav::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: none !important;
     z-index: -1;
 }
 
 .logo{
     width: 140px;
-    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.7));
+    filter: none !important;
+    background: none !important;
 }
 
 nav ul li{
     display: inline-block;
     list-style: none;
     margin: 10px 10px;
+    background: none !important;
 }
 
 nav ul li a{
     color: #fff;
     text-decoration: none;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    text-shadow: none !important;
     font-size: 18px;
     position: relative;
+    background: none !important;
 }
 
 nav ul li a::after{
