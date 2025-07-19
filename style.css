@@ -108,22 +108,26 @@ nav{
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
+    background-image: url(portfolio_pictures/background.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    backdrop-filter: blur(3px);
     z-index: 1000;
     padding: 10px 10%;
     transition: transform 0.3s ease-in-out;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-nav {
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                url('portfolio_pictures/background.jpg') center center/cover no-repeat;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-nav {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -1;
 }
 
 .logo{
