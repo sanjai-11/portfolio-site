@@ -94,14 +94,14 @@ nav{
     top: 0;
     left: 0;
     right: 0;
-    background: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
+    background-image: url(portfolio_pictures/background.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    backdrop-filter: blur(3px);
     z-index: 1000;
     padding: 10px 10%;
     transition: transform 0.3s ease-in-out;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Add subtle overlay for better text readability */
@@ -112,30 +112,27 @@ nav::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: none !important;
+    background: none; /* No overlay, just the background image */
     z-index: -1;
 }
 
 .logo{
     width: 140px;
-    filter: none !important;
-    background: none !important;
+    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.7));
 }
 
 nav ul li{
     display: inline-block;
     list-style: none;
     margin: 10px 10px;
-    background: none !important;
 }
 
 nav ul li a{
     color: #fff;
     text-decoration: none;
-    text-shadow: none !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     font-size: 18px;
     position: relative;
-    background: none !important;
 }
 
 nav ul li a::after{
@@ -673,31 +670,6 @@ body.menu-open #chatbot-toggle {
     scrollbar-width: thin; /* Firefox */
 }
 
-/* Custom scrollbar for chat container - positioned on far right edge */
-.chat-container::-webkit-scrollbar {
-    width: 6px;
-}
-
-.chat-container::-webkit-scrollbar-track {
-    background: #eee;
-    border-radius: 0 15px 15px 0; /* Match container border radius on right */
-}
-
-.chat-container::-webkit-scrollbar-thumb {
-    background: transparent; /* Hidden by default */
-    border-radius: 3px;
-    transition: background 0.2s ease;
-}
-
-/* Show scrollbar only when actively scrolling */
-.chat-container.scrolling::-webkit-scrollbar-thumb {
-    background: #888; /* Softer gray when scrolling */
-}
-
-.chat-container::-webkit-scrollbar-thumb:hover {
-    background: #666; /* Darker when hovering */
-}
-
 /* Hide any scrollbars on chat-body since we're using container scrollbar */
 .chat-body::-webkit-scrollbar {
     display: none;
@@ -731,7 +703,7 @@ body.menu-open #chatbot-toggle {
 .chat-body {
     flex: 1;
     overflow: visible; /* No scrolling on chat-body */
-    padding: 15px 15px 0 15px;
+    padding: 10px 2px 0 15px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -798,6 +770,8 @@ body.menu-open #chatbot-toggle {
     flex-direction: column;
     gap: 15px;
     padding-bottom: 20px;
+    padding-right:20px;
+    padding-top:10px;
     min-height: 100%;
 }
 
@@ -870,7 +844,7 @@ body.menu-open #chatbot-toggle {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ff004f;
+    background: #333333;
     border-radius: 5px;
 }
 
@@ -1511,29 +1485,6 @@ nav .fa-times {
   overflow-y: auto !important;
   overflow-x: hidden !important;
   scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #888 #eee; /* thumb, track */
-}
-
-/* Hide thumb by default */
-.chat-container::-webkit-scrollbar {
-  width: 8px;
-}
-.chat-container::-webkit-scrollbar-thumb {
-  background: transparent;
-  transition: background 0.2s;
-  border-radius: 4px;
-}
-.chat-container::-webkit-scrollbar-track {
-  background: #eee;
-  border-radius: 0 15px 15px 0;
-}
-
-/* Show thumb only when scrolling */
-.chat-container.scrolling::-webkit-scrollbar-thumb {
-  background: #888;
-}
-.chat-container::-webkit-scrollbar-thumb:hover {
-  background: #666;
 }
 
 /* Remove all scrollbars from .chat-body */
@@ -1541,7 +1492,6 @@ nav .fa-times {
   display: none !important;
 }
 
-/* Ensure .chat-body never scrolls */
 .chat-body {
   overflow: visible !important;
 }
