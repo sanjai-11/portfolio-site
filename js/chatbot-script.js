@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatbotToggle = document.getElementById('chatbot-toggle');
     const chatHeader = document.querySelector('.chat-header');
 
+    // Chat scrolling is now handled by the chat-container
+    console.log('✅ Chat container scroll configuration complete');
+
     // Remove any existing close/delete buttons in header
     const oldCloseBtn = chatHeader.querySelector('.close-btn');
     if (oldCloseBtn) oldCloseBtn.remove();
@@ -331,8 +334,13 @@ document.addEventListener('DOMContentLoaded', function() {
             messageDiv.innerHTML = formattedText;
         }
         
-        // Insert message before the scroll marker
-        messagesContainer.insertBefore(messageDiv, scrollMarker);
+        // Always get the scroll marker fresh
+        const freshScrollMarker = document.getElementById('scroll-marker');
+        if (freshScrollMarker && freshScrollMarker.parentNode === messagesContainer) {
+            messagesContainer.insertBefore(messageDiv, freshScrollMarker);
+        } else {
+            messagesContainer.appendChild(messageDiv);
+        }
         
         // Scroll to show new message using scrollIntoView
         scrollToBottom();
@@ -366,11 +374,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 50);
         
-        // Method 3: Fallback with traditional scroll
-        if (chatBody) {
+        // Method 3: Fallback with traditional scroll on chat container
+        if (chatContainer) {
             setTimeout(() => {
-                chatBody.scrollTop = chatBody.scrollHeight;
-                console.log(`📊 ScrollTop set to: ${chatBody.scrollTop}, ScrollHeight: ${chatBody.scrollHeight}`);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                console.log(`📊 ChatContainer ScrollTop set to: ${chatContainer.scrollTop}, ScrollHeight: ${chatContainer.scrollHeight}`);
             }, 100);
         }
         
@@ -382,10 +390,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     block: 'end' 
                 });
                 
-                // Force traditional scroll as last resort
-                if (chatBody) {
-                    chatBody.scrollTop = chatBody.scrollHeight;
-                    console.log('✅ ScrollToBottom: Final scroll completed');
+                // Force traditional scroll as last resort on chat container
+                if (chatContainer) {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    console.log('✅ ScrollToBottom: Final chat container scroll completed');
                 }
             }
         }, 300);
@@ -406,10 +414,10 @@ document.addEventListener('DOMContentLoaded', function() {
         typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
         typingIndicator.innerHTML = '<span></span><span></span><span></span>';
         
-        // Insert typing indicator before scroll marker
-        const scrollMarker = document.getElementById('scroll-marker');
-        if (scrollMarker) {
-            messagesContainer.insertBefore(typingIndicator, scrollMarker);
+        // In handleUserMessage, always get scroll marker fresh for typing indicator
+        const freshScrollMarker = document.getElementById('scroll-marker');
+        if (freshScrollMarker && freshScrollMarker.parentNode === messagesContainer) {
+            messagesContainer.insertBefore(typingIndicator, freshScrollMarker);
         } else {
             messagesContainer.appendChild(typingIndicator);
         }
@@ -451,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chatbotToggle.style.display = 'none';
             // Add welcome message with slight delay to ensure DOM is ready
             setTimeout(() => {
-                addWelcomeMessage();
+            addWelcomeMessage();
             }, 50);
         } else {
             chatContainer.classList.add('hidden');
@@ -462,11 +470,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Make toggleChatbot globally available
     window.toggleChatbot = toggleChatbot;
 
-    // Event Listeners
-    closeBtn.addEventListener('click', toggleChatbot);
-    
-    deleteBtn.addEventListener('click', function() {
-        // Clear all messages but restore the original structure with questions
+    // Helper to reset chatbot to initial state (like page refresh)
+    function resetChatbot() {
         messagesContainer.innerHTML = `
             <div class="suggested-questions">
                 <button class="question-btn">What's your biggest accomplishments?</button>
@@ -476,7 +481,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="question-btn">Why should we hire you?</button>
             </div>
         `;
-        
         // Recreate the scroll marker
         const newScrollMarker = document.createElement('div');
         newScrollMarker.id = 'scroll-marker';
@@ -484,36 +488,41 @@ document.addEventListener('DOMContentLoaded', function() {
         newScrollMarker.style.width = '1px';
         newScrollMarker.style.opacity = '0';
         messagesContainer.appendChild(newScrollMarker);
-        
-        // Re-attach event listeners to the new question buttons with enhanced scroll
+        // Re-attach event listeners to the new question buttons
         const newQuestionButtons = messagesContainer.querySelectorAll('.question-btn');
         newQuestionButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Immediately scroll down when question is clicked
                 scrollToBottom();
-                
-                // Handle the message with additional scroll after it's added
                 handleUserMessage(button.textContent);
-                
-                // Extra scroll to ensure visibility
-                setTimeout(() => {
-                    scrollToBottom();
-                }, 100);
+                setTimeout(() => { scrollToBottom(); }, 100);
             });
         });
-        
-        // Add welcome message back with slight delay
-        setTimeout(() => {
-            addWelcomeMessage();
-        }, 50);
+        // Show welcome message
+        setTimeout(() => { addWelcomeMessage(); }, 50);
+        // Re-enable input
+        messageInput.disabled = false;
+        sendButton.disabled = false;
+        messageInput.value = '';
+    }
+
+    // On page load, reset chatbot if empty
+    if (messagesContainer && messagesContainer.children.length === 0) {
+        resetChatbot();
+    }
+
+    // Event Listeners
+    closeBtn.addEventListener('click', toggleChatbot);
+    
+    deleteBtn.addEventListener('click', function() {
+        resetChatbot();
     });
 
     downloadBtn.addEventListener('click', function() {
         try {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
-            // Add header
+
+        // Add header
             doc.setFontSize(20);
             doc.setFont("helvetica", "bold");
             doc.text('SK Chat Transcript', 20, 20);
@@ -529,8 +538,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const marginLeft = 20;
             const marginRight = 190;
             
-            messages.forEach(msg => {
-                const isUser = msg.classList.contains('user-message');
+        messages.forEach(msg => {
+            const isUser = msg.classList.contains('user-message');
                 const sender = isUser ? 'You' : 'SK';
                 const text = msg.textContent.trim();
                 
@@ -698,18 +707,27 @@ document.addEventListener('DOMContentLoaded', function() {
         addWelcomeMessage();
     }
     
-    // Enhanced scrollbar visibility for chatbot
-    let chatScrollTimeout;
-    if (chatBody) {
-        chatBody.addEventListener('scroll', () => {
-            // Show scrollbar when scrolling
-            chatBody.classList.add('scrolling');
-            
-            // Hide scrollbar after scrolling stops
-            clearTimeout(chatScrollTimeout);
-            chatScrollTimeout = setTimeout(() => {
-                chatBody.classList.remove('scrolling');
-            }, 1200); // Slightly longer timeout for better UX
+    // --- Chatbot Scrollbar: Only show when scrolling ---
+    (function() {
+      function setupChatScrollbar() {
+        const chatContainer = document.querySelector('.chat-container');
+        if (!chatContainer) return;
+        let scrollTimeout;
+        chatContainer.addEventListener('scroll', () => {
+          chatContainer.classList.add('scrolling');
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            chatContainer.classList.remove('scrolling');
+          }, 1000);
         });
-    }
+      }
+      // Run on load
+      setupChatScrollbar();
+      // Also run when toggling chat (in case DOM is reloaded)
+      window.addEventListener('click', function(e) {
+        if (e.target.classList && (e.target.classList.contains('close-btn') || e.target.classList.contains('chatbot-toggle-img'))) {
+          setTimeout(setupChatScrollbar, 300);
+        }
+      });
+    })();
 }); 
