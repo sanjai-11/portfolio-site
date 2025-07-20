@@ -799,21 +799,27 @@ body.menu-open #chatbot-toggle {
 
 /* Chat Footer */
 .chat-footer {
-    padding: 5px 15px 10px 15px;
     display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
     gap: 10px;
+    padding: 5px 15px 10px 15px;
     background-color: #2a2a2a;
     border-top: 1px solid #3a3a3a;
 }
 
 .message-input {
-    flex: 1;
-    padding: 12px 15px;
-    border-radius: 25px;
+    max-width: 80%;         /* Restrict width to 80% of the footer */
+    width: 100%;            /* Take available space up to max-width */
+    border-radius: 20px;    /* WhatsApp-like rounded corners */
+    padding: 10px 16px;     /* Internal padding for comfort */
     border: none;
-    background-color: #3a3a3a;
-    color: white;
+    background-color: #fff; /* WhatsApp uses white input */
+    color: #222;
     outline: none;
+    font-size: 16px;
+    margin-right: 0;        /* Remove any margin that pushes it right */
+    box-sizing: border-box;
 }
 
 .message-input::placeholder {
@@ -821,6 +827,7 @@ body.menu-open #chatbot-toggle {
 }
 
 .send-btn {
+    margin-left: 8px; /* Space between input and button */
     background: linear-gradient(to right, #ff004f, #ff3377);
     color: white;
     border: none;
@@ -832,6 +839,11 @@ body.menu-open #chatbot-toggle {
     align-items: center;
     cursor: pointer;
     font-weight: bold;
+    font-size: 20px;
+    transition: background 0.3s;
+}
+.send-btn:hover {
+    background: #ff004f;
 }
 
 /* Scrollbar Styling */
