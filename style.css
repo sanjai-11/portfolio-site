@@ -820,6 +820,7 @@ body.menu-open #chatbot-toggle {
     border-radius: 25px;
     border: none;
     background-color: #3a3a3a;
+    color: white;
     outline: none;
 }
 
