@@ -781,45 +781,45 @@ body.menu-open #chatbot-toggle {
     border-radius: 18px;
     font-size: 14px;
     line-height: 1.4;
+    margin: 6px 0;
+    word-break: break-word;
 }
 
 .user-message {
     align-self: flex-end;
-    background: linear-gradient(to right, #ff004f, #ff3377);
+    /*background: linear-gradient(to right, #ff004f, #ff3377);
     color: white;
-    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;*/
+    margin-right: 8px;
+    margin-left: 40px;
 }
 
 .bot-message {
     align-self: flex-start;
-    background-color: #3a3a3a;
+    /*background-color: #3a3a3a;
     color: white;
-    border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;*/
+    margin-left: 8px;          
+    margin-right: 40px; 
 }
 
 /* Chat Footer */
 .chat-footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align items to the left */
-    gap: 10px;
     padding: 5px 15px 10px 15px;
+    display: flex;
+    gap: 10px;
     background-color: #2a2a2a;
     border-top: 1px solid #3a3a3a;
 }
 
 .message-input {
-    max-width: 80%;         /* Restrict width to 80% of the footer */
-    width: 100%;            /* Take available space up to max-width */
-    border-radius: 20px;    /* WhatsApp-like rounded corners */
-    padding: 10px 16px;     /* Internal padding for comfort */
+    flex: 1;
+    padding: 12px 15px;
+    border-radius: 25px;
     border: none;
-    background-color: #fff; /* WhatsApp uses white input */
-    color: #222;
+    background-color: #3a3a3a;
+    color: white;
     outline: none;
-    font-size: 16px;
-    margin-right: 0;        /* Remove any margin that pushes it right */
-    box-sizing: border-box;
 }
 
 .message-input::placeholder {
@@ -827,7 +827,6 @@ body.menu-open #chatbot-toggle {
 }
 
 .send-btn {
-    margin-left: 8px; /* Space between input and button */
     background: linear-gradient(to right, #ff004f, #ff3377);
     color: white;
     border: none;
@@ -839,11 +838,6 @@ body.menu-open #chatbot-toggle {
     align-items: center;
     cursor: pointer;
     font-weight: bold;
-    font-size: 20px;
-    transition: background 0.3s;
-}
-.send-btn:hover {
-    background: #ff004f;
 }
 
 /* Scrollbar Styling */
