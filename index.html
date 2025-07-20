@@ -29,16 +29,16 @@
                 navElement.style.transform = 'translateY(0)';
             }
             
-            // Show scrollbar when scrolling
+            // Add scrolling class to show scrollbar
             document.documentElement.classList.add('scrolling');
             document.body.classList.add('scrolling');
             
-            // Hide scrollbar after scrolling stops
+            // Remove scrolling class after scrolling stops
             clearTimeout(mainScrollTimeout);
             mainScrollTimeout = setTimeout(() => {
                 document.documentElement.classList.remove('scrolling');
                 document.body.classList.remove('scrolling');
-            }, 1800); // Longer timeout for portfolio page
+            }, 1000);
             
             lastScrollTop = scrollTop;
         });
@@ -67,7 +67,7 @@
         </nav>
         <div class="header-text">
             <span class="role-rotator"><span id="role-typewriter"></span></span>
-            <h1>Hi, I am <span>Sanjaikumar</span><br>Balasubramaniyan</h1>
+            <h1>Hi, I'm <span>Sanjaikumar</span><br>Balasubramaniyan</h1>
         </div>
     </div>
 </div>
