@@ -648,7 +648,7 @@ body.menu-open #chatbot-toggle {
 
 #chatbot-toggle:hover .chatbot-toggle-img {
     filter: drop-shadow(0 0 8px #ff004f) brightness(1.2);
-    transform: rotate(20deg) scale(1.1);
+    /*transform: rotate(20deg) scale(1.1);*/
     transition: all 0.3s cubic-bezier(.25,1.5,.5,1);
 }
 
