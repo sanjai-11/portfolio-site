@@ -787,18 +787,18 @@ body.menu-open #chatbot-toggle {
 
 .user-message {
     align-self: flex-end;
-    /*background: linear-gradient(to right, #ff004f, #ff3377);
+    background: linear-gradient(to right, #ff004f, #ff3377);
     color: white;
-    border-bottom-right-radius: 5px;*/
+    border-bottom-right-radius: 5px;
     margin-right: 8px;
     margin-left: 40px;
 }
 
 .bot-message {
     align-self: flex-start;
-    /*background-color: #3a3a3a;
+    background-color: #3a3a3a;
     color: white;
-    border-bottom-left-radius: 5px;*/
+    border-bottom-left-radius: 5px;
     margin-left: 8px;          
     margin-right: 40px; 
 }
