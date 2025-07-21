@@ -665,7 +665,7 @@ body.menu-open #chatbot-toggle {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    z-index: 999;
+    z-index: 9999;
     scroll-behavior: smooth;
     scrollbar-width: thin; /* Firefox */
 }
