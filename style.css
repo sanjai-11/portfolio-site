@@ -104,6 +104,14 @@ nav{
     transition: transform 0.3s ease-in-out;
 }
 
+#navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  transition: top 0.3s ease-in-out;
+}
+
 /* Add subtle overlay for better text readability */
 nav::before {
     content: '';
