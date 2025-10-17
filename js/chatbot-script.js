@@ -197,7 +197,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
-                            role: "user",
                             text: "Hello, just testing the connection. Reply with 'Connection successful'"
                         }]
                     }]
@@ -258,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
-                            role: "user",
                             text: `${buildPortfolioContext()}\n\n${contextPrompt}Current user question: ${userMessage}\n\nRespond as SK, Sanjai's AI assistant speaking ON BEHALF of Sanjai. CRITICAL RULES:
 - Speak as "I", "my", "me", "myself" - NOT "he", "him", "his", "Sanjai"
 - You ARE Sanjai responding directly to the user
