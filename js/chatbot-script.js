@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const GEMINI_API_KEY = (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) 
         ? API_CONFIG.GEMINI_API_KEY 
         : 'AIzaSyBFw3iLeokV_PO82IoMIO7-9MpU2-ulH74';
-    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent';
+    const MODEL_NAME = 'gemini-1.5-pro'
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/${MODEL_NAME}:generateContent';
 
     // DOM Elements
     const chatBody = document.querySelector('.chat-body');
@@ -196,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
+                            role: "user",
                             text: "Hello, just testing the connection. Reply with 'Connection successful'"
                         }]
                     }]
@@ -256,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     contents: [{
                         parts: [{
+                            role: "user",
                             text: `${buildPortfolioContext()}\n\n${contextPrompt}Current user question: ${userMessage}\n\nRespond as SK, Sanjai's AI assistant speaking ON BEHALF of Sanjai. CRITICAL RULES:
 - Speak as "I", "my", "me", "myself" - NOT "he", "him", "his", "Sanjai"
 - You ARE Sanjai responding directly to the user
