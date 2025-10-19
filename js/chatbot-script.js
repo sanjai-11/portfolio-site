@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Your Gemini API Key (loaded from config)
     const GEMINI_API_KEY = (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) 
         ? API_CONFIG.GEMINI_API_KEY
+        : (() => { 
+      console.error('❌ Gemini API key missing — check that config.js is loaded before chatbot-script.js');
+      return ''; 
+    })();
     const MODEL_NAME = `gemini-1.5-flash-latest`;
     const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent`;
 
