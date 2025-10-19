@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ? API_CONFIG.GEMINI_API_KEY 
         : 'AIzaSyBFw3iLeokV_PO82IoMIO7-9MpU2-ulH74';
     const MODEL_NAME = `gemini-1.5-flash`;
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent`;
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:StreamGenerateContent`;
 
     // DOM Elements
     const chatBody = document.querySelector('.chat-body');
