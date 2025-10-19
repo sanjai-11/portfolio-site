@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const GEMINI_API_KEY = (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) 
         ? API_CONFIG.GEMINI_API_KEY;
     const MODEL_NAME = `gemini-1.5-flash-latest`;
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:GenerateContent`;
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent`;
 
     // DOM Elements
     const chatBody = document.querySelector('.chat-body');
