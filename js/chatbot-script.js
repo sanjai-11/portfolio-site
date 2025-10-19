@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Your Gemini API Key (loaded from config)
     const GEMINI_API_KEY = (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) 
-        ? API_CONFIG.GEMINI_API_KEY 
-        : 'AIzaSyBFw3iLeokV_PO82IoMIO7-9MpU2-ulH74';
+        ? API_CONFIG.GEMINI_API_KEY;
     const MODEL_NAME = `gemini-1.5-flash-latest`;
     const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:GenerateContent`;
 
