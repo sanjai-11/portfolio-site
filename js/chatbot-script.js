@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const GEMINI_API_KEY = (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) 
         ? API_CONFIG.GEMINI_API_KEY 
         : 'AIzaSyBFw3iLeokV_PO82IoMIO7-9MpU2-ulH74';
-    const MODEL_NAME = `gemini-1.5-pro`;
+    const MODEL_NAME = `gemini-1.5-flash`;
     const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${MODEL_NAME}:generateContent`;
 
     // DOM Elements
