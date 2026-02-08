@@ -229,71 +229,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to get AI response from Gemini API
     async function getAIResponse(userMessage) {
-        // Ensure API key is available
+  try {
+    const response = await fetch(BACKEND_CHAT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: userMessage,
+        context: buildPortfolioContext(),
+        conversationHistory: buildConversationContext()
+      })
+    });
 
-        try {
-            const conversationHistory = buildConversationContext();
-            const contextPrompt = conversationHistory ? 
-                `Previous conversation:\n${conversationHistory}\n\n` : '';
-
-            const response = await fetch(BACKEND_CHAT_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-            message: userMessage,
-            context: buildPortfolioContext(),
-            conversationHistory: buildConversationContext()
-            })
-            });
-
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        role: "user",
-                        parts: [{
-                            text: `${buildPortfolioContext()}\n\n${contextPrompt}Current user question: ${userMessage}\n\nRespond as SK, Sanjai's AI assistant speaking ON BEHALF of Sanjai. CRITICAL RULES:
-- Speak as "I", "my", "me", "myself" - NOT "he", "him", "his", "Sanjai"
-- You ARE Sanjai responding directly to the user
-- Remember the conversation context and answer follow-up questions intelligently
-- If user asks "where" or "when" about previous achievements, refer to specific companies/dates
-- Keep responses 2-3 SHORT sentences maximum
-- Use bullet points (•) ONLY when listing multiple items/skills
-- For single answers or explanations, use plain conversational text
-- Be POLITE, PROFESSIONAL, INTERESTING, and VIBRANT
-- Include specific numbers/achievements naturally
-- Sound IMPRESSIVE but HUMBLE and APPROACHABLE
-- Avoid overly boastful language like "rockstar" or "wizard"`
-                        }]
-                    }]
-                })
-            });
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('API Error Response:', errorText);
-                console.error('Status:', response.status, response.statusText);
-                throw new Error(`API Error: ${response.status} - ${errorText}`);
-            }
-
-            const data = await response.json();
-            return data.text;
-        
-        } catch (error) {
-            console.error('Error fetching AI response:', error);
-            
-            // More specific error message based on the error type
-            if (error.message.includes('Failed to fetch')) {
-                return "I'm having trouble connecting to the AI service. This might be a network issue. Please check your internet connection and try again.";
-            } else if (error.message.includes('Failed to get response')) {
-                return "The AI service returned an error. This might be an API key issue. Please contact Sanjai at sanjaibala11@gmail.com.";
-            } else {
-                return "I apologize, but I'm having trouble processing your request right now. Please try again later or contact Sanjai directly at sanjaibala11@gmail.com.";
-            }
-        }
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`API Error: ${response.status} - ${errorText}`);
     }
+
+    const data = await response.json();
+    return data.text || "No response text returned.";
+  } catch (error) {
+    console.error("Error fetching AI response:", error);
+    return "Sorry — I’m having trouble right now. Please try again in a bit.";
+  }
+}
+
 
     // Create and add a dummy div for auto-scroll at the end of messages
     const scrollMarker = document.createElement('div');
@@ -668,9 +627,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Debug: Check API key configuration
     console.log('Chatbot initialized');
-    console.log('API Key available:', !!GEMINI_API_KEY);
-    console.log('API Key first 10 chars:', GEMINI_API_KEY ? GEMINI_API_KEY.substring(0, 10) : 'NOT FOUND');
-    console.log('API URL:', GEMINI_API_URL);
+    console.log('Backend URL:', BACKEND_CHAT_URL);
     
     // Test API connection on startup
     testAPIConnection();
