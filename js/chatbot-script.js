@@ -185,45 +185,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Test API connection
     async function testAPIConnection() {
-        
         try {
-             const testResponse = await fetch(BACKEND_CHAT_URL, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-              message: "Hello, just testing the connection. Reply with 'Connection successful'",
-              context: buildPortfolioContext(),
-              conversationHistory: ""
-              })
-                });
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        role: "user",
-                        parts: [{
-                            text: "Hello, just testing the connection. Reply with 'Connection successful'"
-                        }]
-                    }]
-                })
-            });
-            
-            if (testResponse.ok) {
-                const data = await testResponse.json();
+        const testResponse = await fetch(BACKEND_CHAT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "Hello, just testing the connection. Reply with 'Connection successful'",
+        context: buildPortfolioContext(),
+        conversationHistory: ""
+      })
+    });
 
-            } else {
-                const errorText = await testResponse.text();
-                console.error('❌ API Connection Test: FAILED');
-                console.error('Status:', testResponse.status, testResponse.statusText);
-                console.error('Error:', errorText);
-            }
-        } catch (error) {
-            console.error('❌ API Connection Test: NETWORK ERROR');
-            console.error('Error:', error);
-        }
+        if (testResponse.ok) {
+      const data = await testResponse.json();
+      console.log("✅ API Connection Test: OK", data);
+    } else {
+      const errorText = await testResponse.text();
+      console.error("❌ API Connection Test: FAILED", testResponse.status, errorText);
     }
+  } catch (error) {
+    console.error("❌ API Connection Test: NETWORK ERROR", error);
+  }
+}
+
 
     // Function to build conversation context
     function buildConversationContext() {
