@@ -1,13 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Your Gemini API Key (loaded from config)
-    const GEMINI_API_KEY = (typeof API_CONFIG !== 'undefined' && API_CONFIG.GEMINI_API_KEY) 
-        ? API_CONFIG.GEMINI_API_KEY
-        : (() => { 
-      console.error('❌ Gemini API key missing — check that config.js is loaded before chatbot-script.js');
-      return ''; 
-    })();
-    const MODEL_NAME = `gemini-2.5-flash`;
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent`;
+    
+    // Call your backend endpoint (keeps API key off GitHub / browser)
+    const BACKEND_CHAT_URL = "/api/chat";
+
 
     // DOM Elements
     const chatBody = document.querySelector('.chat-body');
@@ -192,7 +187,15 @@ document.addEventListener('DOMContentLoaded', function() {
     async function testAPIConnection() {
         
         try {
-            const testResponse = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+             const testResponse = await fetch(BACKEND_CHAT_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+              message: "Hello, just testing the connection. Reply with 'Connection successful'",
+              context: buildPortfolioContext(),
+              conversationHistory: ""
+              })
+                });
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -243,17 +246,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to get AI response from Gemini API
     async function getAIResponse(userMessage) {
         // Ensure API key is available
-        if (!GEMINI_API_KEY || GEMINI_API_KEY === 'undefined') {
-            console.error('Gemini API key is not properly configured');
-            return "I apologize, but there's an issue with the AI configuration. Please check the API key setup. You can contact Sanjai directly at sanjaibala11@gmail.com.";
-        }
 
         try {
             const conversationHistory = buildConversationContext();
             const contextPrompt = conversationHistory ? 
                 `Previous conversation:\n${conversationHistory}\n\n` : '';
 
-            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+            const response = await fetch(BACKEND_CHAT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            message: userMessage,
+            context: buildPortfolioContext(),
+            conversationHistory: buildConversationContext()
+            })
+            });
+
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -287,12 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const data = await response.json();
-
-            return data.candidates[0].content.parts[0].text;
+            return data.text;
+        
         } catch (error) {
             console.error('Error fetching AI response:', error);
-            console.error('API Key (first 10 chars):', GEMINI_API_KEY.substring(0, 10));
-            console.error('API URL:', GEMINI_API_URL);
             
             // More specific error message based on the error type
             if (error.message.includes('Failed to fetch')) {
