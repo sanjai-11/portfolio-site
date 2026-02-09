@@ -233,6 +233,31 @@ Guidelines:
     if (chatContainer) setTimeout(() => { chatContainer.scrollTop = chatContainer.scrollHeight; }, 100);
   }
 
+  function normalizeAIResponse(text) {
+  if (!text) return text;
+
+  // Remove unwanted assistant intro lines
+  text = text.replace(/I'm SK.*?\./gi, "");
+  text = text.replace(/I am SK.*?\./gi, "");
+
+  // Convert * bullets to - bullets
+  text = text.replace(/^\s*\*\s+/gm, "- ");
+
+  // Ensure Summary header exists
+  if (!text.includes("Summary:")) {
+    const lines = text.split("\n").filter(l => l.trim());
+    if (lines.length > 0) {
+      text = `Summary:\n${lines[0]}\n\nKey Points:\n${lines.slice(1).join("\n")}`;
+    }
+  }
+
+  // Ensure bullet formatting spacing
+  text = text.replace(/\n-/g, "\n- ");
+
+  return text.trim();
+}
+
+  
   function addMessage(text, isUser = false) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
