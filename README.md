@@ -1,31 +1,37 @@
-# Sanjai's Portfolio Website
+# Sanjai Bala's Portfolio Website
 
-A modern, interactive portfolio website showcasing my skills, projects, experience, and research work in Data Science and AI. Features an AI-powered chatbot assistant powered by Google's Gemini AI.
+This repository contains the source code for my personal portfolio website showcasing my work in Artificial Intelligence, Machine Learning, Data Engineering, and Applied Analytics.
 
-## 🌟 About Me
+The website highlights my academic research, industry experience, AI product development work, and interactive AI chatbot built using modern web and serverless architecture.
 
-I am Sanjaikumar Balasubramaniyan, a passionate Data Scientist with a strong foundation in machine learning, data engineering, and analytics. Currently pursuing my Master's in Data Science at Indiana University, Bloomington, while working as a Research Data Scientist. I aim to transform complex data into actionable insights that drive innovation.
+## About Me
+
+I am Sanjai Bala, a graduate student pursuing a Master’s in Data Science at Indiana University Bloomington. My work focuses on designing end-to-end AI systems that combine machine learning, large language models, and scalable data infrastructure to solve real-world problems across finance, healthcare, and behavioral research domains.
+
+My experience includes building recommendation systems, LLM-driven decision intelligence tools, streaming data pipelines, and interactive AI applications.
 
 ## 🚀 Live Website
 
-Visit my portfolio: **https://sanjai-11.github.io/portfolio-site**
+Visit my portfolio: **https://sanjaibala.com**
 
-## 💼 What You'll Find
+## What You'll Find
 
 ### **Professional Experience**
 - **Research Data Scientist** at Indiana University Bloomington (Current)
-- **Data Scientist Intern** at Systech Solutions Inc
+- **AI Engineer Intern** at riAI Capital LLC
+- **Data Scientist** at Systech Solutions Inc
 - **Data Analyst Intern** at 8Queens Software Technologies
 
 ### **Key Projects**
+- **Real-Time Streaming Data Pipeline** - Implemented Kafka and Spark Structured Streaming for event-driven data processing and analytics
 - **AI Agent for Operating Backend System** - Built with Gemini-pro LLM, achieving 50% efficiency improvement
 - **CardioCare** - Heart disease management system with ML predictions
+- **Disease Progression Modeling** - Machine learning system predicting longitudinal disease progression using explainable AI techniques
 - **Air Calligraphy using Computer Vision** - Enables air-writing for individuals without limbs
-- **NYC Crime Analytics** - Interactive dashboard using Preswald
-- **Monument Intelligence Dashboard** - AI-powered exploration of global monuments
 - **BlinkIt Sales Analytics** - Power BI dashboard for comprehensive sales insights
 
 ### **Products I've Built**
+- **Prosk Assist** - Job application automation software for job seekers
 - **Jobha Naturals Web Application** - E-commerce platform I led and developed
 - **Box of Wellness** - Nutrition catalog web application for fitness enthusiasts
 
@@ -39,9 +45,9 @@ Visit my portfolio: **https://sanjai-11.github.io/portfolio-site**
 - **Master's in Data Science** - Indiana University Bloomington (2024-2026)
 - **Bachelor's in AI & Data Science** - SRMIST University (2020-2024)
 
-## 🛠️ Technical Skills
+## Technical Skills
 
-**Machine Learning & AI**: Machine Learning, Deep Learning, NLP, Generative AI, Statistics  
+**Machine Learning & AI**: Machine Learning, Deep Learning, NLP, LLM, RAG, Generative AI, Statistics  
 **Data Engineering**: Data Analytics, Data Cleaning, Data Wrangling, ETL Pipelines  
 **Cloud Technologies**: AWS (S3, EC2, SageMaker), GCP (BigQuery, DataFlow), Apache Spark  
 **Programming**: Python, SQL, R
@@ -53,6 +59,13 @@ Visit my portfolio: **https://sanjai-11.github.io/portfolio-site**
 - **Responsive Design**: Optimized for all devices and screen sizes
 - **Dynamic Animations**: Engaging starfield background and smooth transitions
 - **Direct Contact**: Integrated contact form and resume download
+
+## Career Interests
+- **Machine Learning Engineer**
+- **AI Engineer**
+- **Data Scientist**
+- **Data Engineer**
+- **Software Engineer**
 
 ## 📞 Contact
 
