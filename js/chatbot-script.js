@@ -154,12 +154,29 @@ ${expLines.join("\n")}
 PROJECTS:
 ${projectLines.join("\n")}
 
-RESPONSE FORMAT (STRICT):
-1) 1-line summary
-2) 3–6 bullets (max 14 words each)
-3) Optional: one “Next step” line
-Never exceed 120 words unless user explicitly asks for detail.
-`.trim();
+RESPONSE FORMAT (MANDATORY):
+
+Return response ONLY in this format:
+
+Summary:
+<One professional sentence>
+
+Key Points:
+- Bullet 1 (max 12 words)
+- Bullet 2 (max 12 words)
+- Bullet 3 (max 12 words)
+- Bullet 4 (optional)
+- Bullet 5 (optional)
+
+Guidelines:
+- Always include "Summary:" heading
+- Always include "Key Points:" heading
+- Always use "-" for bullets
+- Never use "*"
+- Never return paragraphs longer than 2 lines
+- Never add introduction like "I'm SK"
+- Never include filler phrases
+- Keep tone professional and recruiter-friendly
   }
 
   // Conversation context
