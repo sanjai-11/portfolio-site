@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  // Backend endpoint (keep as /api/chat once sanjaibala.com is routed to Vercel)
+  // Backend endpoint
   const BACKEND_CHAT_URL = "/api/chat";
 
   // DOM Elements
@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function normalizePortfolioData(p) {
-    // Ensure required structure exists, even if fields missing
     const data = p || {};
     data.links = data.links || {};
     data.skills = Array.isArray(data.skills) ? data.skills : [];
@@ -113,14 +112,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const json = loadPortfolioJSON();
     const data = normalizePortfolioData(json || fallbackDOMData());
 
-    // Ensure experience status is respected
     const expLines = data.experience.map((e, i) => {
       const status = (e.status || "").toUpperCase() || "PAST";
       const highlights = Array.isArray(e.highlights) ? e.highlights : [];
       const metrics = Array.isArray(e.metrics) ? e.metrics : [];
       return `${i + 1}. ${e.title || ""} at ${e.company || ""} (${e.dates || ""}) [${status}]
-   - Highlights: ${highlights.join(" | ")}
-   - Impact: ${metrics.join(" | ")}`.trim();
+- Highlights: ${highlights.join(" | ")}
+- Impact: ${metrics.join(" | ")}`.trim();
     });
 
     const projectLines = data.projects.map((pr, i) => {
@@ -129,107 +127,49 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     return `
-===========================
-ASSISTANT ROLE
-===========================
-
 You are SK — Sanjai Bala’s AI assistant.
 
-You represent Sanjai professionally and help visitors understand his:
+GOAL:
+Be friendly, professional, concise, and impressive. Your audience may be HR, recruiters, hiring managers, or engineers.
 
-• Experience
-• Skills
-• Projects
-• Research
-• Technical strengths
-• Career background
+ABSOLUTE RULES:
+- Never use labeled templates like "Summary:" or "Key Points:".
+- Never output headings like "Summary" / "Key Points" / "Conclusion".
+- Keep answers conversational and easy to read.
+- Use short paragraphs. Use bullets only when helpful.
+- Do not hallucinate. Use only the portfolio data provided.
+- Roles marked [PAST] are completed. Never describe them as "upcoming".
 
-Your responses must always feel natural, polished, and impressive to recruiters and hiring managers.
+GREETING BEHAVIOR:
+If the user says hi/hey/hello or small talk, respond in 1–2 sentences:
+"Hey there — I’m SK, Sanjai Bala’s assistant. Ask me about his experience, skills, projects, or research."
 
-===========================
-COMMUNICATION STYLE
-===========================
+CONTENT TO USE (SOURCE OF TRUTH):
+PROFILE:
+- Name: ${data.name || "Sanjai Bala"}
+- Headline: ${data.headline || ""}
+- Location: ${data.location || ""}
+- Email: ${data.email || ""}
+- Phone: ${data.phone || ""}
+- Links: ${Object.entries(data.links || {}).map(([k, v]) => `${k}: ${v}`).join(" | ")}
 
-Always speak in a tone that is:
+SKILLS:
+${(data.skills || []).join(", ")}
 
-• Professional
-• Friendly
-• Conversational
-• Confident
-• Concise
-• Informative
+EDUCATION:
+${(data.education || []).join("\n")}
 
-Never sound robotic or scripted.
+EXPERIENCE:
+${expLines.join("\n")}
 
-Never use rigid templates or labeled sections like:
-- Summary
-- Key Points
-- Conclusion
+PROJECTS:
+${projectLines.join("\n")}
 
-===========================
-GREETING BEHAVIOR
-===========================
-
-If the user greets you or starts small talk:
-
-Respond warmly and conversationally.
-
-Introduce yourself naturally as SK, Sanjai’s assistant.
-
-Invite them to ask about Sanjai’s experience, skills, projects, or research.
-
-Keep greeting responses short and friendly.
-
-===========================
-ANSWER QUALITY RULES
-===========================
-
-When answering questions:
-
-• Focus on real impact and achievements
-• Mention technologies naturally
-• Highlight measurable results when relevant
-• Use short paragraphs or occasional clean bullet points if helpful
-• Keep responses easy to read and recruiter friendly
-• Avoid long walls of text
-• Avoid repeating resume content word-for-word
-
-===========================
-PROJECT EXPLANATION RULES
-===========================
-
-When describing projects:
-
-Naturally explain:
-• What problem it solves
-• Technologies used
-• Impact or outcomes
-• Real-world relevance
-
-===========================
-HIRING / EVALUATION QUESTIONS
-===========================
-
-If user asks hiring or evaluation questions:
-
-Highlight:
-• Demonstrated impact
-• Strong technical versatility
-• Research and production experience
-• Problem-solving ability
-• Continuous learning mindset
-
-===========================
-ERROR PREVENTION
-===========================
-
-If a question is unclear:
-→ Ask one short clarification question.
-
-If a question is unrelated to Sanjai:
-→ Politely redirect to his professional background.
-
-Always maintain clean formatting and clarity.
+HOW TO ANSWER WELL:
+- For experience questions: mention role, domain, tech, and measurable impact.
+- For skills questions: prioritize the most relevant skills; avoid listing everything.
+- For project questions: explain problem → approach → tech → impact, briefly.
+- For "why hire": emphasize impact, ownership, speed, and applied AI strength.
 `.trim();
   }
 
@@ -240,9 +180,40 @@ Always maintain clean formatting and clarity.
     msgs.forEach(m => {
       const isUser = m.classList.contains('user-message');
       const content = (m.textContent || m.innerText || '').trim();
+      if (!content) return;
       history += isUser ? `Human: ${content}\n` : `SK: ${content}\n`;
     });
     return history;
+  }
+
+  // Normalize AI response (NO Summary/Key Points injection)
+  function normalizeAIResponse(text) {
+    if (!text) return "";
+
+    // Remove any lingering "Summary/Key Points" labels if model outputs them
+    text = text.replace(/^\s*Summary:\s*/gmi, "");
+    text = text.replace(/^\s*Key Points:\s*/gmi, "");
+
+    // Convert asterisks to clean bullets
+    text = text.replace(/^\s*\*\s+/gm, "• ");
+    text = text.replace(/^\s*-\s+/gm, "• ");
+
+    // Remove duplicated assistant intro if it repeats too often (but allow greetings)
+    // If message already contains "I'm SK" more than once, reduce duplicates
+    const introMatches = text.match(/I[’']?m SK|I am SK/gi) || [];
+    if (introMatches.length > 1) {
+      // remove all but first
+      let seen = 0;
+      text = text.replace(/(I[’']?m SK|I am SK)[^.\n]*\.?/gi, (m) => {
+        seen += 1;
+        return seen === 1 ? m : "";
+      });
+    }
+
+    // Clean spacing
+    text = text.replace(/\n{3,}/g, "\n\n").trim();
+
+    return text;
   }
 
   // API call
@@ -252,7 +223,8 @@ Always maintain clean formatting and clarity.
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          message: `Answer concisely and structured. ${userMessage}`,
+          // Remove "structured" wording that can bias Summary/Key Points
+          message: `Reply as SK: friendly, professional, concise, and recruiter-friendly. Do NOT use "Summary" or "Key Points" labels. User message: ${userMessage}`,
           context: buildPortfolioContext(),
           conversationHistory: buildConversationContext()
         })
@@ -287,50 +259,17 @@ Always maintain clean formatting and clarity.
     if (chatContainer) setTimeout(() => { chatContainer.scrollTop = chatContainer.scrollHeight; }, 100);
   }
 
-  // --- Normalize AI responses to enforce structure ---
-  function normalizeAIResponse(text) {
-  if (!text) return text;
-
-  // Remove assistant self-introductions
-  text = text.replace(/I'm SK.*?\./gi, "");
-  text = text.replace(/I am SK.*?\./gi, "");
-
-  // Convert "*" bullets to "-"
-  text = text.replace(/^\s*\*\s+/gm, "- ");
-
-  // Ensure required headings exist
-  if (!text.includes("Summary:")) {
-    const lines = text.split("\n").filter(l => l.trim());
-    if (lines.length > 0) {
-      const summary = lines[0];
-      const bullets = lines.slice(1).filter(l => l.trim());
-      text =
-        `Summary:\n${summary}\n\nKey Points:\n` +
-        bullets.map(l => l.startsWith("-") ? l : `- ${l}`).join("\n");
-    }
-  }
-
-  // Normalize spacing
-  text = text.replace(/\n{3,}/g, "\n\n");
-
-  return text.trim();
-}
-
-  
   function addMessage(text, isUser = false) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
 
-    // Clean formatting
-    const formattedText = text
-      .replace(/^Summary:/gm, '<strong>Summary:</strong>')
-      .replace(/^Key Points:/gm, '<strong>Key Points:</strong>')
-      .replace(/^- (.*)$/gm, '• $1')
+    // Render: keep it clean and readable (no Summary/Key Points formatting)
+    const safeText = (text || "").trim();
+
+    const formattedText = safeText
       .replace(/\n/g, '<br>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-
 
     messageDiv.innerHTML = formattedText;
 
@@ -372,7 +311,7 @@ Always maintain clean formatting and clarity.
   function addWelcomeMessage() {
     const msgs = messagesContainer.querySelectorAll('.message');
     if (msgs.length === 0) {
-      addMessage("Hi — I’m SK. Ask about Sanjai’s experience, projects, or skills.");
+      addMessage("Hey there — I’m SK, Sanjai Bala’s assistant. Ask me about his experience, skills, projects, or research.");
     }
   }
 
