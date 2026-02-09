@@ -210,7 +210,7 @@ Guidelines:
       }
 
       const data = await res.json();
-      return data.text || "No response returned.";
+      return normalizeAIResponse(data.text || "");
     } catch (e) {
       console.error("Error fetching AI response:", e);
       return "Sorry — I’m having trouble right now. Please try again.";
@@ -233,26 +233,31 @@ Guidelines:
     if (chatContainer) setTimeout(() => { chatContainer.scrollTop = chatContainer.scrollHeight; }, 100);
   }
 
+  // --- Normalize AI responses to enforce structure ---
   function normalizeAIResponse(text) {
   if (!text) return text;
 
-  // Remove unwanted assistant intro lines
+  // Remove assistant self-introductions
   text = text.replace(/I'm SK.*?\./gi, "");
   text = text.replace(/I am SK.*?\./gi, "");
 
-  // Convert * bullets to - bullets
+  // Convert "*" bullets to "-"
   text = text.replace(/^\s*\*\s+/gm, "- ");
 
-  // Ensure Summary header exists
+  // Ensure required headings exist
   if (!text.includes("Summary:")) {
     const lines = text.split("\n").filter(l => l.trim());
     if (lines.length > 0) {
-      text = `Summary:\n${lines[0]}\n\nKey Points:\n${lines.slice(1).join("\n")}`;
+      const summary = lines[0];
+      const bullets = lines.slice(1).filter(l => l.trim());
+      text =
+        `Summary:\n${summary}\n\nKey Points:\n` +
+        bullets.map(l => l.startsWith("-") ? l : `- ${l}`).join("\n");
     }
   }
 
-  // Ensure bullet formatting spacing
-  text = text.replace(/\n-/g, "\n- ");
+  // Normalize spacing
+  text = text.replace(/\n{3,}/g, "\n\n");
 
   return text.trim();
 }
@@ -263,11 +268,15 @@ Guidelines:
     messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
 
     // Clean formatting
-    const formattedText = (text || "")
+    const formattedText = text
+      .replace(/^Summary:/gm, '<strong>Summary:</strong>')
+      .replace(/^Key Points:/gm, '<strong>Key Points:</strong>')
+      .replace(/^- (.*)$/gm, '• $1')
       .replace(/\n/g, '<br>')
-      .replace(/• /g, '<br>• ')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+
 
     messageDiv.innerHTML = formattedText;
 
