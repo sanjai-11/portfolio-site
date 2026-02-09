@@ -176,7 +176,7 @@ Guidelines:
 - Never return paragraphs longer than 2 lines
 - Never add introduction like "I'm SK"
 - Never include filler phrases
-- Keep tone professional and recruiter-friendly
+- Keep tone professional and recruiter-friendly`.trim();
   }
 
   // Conversation context
