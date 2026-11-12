@@ -1,79 +1,52 @@
-# Sanjai Bala's Portfolio Website
+# Sanjai Bala | AI/ML Engineer
 
-This repository contains the source code for my personal portfolio website showcasing my work in Artificial Intelligence, Machine Learning, Data Engineering, and Applied Analytics.
+Source code for my personal portfolio website: **https://sanjaibala.com**
 
-The website highlights my academic research, industry experience, AI product development work, and interactive AI chatbot built using modern web and serverless architecture.
+The site showcases my industry experience, research and projects in AI/ML, LLMs, agentic systems and computer vision. It also includes an AI assistant ("SK") that answers questions about my work.
 
 ## About Me
 
-I am Sanjai Bala, a graduate student pursuing a Master’s in Data Science at Indiana University Bloomington. My work focuses on designing end-to-end AI systems that combine machine learning, large language models, and scalable data infrastructure to solve real-world problems across finance, healthcare, and behavioral research domains.
+I'm Sanjai Bala (Sanjaikumar Balasubramaniyan), an AI/ML Engineer at **Agilisium Consulting**, embedded with **UCB Pharma**. I build conversational AI on Databricks and validate transformer-based patient prediction models on real-world healthcare data. I hold an MS in Data Science from Indiana University Bloomington and a B.Tech in AI & Data Science. I'm also a Databricks Certified Machine Learning Associate.
 
-My experience includes building recommendation systems, LLM-driven decision intelligence tools, streaming data pipelines, and interactive AI applications.
+## Experience
 
-## 🚀 Live Website
+- **AI/ML Engineer**, Agilisium Consulting (client: UCB Pharma) — Jun 2026 to present
+- **Research Data Scientist**, Indiana University Bloomington — Jan 2025 to Jun 2026
+- **AI Engineer Intern**, riAI Capital LLC — Jul 2025 to Nov 2025
+- **Data Scientist Intern**, Systech Solutions Inc.
+- **Data Analyst Intern**, 8Queens Software Technologies
 
-Visit my portfolio: **https://sanjaibala.com**
+## Research
 
-## What You'll Find
+- **Toward Reliable Visible-Track Speaking-State Detection Under Video Restoration**: accepted at WVAQ 2027 @ WACV 2027 ([OpenReview](https://openreview.net/forum?id=RoZpoUx9Z7))
+- **Advanced ANPR for Vehicle Management**: Adalya International Journal (96% accuracy)
+- **AI-Powered Banknote Identification System for Visually Impaired**: RTACT 2024
+- **Funding Networks for BIPOC Nonprofit Organizations**: presented at ARNOVA
 
-### **Professional Experience**
-- **Research Data Scientist** at Indiana University Bloomington (Current)
-- **AI Engineer Intern** at riAI Capital LLC
-- **Data Scientist** at Systech Solutions Inc
-- **Data Analyst Intern** at 8Queens Software Technologies
+## Featured Projects
 
-### **Key Projects**
-- **Real-Time Streaming Data Pipeline** - Implemented Kafka and Spark Structured Streaming for event-driven data processing and analytics
-- **AI Agent for Operating Backend System** - Built with Gemini-pro LLM, achieving 50% efficiency improvement
-- **CardioCare** - Heart disease management system with ML predictions
-- **Disease Progression Modeling** - Machine learning system predicting longitudinal disease progression using explainable AI techniques
-- **Air Calligraphy using Computer Vision** - Enables air-writing for individuals without limbs
-- **BlinkIt Sales Analytics** - Power BI dashboard for comprehensive sales insights
+- [Semantic Search RAG](https://github.com/sanjai-11/semantic-search-rag): multi-PDF Q&A with ChromaDB, MMR retrieval and cited answers
+- [Report Builder AI](https://github.com/sanjai-11/report-builder-AI-ipynb): notebook outputs to branded PDF/DOCX reports with AI summaries
+- [Customer Churn Prediction & Segmentation](https://github.com/sanjai-11/customer-churn-predict): XGBoost + KMeans with lift analysis
+- [ROS2 Object Tracking & Control](https://github.com/sanjai-11/ros2-object-tracking-control): OpenCV, Kalman filter and PID control
+- [Predictive Maintenance – RUL (LSTM)](https://github.com/sanjai-11/predictive-maintenance-rul-lstm)
+- [Industrial Surface Defect Detection](https://github.com/sanjai-11/industrial-surface-defect-detection-cv)
+- [AI Agent for Operating Backend System](https://github.com/sanjai-11/AI-Agent-for-operating-Background-System)
 
-### **Products I've Built**
-- **Prosk Assist** - Job application automation software for job seekers
-- **Jobha Naturals Web Application** - E-commerce platform I led and developed
-- **Box of Wellness** - Nutrition catalog web application for fitness enthusiasts
+## Skills
 
-### **Research Work**
-- Published research on "Advanced ANPR for Vehicle Management" (96% accuracy)
-- Presented "AI-Powered Banknote Identification System for Visually Impaired"
-- Currently researching funding networks for BIPOC nonprofit organizations
+**AI/ML**: LLMs, RAG, Agentic AI, LLM Evaluation, NLP, Transformers, Computer Vision, Deep Learning, Time-Series
+**Platforms**: Databricks, Apache Spark, AWS (S3, EC2, SageMaker), GCP, Docker, GitHub Actions
+**Languages**: Python, PyTorch, SQL, JavaScript
 
-## 🎓 Education
+## How the Site Works
 
-- **Master's in Data Science** - Indiana University Bloomington (2024-2026)
-- **Bachelor's in AI & Data Science** - SRMIST University (2020-2024)
+- Static HTML/CSS/JS (`index.html`, `style.css`)
+- **AI assistant**: `js/chatbot-script.js` builds context from the `portfolio-data` JSON block in `index.html` and sends it to the serverless function `api/chat.js`. That function calls Gemini using the `GEMINI_API_KEY` environment variable on the server, so no key is shipped to the browser.
+- **Keeping the assistant in sync**: when you update the site, update the `portfolio-data` JSON too, and make sure it is still valid JSON. If it doesn't parse, the assistant falls back to the About section only.
 
-## Technical Skills
-
-**Machine Learning & AI**: Machine Learning, Deep Learning, NLP, LLM, RAG, Generative AI, Statistics  
-**Data Engineering**: Data Analytics, Data Cleaning, Data Wrangling, ETL Pipelines  
-**Cloud Technologies**: AWS (S3, EC2, SageMaker), GCP (BigQuery, DataFlow), Apache Spark  
-**Programming**: Python, SQL, R
-
-## 🤖 Interactive Features
-
-- **AI Chatbot Assistant**: Powered by Google's Gemini AI that can answer questions about my work and experience
-- **Interactive Project Showcases**: Slider-based navigation through projects and research
-- **Responsive Design**: Optimized for all devices and screen sizes
-- **Dynamic Animations**: Engaging starfield background and smooth transitions
-- **Direct Contact**: Integrated contact form and resume download
-
-## Career Interests
-- **Machine Learning Engineer**
-- **AI Engineer**
-- **Data Scientist**
-- **Data Engineer**
-- **Software Engineer**
-
-## 📞 Contact
+## Contact
 
 - **Email**: sanjaibala11@gmail.com
-- **Phone**: +1 (812) 671-6737
 - **LinkedIn**: [Sanjai Bala](https://www.linkedin.com/in/sanjai-bala/)
 - **GitHub**: [sanjai-11](https://github.com/sanjai-11)
-
----
-
-*This portfolio is continuously updated with my latest projects, research, and professional achievements. The AI assistant automatically stays in sync with any content updates.* 
