@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="viewport" content="width-device-width, initial-scale=1.0">
-    <title>Sanjai's Portfolio</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjai Bala | AI/ML Engineer</title>
+    <meta name="description" content="Sanjaikumar Balasubramaniyan (Sanjai Bala) is an AI/ML Engineer building LLM, RAG, agentic and computer vision systems for production, with published research in applied AI.">
+    <meta property="og:title" content="Sanjai Bala | AI/ML Engineer">
+    <meta property="og:description" content="AI/ML Engineer building production LLM, RAG, agentic and computer vision systems. Projects, research and experience.">
+    <meta property="og:url" content="https://sanjaibala.com">
+    <meta property="og:type" content="website">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="js/chatbot-script.js"></script>
@@ -12,14 +17,15 @@
     <script>
         // Hide/Show Navigation on Scroll
         let lastScrollTop = 0;
-        const navElement = document.querySelector('nav');
         
         // Enhanced scrollbar visibility for main page
         let mainScrollTimeout;
         
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
+            const navElement = document.querySelector('nav');
+            if (!navElement) return;
+
             if (scrollTop > lastScrollTop && scrollTop > 100) {
                 // Scrolling down - hide navigation
                 navElement.style.transform = 'translateY(-100%)';
@@ -79,9 +85,9 @@
             </div>
             <div class="about-col-2">
                 <h1 class="sub-title">About Me</h1>
-                <p style="text-align: justify;"> Welcome to my portfolio! I am Sanjai Bala (Sanjaikumar Balasubramaniyan), a passionate AI and Machine Learning engineer with a strong foundation in applied machine learning, data engineering, and analytics. With hands-on experience across research and industry, I have built impactful solutions including LLM-powered analytics tools, real-time dashboards, scalable data pipelines, and predictive modeling systems that improve decision-making. Currently pursuing my Master’s in Data Science at Indiana University Bloomington, I focus on developing intelligent systems that transform complex data into actionable insights and real-world applications.
+                <p style="text-align: justify;">I'm Sanjai Bala (Sanjaikumar Balasubramaniyan), an AI/ML Engineer who builds machine learning and LLM systems that hold up in production. At Agilisium Consulting, embedded with UCB Pharma, I build conversational AI on Databricks for field teams and validate transformer-based patient prediction models on real-world healthcare data, in a regulated environment where reliability and evaluation matter as much as accuracy.
                 </p> <br>
-                <p style="text-align: justify;">My projects reflect a strong commitment to solving practical problems using AI and data-driven technology. From developing AI workflows that improved research and analytics efficiency by up to 40% to building an Automatic Number Plate Recognition (ANPR) system with 96% accuracy (published in an international journal), my work combines innovation with reliability. Skilled in Python, JavaScript, SQL, PyTorch, and cloud platforms such as AWS, I am dedicated to building scalable, user-focused AI solutions that create measurable impact. Explore my portfolio to see how I turn data into decisions.!</p>
+                <p style="text-align: justify;">I hold an MS in Data Science from Indiana University Bloomington and a B.Tech in AI &amp; Data Science. My work spans LLMs and RAG, agentic pipelines, NLP, computer vision and deep learning, from research to deployment. My research has been accepted at the WVAQ workshop at WACV 2027, published in an international journal and presented at RTACT and ARNOVA. I'm a Databricks Certified Machine Learning Associate and I'm always building something new. Have a look around, or ask my AI assistant anything.</p>
 
                 <div class="tab-titles">
                     <p class="tab-links active-link"  onclick="opentab('skills')">Skills</p>
@@ -90,34 +96,34 @@
                 </div>
                 <div class="tab-contents active-tab" id="skills">
                     <ul>
+                        <li><span>LLMs &amp; RAG</span></li>
+                        <li><span>Agentic AI</span></li>
+                        <li><span>LLM Evaluation</span></li>
+                        <li><span>Python</span></li>
+                    </ul>
+                    <ul>
                         <li><span>Machine Learning</span></li>
-                        <li><span>Statistics</span></li>
-                        <li><span>Data Analytics</span></li>
+                        <li><span>Deep Learning</span></li>
+                        <li><span>NLP</span></li>
+                        <li><span>PyTorch</span></li>
                     </ul>
-                    <ul>       
-                        <li><span>Generative AI</span></li>                 
-                        <li><span>NLP</span></li>                  
-                        <li><span>Deep Learning</span></li>                  
-                    </ul> 
-                    <ul>       
-                        <li><span>Data Cleaning</span></li>                 
-                        <li><span>Data Wrangling</span></li>                  
-                        <li><span>ETL Pipelines</span></li>                  
+                    <ul>
+                        <li><span>Computer Vision</span></li>
+                        <li><span>Transformers</span></li>
+                        <li><span>Time-Series Modeling</span></li>
+                        <li><span>SQL</span></li>
                     </ul>
-                    <ul>                
-                        <li><span>AWS(S3, EC2, SageMaker)</span></li>                
-                        <li><span>GCP(BigQuery, DataFLow)</span></li>               
-                        <li><span>Apache Spark</span></li>            
-                    </ul>
-                    <ul>                
-                        <li><span>Python</span></li>                
-                        <li><span>SQL</span></li>               
-                        <li><span>R</span></li>            
+                    <ul>
+                        <li><span>Databricks &amp; Spark</span></li>
+                        <li><span>AWS (S3, EC2, SageMaker)</span></li>
+                        <li><span>MLOps &amp; CI/CD</span></li>
+                        <li><span>Docker</span></li>
                     </ul>
                 </div>
                 <div class="tab-contents" id="experience">
                     <ul>
-                        <li><span>Jan 2025 - Present</span><br>Research Data Scientist | Indiana University Bloomington.</li>
+                        <li><span>June 2026 - Present</span><br>AI/ML Engineer | Agilisium Consulting (UCB Pharma).</li>
+                        <li><span>Jan 2025 - June 2026</span><br>Research Data Scientist | Indiana University Bloomington.</li>
                         <li><span>July 2025 - Nov 2025</span><br>AI Engineer Intern | riAI Capital LLC.</li>
                         <li><span>Apr 2023 - July 2024</span><br>Data Scientist | Systech Solutions Inc.</li>
                         <li><span>May 2022 - Jan 2023</span><br>Data Analyst Intern | 8Queens Software Technologies Pvt Ltd.</li>
@@ -126,7 +132,8 @@
                 <div class="tab-contents" id="education">
                     <ul>
                         <li><span>Aug 2024 - May 2026</span><br>Master's in Data Science | Indiana University Bloomington.</li>
-                        <li><span>Oct 2020 - Apr 2024</span><br>Bachelor's in Artificial Intelligence & Data Science | SRMIST University.</li>
+                        <li><span>Oct 2020 - Apr 2024</span><br>Bachelor's in Artificial Intelligence &amp; Data Science | SRMIST University.</li>
+                        <li><span>Certification</span><br>Databricks Certified Machine Learning Associate.</li>
                     </ul>
                 </div>
             </div>
@@ -140,6 +147,15 @@
         <h1 class="sub-title">My Experience</h1>
         <div class="experience-list">
             <div>
+                <h3>AI/ML Engineer</h3>
+                <h4><i class="fa-regular fa-building"></i> Agilisium Consulting · Client: UCB Pharma</h4>
+                <p>June 2026 – Present</p>
+                <br>
+                <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Building a conversational analytics assistant on Databricks Genie, integrated into Microsoft Teams, so field teams can query commercial data in natural language instead of waiting on reports.</p>
+                <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Validating transformer-based patient representation and prediction models on large-scale real-world healthcare claims data, and fine-tuning a BERT-based patient model for a rare-disease use case.</p>
+                <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Setting up a Databricks AI/ML sandbox environment and working with cross-regional data, platform and modeling teams on model validation and integration in a regulated pharma setting.</p>
+            </div>
+            <div>
     <h3>AI Engineer Intern</h3>
     <a href="https://maps.app.goo.gl/4J1sH3qz4dP7ZrA27">
         <h4><i class="fa-regular fa-building"></i> riAI Capital LLC, Reno, NV</h4>
@@ -148,8 +164,8 @@
     <br>
     <p style="text-align: justify;">
         <i class="fa-solid fa-arrow-right"></i>
-        Conducted foundational research on AI-driven solutions for financial advisory, asset management, and ETF
-        analytics, contributing to the company’s long-term AI platform strategy.
+        Built a RAG-based advisory research system over 5M+ financial records, combining retrieval, ranking and
+        LLM generation for financial advisory, asset management and ETF analytics.
     </p>
     <p style="text-align: justify;">
         <i class="fa-solid fa-arrow-right"></i>
@@ -166,11 +182,10 @@
             <div>
                 <h3>Research Data Scientist</h3>
                 <a href="https://maps.app.goo.gl/uVTHmqEhvxcTXWQGA"> <h4><i class="fa-regular fa-building"></i> Indiana University, Bloomington</h4></a>
-                <p>Jan 2025 - Present</p>
+                <p>Jan 2025 – June 2026</p>
                 <br>
-                <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Mapped funding networks for 157,000+ BIPOC nonprofit grants to analyze funding trends and relationships, Overcame data limitations with advanced retrieval techniques for comprehensive analysis.
-                <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Conducted network analysis to identify bonding, bridging, and linking patterns in grant funding, Classified grant recipients and funders by demographic focus, uncovering insights into funding equity for
-underserved communities.</p>
+                <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Built a taxonomy-grounded NTEE classification framework for nonprofits using RoBERTa and instruction-tuned LLMs, constraining outputs to the official taxonomy to curb off-taxonomy hallucinations.</p>
+                <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Mapped funding networks across 157,000+ BIPOC nonprofit grants, using network analysis to identify bonding, bridging and linking patterns and surface insights into funding equity for underserved communities.</p>
             </div>
             <div>
                 <h3>Data Scientist Intern</h3>
@@ -198,7 +213,37 @@ underserved communities.</p>
         <div class="slider-outer">
             <button class="slider-btn prev-btn" aria-label="Previous Projects">&#10094;</button>
             <div class="project-list slider-track">
-                
+
+                <div class="project">
+                    <img src="portfolio_pictures/work-1.png">
+                    <div class="layer">
+                        <h3>Semantic Search RAG – PDF Q&amp;A</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Retrieval-augmented generation app that ingests multiple PDFs, chunks and embeds them into a ChromaDB vector store, and answers questions with page-level source citations.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Uses MMR retrieval for diverse context, automatic Gemini embedding and chat model fallback for availability, and a Streamlit chat UI with session-safe API key handling.</p>
+                        <a href="https://github.com/sanjai-11/semantic-search-rag" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="project">
+                    <img src="portfolio_pictures/work-2.png">
+                    <div class="layer">
+                        <h3>Report Builder AI – Notebook to Report</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Python framework that turns notebook outputs (text, tables, charts) into branded PDF and DOCX reports, with an AI-written executive summary layered on top of the original results.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Pluggable LLM adapter (Claude, GPT or any provider), business and technical audience modes, and a platform-agnostic input schema that works with Databricks exports. Packaged as a CLI with tests.</p>
+                        <a href="https://github.com/sanjai-11/report-builder-AI-ipynb" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="project">
+                    <img src="portfolio_pictures/work-3.png">
+                    <div class="layer">
+                        <h3>Customer Churn Prediction &amp; Segmentation</h3>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> End-to-end churn system on a 1M-customer synthetic dataset: 21 engineered behavioral features, XGBoost (AUC-ROC 0.91) vs. Logistic Regression (0.83) baselines.</p>
+                        <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> KMeans segmentation into five actionable segments, with a decile lift analysis showing 30% more churners captured than random targeting at a 20% contact budget.</p>
+                        <a href="https://github.com/sanjai-11/customer-churn-predict" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
                 <div class="project">
     <img src="portfolio_pictures/ros2_object_tracking.png">
     <div class="layer">
@@ -270,7 +315,7 @@ underserved communities.</p>
             Optimized performance using precision, recall, and F1-score to minimize false negatives, demonstrating
             applicability to real-world industrial inspection workflows.
         </p>
-        <a href="https://github.com/sanjai-11/industrial-surface-defect-detection" target="_blank">
+        <a href="https://github.com/sanjai-11/industrial-surface-defect-detection-cv" target="_blank">
             <i class="fas fa-external-link-alt"></i>
         </a>
     </div>
@@ -286,7 +331,7 @@ underserved communities.</p>
 manual tasks at 95% accuracy. </p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Developed a Flask API with SQLite, cutting response times by 40%, supporting 1,000 queries, and boosting
 backend efficiency by 30%.</p>
-                        <a href="https://github.com/sanjai-11/AI-Agent-for-operating-Background-System" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://github.com/sanjai-11/AI-Agent-for-operating-Background-System" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
                 <div class="project">
@@ -296,7 +341,7 @@ backend efficiency by 30%.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> CardioCare is a heart disease management system that leverages machine learning to predict and assess cardiovascular risks based on real-time patient data.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The platform provides healthcare professionals with valuable insights, enabling proactive and informed decision-making for better patient care.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Click below link for Live Website.</p>
-                        <a href="https://cardiocare-40xa.onrender.com/" target=”_blank”><i class="fa-solid fa-up-right-from-square"></i></a>
+                        <a href="https://cardiocare-40xa.onrender.com/" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
                     </div>
                 </div>
                 <div class="project">
@@ -305,7 +350,7 @@ backend efficiency by 30%.</p>
                         <h3>Air Calligraphy Using Computer Vision</h3>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Designed a computer vision-based system enabling individuals without limbs (hand) to write in the air using a fingertip, eliminating the need for traditional input devices.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Leveraged OpenCV and Python to implement real-time object detection and gesture recognition for intuitive and accessible air-writing.</p>
-                        <a href="https://github.com/sanjai-11/Air-Calligraphy-using-CV" target=”_blank”><i class="fa-solid fa-up-right-from-square"></i></a>
+                        <a href="https://github.com/sanjai-11/Air-Calligraphy-using-CV" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
                     </div>
                 </div>
                 <div class="project">
@@ -314,7 +359,7 @@ backend efficiency by 30%.</p>
                         <h3>NYC Crime Analytics - using Preswald</h3>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The NY Crime Analytics Application is an interactive dashboard built using Preswald, providing a comprehensive view of crime trends across New York State from 1990 to 2023.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The application allows users to explore county-wise crime statistics, including violent, property, and firearm-related crimes, with visually engaging charts and interactive filtering for deeper insights.</p>
-                        <a href="https://github.com/sanjai-11/NY-Crime-Analytics-App-Preswald" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://github.com/sanjai-11/NY-Crime-Analytics-App-Preswald" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
                 <div class="project">
@@ -323,7 +368,7 @@ backend efficiency by 30%.</p>
                         <h3>Monument Intelligence Dashboard</h3>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The Monument Intelligence Dashboard is an interactive, AI-powered web app built with Preswald, allowing users to explore and analyze iconic monuments worldwide through dynamic visualizations and natural language queries.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> The application features an interactive geospatial map, trend analysis by country and century, and a chatbot for intuitive, conversational exploration of global monuments' historical data and visitor statistics.</p>
-                        <a href="https://github.com/sanjai-11/monument-dashboard-preswald" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://github.com/sanjai-11/monument-dashboard-preswald" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
                 <div class="project">
@@ -332,13 +377,13 @@ backend efficiency by 30%.</p>
                         <h3>BlinkIt Sales Analytics</h3>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Developed an interactive Power BI dashboard to analyze Blinkit's sales data, providing insights into key metrics such as total sales, item distribution, outlet performance, and customer preferences.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Implemented dynamic filtering and visualizations to track sales trends by product type, outlet size, and location, enabling data-driven decision-making for business growth.</p>
-                        <a href="https://github.com/sanjai-11/Blinkit-Sales-Analytics" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://github.com/sanjai-11/Blinkit-Sales-Analytics" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
             </div>
             <button class="slider-btn next-btn" aria-label="Next Projects">&#10095;</button>
         </div>
-        <a href="https://github.com/sanjai-11" target=”_blank” class="btn">See more</a>
+        <a href="https://github.com/sanjai-11" target="_blank" class="btn">See more</a>
     </div>
 </div>
 
@@ -355,7 +400,7 @@ backend efficiency by 30%.</p>
                         <h2>Jobha Naturals Web Application</h2>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Managed a cross-functional team of six developers and coordinated with stakeholders to design, develop, and launch a scalable e-commerce platform for Jobha Naturals. Oversaw project timelines, feature prioritization, and seamless integration of RazorPay for secure transactions.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Maintain ongoing collaboration with business stakeholders to optimize performance, implement updates, and provide strategic technical support.</p>
-                        <a href="https://www.jobhanaturals.com/" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://www.jobhanaturals.com/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
                 <div class="product">
@@ -365,14 +410,14 @@ backend efficiency by 30%.</p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> A static web application that serves as a catalog of nutritious foods tailored for gym-goers, highlighting key nutritional facts. Users can conveniently browse healthy meal options and place orders, promoting informed dietary choices.
                         </p>
                         <p style="text-align: justify;"><i class="fa-solid fa-arrow-right"></i> Clear layout for easy navigation, ensuring users quickly find the right meals to meet their fitness goals.</p>
-                        <a href="https://box-of-wellness.onrender.com/" target=”_blank”><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://box-of-wellness.onrender.com/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
                 <div class="product">
                     <img src="portfolio_pictures/work-3.png">
                     <div class="layer">
                         <h3>App</h3>
-                        <p>Coming Soooon</p>
+                        <p>Coming Soon</p>
                         <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>
                     </div>
                 </div>
@@ -391,9 +436,15 @@ backend efficiency by 30%.</p>
             <button class="slider-btn prev-btn" aria-label="Previous Research">&#10094;</button>
             <div class="researchwork-list slider-track">
                 <div>
-                    <h2>Snacks & Satiety Research Study</h2>
+                    <h2>Toward Reliable Visible-Track Speaking-State Detection Under Video Restoration</h2>
+                    <p style="text-align: justify;">Accepted at the 6th Workshop on Image/Video/Audio Quality Assessment in Computer Vision, VLM and Diffusion Models (WVAQ 2027) at WACV 2027, Orlando, FL. Co-authored with Pradeep Bolleddu (UMass) and Senthil Palaniswamy (Northwestern).</p>
+                    <p style="text-align: justify;">Studies how video restoration affects the reliability of visible-track speaking-state detection, including experiments on audio-assisted restoration and how audio evidence carries over to visual predictions.</p>
+                    <a href="https://openreview.net/forum?id=RoZpoUx9Z7" target="_blank">OpenReview</a>
+                </div>
+                <div>
+                    <h2>Snacks &amp; Satiety Research Study</h2>
                     <p style="text-align: justify;"> Worked as a Research Assistant under Dr. Bret Rust on the Snacks & Satiety Study, funded by Linus Technology. Contributed to data analysis and research on the effects of snack consumption on satiety.</p>
-                    <p style="text-align: justify;">Contributed to an upcoming data authorship piece in The New York Times Magazine, showcasing expertise in data-driven insights and research.ThisNewYork Times Magazine - for Data Ownership</p>
+                    <p style="text-align: justify;">Contributed to an upcoming data authorship piece in The New York Times Magazine, showcasing expertise in data-driven insights and research.</p>
                 </div>
                 <div>
                     <h2>Funding Networks for BIPOC Non-Profit Organization</h2>
@@ -401,13 +452,13 @@ backend efficiency by 30%.</p>
                     <p style="text-align: justify;">Presented the research at the ARNOVA conference, showcasing findings on the funding dynamics and equity for BIPOC nonprofit organizations.</p>
                 </div>
                 <div>
-                    <h2>Advanced ANPR approach for Vehichle Management</h2>
+                    <h2>Advanced ANPR Approach for Vehicle Management</h2>
                     <p style="text-align: justify;">Published a research paper titled "Advanced ANPR for Vehicle Management" in Adalya International Journal (DOI: 10.37896/aj13.3/001), which focused on using YOLO-based object detection combined with OCR for real-time license plate recognition, achieving 96% accuracy and improving blurred image clarity by 85%.</p>
                     <p style="text-align: justify;">Developed a scalable, autonomous vehicle tracking system that utilized real-time object detection, motion tracking, and decision-based logging to optimize parking flow and entry/exit management in vehicle management systems.</p>
                     <a href="https://drive.google.com/file/d/1PZXn8gMPbjQwiGJ_1ukCjLqmpkVkopUP/view">Link</a>
                 </div>
                 <div>
-                    <h2>AI-Powered Bank note Identification System for Visually Impaired</h2>
+                    <h2>AI-Powered Banknote Identification System for Visually Impaired</h2>
                     <p style="text-align: justify;">Presented a paper titled "AI-Powered Banknote Identification System for Visually Impaired" at the Recent Trends in Analytics and Computing Technologies (RTACT) 2024 conference, showcasing an AI-based solution for assisting visually impaired individuals in identifying banknotes.</p>
                     <p style="text-align: justify;">The system utilizes advanced computer vision and machine learning techniques to accurately identify banknotes and provide audio feedback, enhancing accessibility for visually impaired users in financial transactions.</p>
                     <a href="https://drive.google.com/file/d/1Re9U3aKcNjf17Q0bdMQ6MBB4G1vRN4eB/view?usp=sharing">Link</a>
@@ -451,7 +502,7 @@ backend efficiency by 30%.</p>
         </div>
     </div>
     <div class="copyright">
-        <p>Copyright © 2025 - Sanjai Bala. All Rights Reserved</p>
+        <p>Copyright © 2026 - Sanjai Bala. All Rights Reserved</p>
     </div>
 </div>
 
@@ -528,9 +579,9 @@ backend efficiency by 30%.</p>
     <div class="chat-body">
         <div class="messages">
             <div class="suggested-questions">
-                <button class="question-btn">What's your biggest accomplishments?</button>
-                <button class="question-btn">Convince me, you excel in AI.</button>
-                <button class="question-btn">What's your superpowers?</button>
+                <button class="question-btn">What are your biggest accomplishments?</button>
+                <button class="question-btn">What makes you strong in AI/ML?</button>
+                <button class="question-btn">What are you working on now?</button>
                 <button class="question-btn">Key projects to see?</button>
                 <button class="question-btn">Why should we hire you?</button>
             </div>
@@ -552,10 +603,10 @@ backend efficiency by 30%.</p>
 
 <script>
 const roles = [
-  "Data Scientist",
-  "ML Engineer",
-  "AI Engineer",
-  "Budding Entrepreneur"
+  "AI/ML Engineer",
+  "Machine Learning Engineer",
+  "LLM & Agentic AI Builder",
+  "Applied AI Researcher"
 ];
 
 let roleIndex = 0;
@@ -1033,11 +1084,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script id="portfolio-data" type="application/json">
 {
-  "name": "Sanjaikumar Balasubramaniyan",
-  "email": "bsan@iu.edu", "sanjaibala2002@gmail.com",
+  "name": "Sanjaikumar Balasubramaniyan (Sanjai Bala)",
+  "email": "sanjaibala11@gmail.com",
   "phone": "+1 (812) 671-6737",
-  "location": "Bloomington, IN",
-  "headline": "MS Data Science (IUB) | Applied ML, LLM Systems, Recommenders | Spring 2026",
+  "location": "Atlanta, GA, USA",
+  "headline": "AI/ML Engineer at Agilisium Consulting (UCB Pharma) | LLMs, RAG, Agentic AI, Computer Vision | MS Data Science, Indiana University | WACV 2027 workshop author",
+  "about": "AI/ML Engineer who builds machine learning and LLM systems for production. Currently at Agilisium Consulting, embedded with UCB Pharma, building conversational AI on Databricks and validating transformer-based patient prediction models in a regulated healthcare environment. Completed an MS in Data Science at Indiana University Bloomington (May 2026) after a B.Tech in AI & Data Science. Works across LLMs and RAG, agentic pipelines, NLP, computer vision and deep learning, from research to deployment. Open to AI/ML Engineer, Machine Learning Engineer, Applied AI and AI Research Engineer opportunities.",
   "links": {
     "website": "https://sanjaibala.com",
     "linkedin": "https://www.linkedin.com/in/sanjai-bala",
@@ -1045,28 +1097,50 @@ document.addEventListener('DOMContentLoaded', function() {
     "leetcode": "https://leetcode.com/u/sanjai-11/"
   },
   "skills": [
-    "Python", "C/C++", "Java", "JavaScript", "SQL", "PyTorch", "R", "AWS (S3, Lambda, Step Functions, Kendra)",
-    "ETL", "Airflow", "Kafka (basic)", "LLM", "RAG", "Embeddings", "Recommendation Systems", "NLP"
+    "Python", "PyTorch", "SQL", "JavaScript", "C/C++", "Java", "R",
+    "LLMs", "RAG", "Agentic AI", "LLM evaluation", "Prompt engineering", "Embeddings and vector search (ChromaDB)",
+    "Transformers (BERT, RoBERTa)", "NLP", "Computer Vision (OpenCV, YOLO, CNNs)", "Deep Learning", "Time-series modeling (LSTM)",
+    "XGBoost", "Recommendation systems",
+    "Databricks (Genie, ML)", "Apache Spark", "AWS (S3, EC2, SageMaker, Lambda, Step Functions, Kendra)", "GCP (BigQuery)",
+    "Flask/FastAPI", "Docker", "GitHub Actions CI/CD", "Airflow", "Streamlit"
+  ],
+  "certifications": [
+    "Databricks Certified Machine Learning Associate"
   ],
   "education": [
-    "Indiana University Bloomington — MS Data Science (GPA 3.5/4) — Aug 2024 – May 2026"
+    "Indiana University Bloomington — MS Data Science (GPA 3.5/4) — Aug 2024 – May 2026 (completed)",
+    "SRMIST University — B.Tech Artificial Intelligence & Data Science — Oct 2020 – Apr 2024"
   ],
-"experience": [
+  "experience": [
     {
-      "title": "Research Data Scientist",
-      "company": "Indiana University",
-      "dates": "Jan 2025 – Present",
+      "title": "AI/ML Engineer",
+      "company": "Agilisium Consulting (client: UCB Pharma)",
+      "dates": "Jun 2026 – Present",
       "status": "CURRENT",
       "highlights": [
-        "Built reproducible Python/R pipelines for multi-year nonprofit datasets; cleaned/standardized reporting formats",
-        "Performed EDA + statistical analysis; produced stakeholder-ready dashboards and summaries",
-        "Supported Snacks & Satiety research: processing dietary/satiety data; created comparative visuals and reports"
+        "Building a conversational analytics assistant on Databricks Genie, integrated into Microsoft Teams, so field teams can query commercial data in natural language",
+        "Validating transformer-based patient representation and prediction models on large-scale real-world healthcare claims data",
+        "Fine-tuning a BERT-based patient model for a rare-disease use case",
+        "Setting up a Databricks AI/ML sandbox environment and coordinating with cross-regional data, platform and modeling teams in a regulated pharma setting"
+      ],
+      "metrics": [],
+      "tags": ["LLM", "Databricks", "conversational AI", "healthcare AI", "transformers"]
+    },
+    {
+      "title": "Research Data Scientist",
+      "company": "Indiana University Bloomington",
+      "dates": "Jan 2025 – Jun 2026",
+      "status": "PAST",
+      "highlights": [
+        "Built a taxonomy-grounded NTEE nonprofit classification framework using RoBERTa and instruction-tuned LLMs",
+        "Mapped funding networks across 157,000+ BIPOC nonprofit grants using network analysis (presented at ARNOVA)",
+        "Built reproducible Python/R pipelines for multi-year nonprofit datasets",
+        "Supported the Snacks & Satiety research study with dietary/satiety data processing and analysis"
       ],
       "metrics": [
-        "Reduced manual processing by up to 60% (pipeline automation)",
-        "Improved insight-to-decision speed with dashboards and reporting"
+        "Reduced manual processing by up to 60% through pipeline automation"
       ],
-      "tags": ["research", "pipelines", "dashboards", "statistics"]
+      "tags": ["NLP", "LLM", "research", "network analysis"]
     },
     {
       "title": "AI Research Assistant",
@@ -1075,103 +1149,161 @@ document.addEventListener('DOMContentLoaded', function() {
       "status": "PAST",
       "highlights": [
         "Developed NLP workflows to improve nonprofit recommendation and classification systems",
-        "Designed analytical workflows for data-driven grant evaluation and simulation scenarios",
-        "Collaborated cross-functionally to productionize maintainable AI workflows"
+        "Designed analytical workflows for data-driven grant evaluation and simulation scenarios"
       ],
       "metrics": [],
       "tags": ["NLP", "recommenders", "applied AI"]
     },
     {
-      "title": "Software AI Engineer Intern",
-      "company": "riAI Capital LLC",
+      "title": "AI Engineer Intern",
+      "company": "riAI Capital LLC (Reno, NV)",
       "dates": "Jul 2025 – Nov 2025",
       "status": "PAST",
       "highlights": [
-        "Built LLM-powered advisory research assistant using prompt engineering + retrieval/ranking logic",
-        "Defined KPIs, evaluation criteria, and benchmarking to track model quality and adoption",
-        "Standardized prompt templates + evaluation checks for consistent outputs across workflows",
-        "Built backend services and REST APIs (Flask/FastAPI) supporting LLM-driven analytics workflows",
-        "Designed AWS pipelines for ingesting and storing financial datasets for benchmarking",
-        "Implemented CI/CD with GitHub Actions + Docker; improved reliability and deployment speed"
+        "Built a RAG-based advisory research system over 5M+ financial records",
+        "Designed LLM workflows and prompt templates for portfolio optimization and investment research",
+        "Defined KPIs, evaluation criteria and benchmarks to track model quality and adoption",
+        "Built backend services and REST APIs (Flask/FastAPI) and AWS data pipelines; CI/CD with GitHub Actions and Docker"
       ],
       "metrics": [
         "Improved research/analysis turnaround by ~40%"
       ],
-      "tags": ["LLM", "prompting", "evaluation", "finance"]
+      "tags": ["LLM", "RAG", "evaluation", "finance"]
     },
     {
-      "title": "Data Analyst",
-      "company": "Systech Solutions",
-      "dates": "Apr 2023 – Jul 2024",
+      "title": "Data Scientist Intern",
+      "company": "Systech Solutions Inc. (India)",
+      "dates": "Apr 2024 – Jul 2024",
       "status": "PAST",
       "highlights": [
-        "Built customer segmentation + recommendation clustering models for targeting optimization",
-        "Automated ETL + feature engineering pipelines in Python/SQL for faster analytics delivery",
-        "Built Power BI dashboards for real-time decision intelligence and reporting"
+        "Deployed customer segmentation ML models for targeting",
+        "Automated ETL and feature engineering pipelines in Python/SQL",
+        "Built real-time Power BI dashboards"
       ],
       "metrics": [
-        "Improved campaign targeting accuracy by ~25%",
-        "Reduced processing latency/time by ~35%",
-        "Improved business response speed by ~40%"
+        "Improved segmentation/targeting accuracy by ~25%",
+        "Cut data processing time by ~35%"
       ],
-      "tags": ["ML", "ETL", "Power BI", "analytics"]
+      "tags": ["ML", "ETL", "analytics"]
     },
+    {
+      "title": "Data Analyst Intern",
+      "company": "8Queens Software Technologies (India)",
+      "dates": "May 2022 – Jan 2023",
+      "status": "PAST",
+      "highlights": [
+        "Deployed a supervised ML model for diabetes risk prediction",
+        "Built interactive Tableau sales dashboards"
+      ],
+      "metrics": [
+        "~15% improvement in sales performance insights"
+      ],
+      "tags": ["ML", "analytics"]
+    }
   ],
-  "projects": [
+  "research": [
     {
-      "name": "AI-Powered Portfolio Chatbot & Interactive User Simulation",
-      "summary": "LLM-integrated chatbot + interactive simulation experience with secure server endpoint",
-      "tech": ["JavaScript", "HTML/CSS", "Serverless API", "Gemini API", "SQL", "Python"],
-      "link": "https://sanjaibala.com"
+      "title": "Toward Reliable Visible-Track Speaking-State Detection Under Video Restoration",
+      "venue": "Accepted at WVAQ 2027 (6th Workshop on Image/Video/Audio Quality Assessment in CV, VLM and Diffusion Models) at WACV 2027, Orlando, FL",
+      "summary": "Studies how video restoration affects the reliability of visible-track speaking-state detection, including audio-assisted restoration. Co-authors: Pradeep Bolleddu (UMass), Senthil Palaniswamy (Northwestern).",
+      "link": "https://openreview.net/forum?id=RoZpoUx9Z7"
     },
     {
-      "name": "AI-Powered Recommendation & Conversational System",
-      "summary": "Conversational recommender using semantic search, contextual memory, and adaptive ranking",
-      "tech": ["Python", "JavaScript", "Gemini API", "NLP", "Semantic Search"],
+      "title": "Advanced ANPR for Vehicle Management",
+      "venue": "Published in Adalya International Journal (DOI: 10.37896/aj13.3/001)",
+      "summary": "YOLO-based detection plus OCR for real-time license plate recognition, 96% accuracy",
       "link": ""
     },
     {
-      "name": "Scalable ETL Pipeline for Open Data Analytics",
-      "summary": "Automated ETL to ingest, validate, and store large public datasets for downstream analytics",
-      "tech": ["Python", "SQL", "Apache Airflow", "PostgreSQL", "AWS", "Pandas"],
+      "title": "AI-Powered Banknote Identification System for Visually Impaired",
+      "venue": "Presented at RTACT 2024",
+      "summary": "Computer vision system that identifies banknotes and gives audio feedback",
+      "link": ""
+    },
+    {
+      "title": "Funding Networks for BIPOC Nonprofit Organizations",
+      "venue": "Presented at ARNOVA",
+      "summary": "Network analysis of 157,000+ grants to study funding equity",
+      "link": ""
+    }
+  ],
+  "projects": [
+    {
+      "name": "Semantic Search RAG (PDF Q&A)",
+      "summary": "Multi-PDF RAG app with ChromaDB, MMR retrieval, Gemini model fallback and page-level citations in a Streamlit chat UI",
+      "tech": ["Python", "LangChain", "ChromaDB", "Gemini", "Streamlit"],
+      "link": "https://github.com/sanjai-11/semantic-search-rag"
+    },
+    {
+      "name": "Report Builder AI",
+      "summary": "Turns notebook outputs into branded PDF/DOCX reports with an AI executive summary via a pluggable LLM adapter",
+      "tech": ["Python", "LLM APIs", "CLI", "PDF/DOCX generation"],
+      "link": "https://github.com/sanjai-11/report-builder-AI-ipynb"
+    },
+    {
+      "name": "Customer Churn Prediction & Segmentation",
+      "summary": "XGBoost (AUC 0.91) churn model and KMeans segmentation on a 1M-customer synthetic dataset; 30% lift over random targeting",
+      "tech": ["Python", "XGBoost", "scikit-learn", "SQL", "Tableau"],
+      "link": "https://github.com/sanjai-11/customer-churn-predict"
+    },
+    {
+      "name": "ROS2 Object Tracking and Control System",
+      "summary": "Real-time ROS2 pipeline with OpenCV detection, Kalman filter tracking and PID control",
+      "tech": ["ROS2", "Python", "OpenCV"],
+      "link": "https://github.com/sanjai-11/ros2-object-tracking-control"
+    },
+    {
+      "name": "Predictive Maintenance – RUL Estimation (LSTM)",
+      "summary": "LSTM regression on multivariate sensor time series to estimate remaining useful life",
+      "tech": ["Python", "PyTorch", "LSTM"],
+      "link": "https://github.com/sanjai-11/predictive-maintenance-rul-lstm"
+    },
+    {
+      "name": "Industrial Surface Defect Detection",
+      "summary": "CNN and transfer-learning defect detection with augmentation and class-imbalance handling",
+      "tech": ["Python", "PyTorch", "Computer Vision"],
+      "link": "https://github.com/sanjai-11/industrial-surface-defect-detection-cv"
+    },
+    {
+      "name": "AI Agent for Operating Backend System",
+      "summary": "Gemini-powered agent that operates a Flask/SQLite backend from natural language",
+      "tech": ["Python", "Gemini", "Flask", "SQLite"],
+      "link": "https://github.com/sanjai-11/AI-Agent-for-operating-Background-System"
+    },
+    {
+      "name": "AI-Powered Portfolio Chatbot (this site)",
+      "summary": "LLM chatbot with a serverless API endpoint that answers questions about Sanjai's work",
+      "tech": ["JavaScript", "Serverless API", "Gemini API"],
+      "link": "https://sanjaibala.com"
+    },
+    {
+      "name": "CardioCare",
+      "summary": "ML-based heart disease risk prediction and management web app",
+      "tech": ["Python", "ML", "Flask"],
+      "link": "https://cardiocare-40xa.onrender.com/"
+    },
+    {
+      "name": "Air Calligraphy Using Computer Vision",
+      "summary": "Fingertip air-writing system for people without the use of their hands",
+      "tech": ["Python", "OpenCV"],
+      "link": "https://github.com/sanjai-11/Air-Calligraphy-using-CV"
+    },
+    {
+      "name": "Disease Progression Modeling",
+      "summary": "Predicts 12-month disease progression from longitudinal clinical data with SHAP explainability",
+      "tech": ["Python", "XGBoost", "SQL", "SHAP"],
       "link": ""
     },
     {
       "name": "Real-Time Streaming Data Pipeline",
       "summary": "Kafka + Spark Structured Streaming pipeline for event processing and analytical storage",
-      "tech": ["Python", "Kafka", "Spark Structured Streaming", "SQL", "Docker"],
-      "link": ""
-    },
-    {
-      "name": "Real-Time Data Ingestion Pipeline",
-      "summary": "Streaming ingestion with Kafka producers/consumers into PostgreSQL analytics storage",
-      "tech": ["Python", "Kafka", "PostgreSQL"],
-      "link": ""
-    },
-    {
-      "name": "Distributed Task Scheduler",
-      "summary": "Lightweight distributed job scheduler using Redis queues and REST APIs across workers",
-      "tech": ["Python", "Redis", "Docker"],
-      "link": ""
-    },
-    {
-      "name": "Disease Progression Modeling",
-      "summary": "Predicts 12-month disease progression using longitudinal clinical data with SHAP explainability",
-      "tech": ["Python", "XGBoost", "SQL", "SHAP"],
-      "link": ""
-    },
-    {
-      "name": "Healthcare Commercial Analytics",
-      "summary": "Clustering + forecasting on patient/prescription datasets for targeting and adoption insights",
-      "tech": ["Python", "SQL", "Clustering", "Forecasting"],
-      "link": ""
-    },
-    {
-      "name": "Customer Behavior & Sales Performance Analytics",
-      "summary": "Segmentation + sales analytics to identify purchasing patterns and support strategy decisions",
-      "tech": ["Python", "Kafka", "SQL", "Power BI", "AWS"],
+      "tech": ["Python", "Kafka", "Spark Structured Streaming", "Docker"],
       "link": ""
     }
+  ],
+  "products": [
+    "Jobha Naturals — e-commerce platform; led a team of six developers (https://www.jobhanaturals.com/)",
+    "Box of Wellness — nutrition catalog web app (https://box-of-wellness.onrender.com/)"
   ]
 }
 </script>
@@ -1179,4 +1311,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
