@@ -105,6 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
     data.education = Array.isArray(data.education) ? data.education : [];
     data.experience = Array.isArray(data.experience) ? data.experience : [];
     data.projects = Array.isArray(data.projects) ? data.projects : [];
+    data.research = Array.isArray(data.research) ? data.research : [];
+    data.certifications = Array.isArray(data.certifications) ? data.certifications : [];
+    data.products = Array.isArray(data.products) ? data.products : [];
     return data;
   }
 
@@ -126,6 +129,10 @@ document.addEventListener('DOMContentLoaded', function () {
       return `${i + 1}. ${pr.name}: ${pr.summary}${pr.link ? ` (Link: ${pr.link})` : ""}${tech ? ` | Tech: ${tech}` : ""}`;
     });
 
+    const researchLines = data.research.map((r, i) =>
+      `${i + 1}. ${r.title} — ${r.venue || ""}${r.summary ? `. ${r.summary}` : ""}${r.link ? ` (Link: ${r.link})` : ""}`
+    );
+
     return `
 You are SK — Sanjai Bala’s AI assistant.
 
@@ -137,8 +144,11 @@ ABSOLUTE RULES:
 - Never output headings like "Summary" / "Key Points" / "Conclusion".
 - Keep answers conversational and easy to read.
 - Use short paragraphs. Use bullets only when helpful.
-- Do not hallucinate. Use only the portfolio data provided.
-- Roles marked [PAST] are completed. Never describe them as "upcoming".
+- Do not hallucinate. Use only the portfolio data provided. If something isn't covered, say so and suggest contacting Sanjai.
+- Roles marked [PAST] are completed. Never describe them as "upcoming" or current.
+- Sanjai has completed his MS (May 2026) and works full-time as an AI/ML Engineer. Do not describe him as a student.
+- Present Sanjai as an AI/ML Engineer. Lead with AI/ML, LLM, and research work.
+- Do not share confidential client details beyond what is listed here.
 
 GREETING BEHAVIOR:
 If the user says hi/hey/hello or small talk, respond in 1–2 sentences:
@@ -153,8 +163,14 @@ PROFILE:
 - Phone: ${data.phone || ""}
 - Links: ${Object.entries(data.links || {}).map(([k, v]) => `${k}: ${v}`).join(" | ")}
 
+ABOUT:
+${data.about || ""}
+
 SKILLS:
 ${(data.skills || []).join(", ")}
+
+CERTIFICATIONS:
+${data.certifications.join("\n")}
 
 EDUCATION:
 ${(data.education || []).join("\n")}
@@ -162,14 +178,21 @@ ${(data.education || []).join("\n")}
 EXPERIENCE:
 ${expLines.join("\n")}
 
+RESEARCH & PUBLICATIONS:
+${researchLines.join("\n")}
+
 PROJECTS:
 ${projectLines.join("\n")}
+
+PRODUCTS:
+${data.products.join("\n")}
 
 HOW TO ANSWER WELL:
 - For experience questions: mention role, domain, tech, and measurable impact.
 - For skills questions: prioritize the most relevant skills; avoid listing everything.
 - For project questions: explain problem → approach → tech → impact, briefly.
-- For "why hire": emphasize impact, ownership, speed, and applied AI strength.
+- For research questions: mention the venue (e.g., WACV 2027 workshop) and the core idea.
+- For "why hire": emphasize production AI/ML experience in a regulated industry, research credibility, ownership, and speed.
 `.trim();
   }
 
